@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>James Studio — Minimalist Web Development</title>
+    <!-- Tailwind CSS for high-fidelity styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Syne (geometric, wide header similar to Kessel-105) & Space Grotesk (modern mono-ish clean body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #FAF9F6; /* Premium soft off-white background */
+            color: #1A1A1A;
+        }
+        h1, h2, h3, .geometric-font {
+            font-family: 'Syne', sans-serif;
+            letter-spacing: -0.03em;
+        }
+        /* Custom scrollbar matching the minimal layout */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF9F6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1A1A1A;
+            border-radius: 3px;
+        }
+
+        /* Scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-on-scroll.delay-100 {
+            transition-delay: 0.1s;
+        }
+
+        .animate-on-scroll.delay-200 {
+            transition-delay: 0.2s;
+        }
+
+        .animate-on-scroll.delay-300 {
+            transition-delay: 0.3s;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#1A1A1A] selection:text-[#FAF9F6]">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#1A1A1A]/10 px-6 py-4 md:px-12 flex justify-between items-center transition-all duration-300">
+        <a href="#" class="geometric-font text-xl md:text-2xl font-extrabold tracking-tighter flex items-center gap-2">
+            JAMES<span class="text-xs bg-[#1A1A1A] text-[#FAF9F6] px-2 py-0.5 rounded-full uppercase tracking-widest">Studio</span>
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center gap-8 font-medium text-sm tracking-tight">
+            <a href="#services" class="hover:text-black/60 transition-colors">Services</a>
+            <a href="#work" class="hover:text-black/60 transition-colors">Selected Work</a>
+            <a href="#about" class="hover:text-black/60 transition-colors">About Us</a>
+            <a href="#contact" class="bg-[#1A1A1A] text-[#FAF9F6] px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider hover:bg-neutral-800 transition-all shadow-sm">
+                Get in Touch
+            </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuBtn" class="md:hidden flex flex-col justify-between w-6 h-4 focus:outline-none" aria-label="Toggle Menu">
+            <span class="w-full h-[2px] bg-[#1A1A1A] transition-all" id="bar1"></span>
+            <span class="w-full h-[2px] bg-[#1A1A1A] transition-all" id="bar2"></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Navigation Overlay -->
+    <div id="mobileMenu" class="hidden fixed inset-0 z-40 bg-[#FAF9F6] flex flex-col justify-center items-center gap-8 text-2xl font-bold border-t border-[#1A1A1A]/10">
+        <a href="#services" onclick="toggleMenu()" class="hover:underline">Services</a>
+        <a href="#work" onclick="toggleMenu()" class="hover:underline">Selected Work</a>
+        <a href="#about" onclick="toggleMenu()" class="hover:underline">About Us</a>
+        <a href="#contact" onclick="toggleMenu()" class="bg-[#1A1A1A] text-[#FAF9F6] px-6 py-3 rounded-full text-sm font-semibold tracking-wider">
+            Get in Touch
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="relative px-6 py-20 md:py-32 md:px-12 max-w-7xl mx-auto flex flex-col justify-center min-h-[80vh]">
+        <div class="max-w-4xl space-y-6">
+            <h1 class="animate-on-scroll text-5xl sm:text-7xl md:text-8xl font-extrabold tracking-tight leading-[0.9] text-[#1A1A1A]">
+                WE DESIGN & CODE DIGITAL SUCCESS.
+            </h1>
+            
+            <p class="animate-on-scroll delay-200 text-lg md:text-xl text-neutral-600 max-w-2xl font-normal leading-relaxed pt-2">
+                At <span class="font-semibold text-black">James Studio</span>, we build complete web solutions—from stunning user interfaces to robust server-side architecture.
+            </p>
+
+            <div class="animate-on-scroll delay-300 flex flex-wrap gap-4 pt-6">
+                <a href="#contact" class="bg-[#1A1A1A] text-[#FAF9F6] px-8 py-4 rounded-full text-sm font-semibold tracking-wider hover:bg-neutral-800 transition-all transform hover:-translate-y-0.5">
+                    Start a Project
+                </a>
+                <a href="#work" class="border border-[#1A1A1A] text-[#1A1A1A] px-8 py-4 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all transform hover:-translate-y-0.5">
+                    View Our Portfolio
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section id="services" class="border-y border-[#1A1A1A]/10 bg-white py-24 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="animate-on-scroll space-y-4">
+                    <p class="text-xs uppercase font-bold tracking-widest text-neutral-400">01 / Services</p>
+                    <h2 class="text-3xl font-extrabold tracking-tight">Our Core Offerings</h2>
+                    <p class="text-neutral-500 leading-relaxed max-w-md">We blend design engineering with creative systems to build robust digital products that grow with your brand.</p>
+                </div>
+                
+                <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <!-- Card 1 -->
+                    <div class="animate-on-scroll delay-100 border border-[#1A1A1A]/10 p-8 rounded-2xl hover:border-[#1A1A1A] transition-all duration-300 hover:shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center mb-6">
+                            <svg class="w-5 h-5 text-neutral-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Frontend Development</h3>
+                        <p class="text-neutral-500 text-sm leading-relaxed">Building lightning-fast, responsive user interfaces with modern frameworks for exceptional user experiences.</p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="animate-on-scroll delay-200 border border-[#1A1A1A]/10 p-8 rounded-2xl hover:border-[#1A1A1A] transition-all duration-300 hover:shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center mb-6">
+                            <svg class="w-5 h-5 text-neutral-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Product Design</h3>
+                        <p class="text-neutral-500 text-sm leading-relaxed">User experiences refined by crisp geometric wireframing, fluid responsive architecture, and gorgeous minimal layouts.</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="animate-on-scroll delay-100 border border-[#1A1A1A]/10 p-8 rounded-2xl hover:border-[#1A1A1A] transition-all duration-300 hover:shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center mb-6">
+                            <svg class="w-5 h-5 text-neutral-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Backend Development</h3>
+                        <p class="text-neutral-500 text-sm leading-relaxed">Building robust server-side architecture, APIs, and databases that power scalable, secure applications.</p>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="animate-on-scroll delay-200 border border-[#1A1A1A]/10 p-8 rounded-2xl hover:border-[#1A1A1A] transition-all duration-300 hover:shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center mb-6">
+                            <svg class="w-5 h-5 text-neutral-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">SEO & Conversion</h3>
+                        <p class="text-neutral-500 text-sm leading-relaxed">Auditing and sculpting semantic architectures to elevate page performance, organic reach, and target platform rankings.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Selected Work Section -->
+    <section id="work" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
+            <div class="space-y-4">
+                <p class="text-xs uppercase font-bold tracking-widest text-neutral-400">02 / Portfolio</p>
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">Recent Commissions</h2>
+            </div>
+            <p class="text-neutral-500 max-w-sm leading-relaxed text-sm">A brief curated look into the simple, clean, and highly performant layouts we have launched globally.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <!-- Project 1 -->
+            <a href="/projects/classchartsimprover.html" class="group cursor-pointer">
+                <div class="relative overflow-hidden rounded-2xl aspect-[4/3] bg-neutral-100 border border-[#1A1A1A]/5 mb-6">
+                    <img src="/assets/projects/cc improver/promo.png" 
+                         alt="ClassCharts Improver browser extension"
+                         class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                         onerror="this.src='https://placehold.co/800x600/f3f4f6/1a1a1a?text=ClassCharts+Improver'">
+                </div>
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-xs uppercase font-semibold text-neutral-400">Browser Extension</span>
+                        <h3 class="text-xl font-bold mt-1 group-hover:underline">ClassCharts Improver</h3>
+                    </div>
+                    <span class="text-xs uppercase font-bold tracking-widest border border-[#1A1A1A]/10 px-3 py-1 rounded-full">2026</span>
+                </div>
+            </a>
+
+            <!-- Stats Card -->
+            <div class="bg-white p-8 rounded-2xl border border-[#1A1A1A]/10 shadow-sm space-y-6">
+                <h3 class="text-lg font-bold geometric-font">Project Stats</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between py-3 border-b border-[#1A1A1A]/5">
+                        <span class="text-sm text-neutral-500">Active Users</span>
+                        <span class="text-lg font-bold flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                            77+
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between py-3 border-b border-[#1A1A1A]/5">
+                        <span class="text-sm text-neutral-500">Rating</span>
+                        <span class="text-lg font-bold flex items-center gap-2">
+                            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            4.5 Stars
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between py-3">
+                        <span class="text-sm text-neutral-500">Reach</span>
+                        <span class="text-lg font-bold flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            Global
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="border-t border-[#1A1A1A]/10 bg-neutral-100/50 py-24 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="space-y-6">
+                <p class="text-xs uppercase font-bold tracking-widest text-neutral-400">03 / Agency</p>
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">We build to endure.</h2>
+                <p class="text-neutral-600 leading-relaxed">
+                    James Studio is born from a desire to break away from bloated, slow websites. We design directly with the code, giving our clients highly customized layouts that score beautifully on speed metrics and deliver robust conversions.
+                </p>
+                <p class="text-neutral-600 leading-relaxed">
+                    Our process is entirely collaborative and completely transparent. No heavy agency overhead. Just clean, precise, and beautiful digital results.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-8 rounded-2xl border border-[#1A1A1A]/5 shadow-sm">
+                    <p class="text-4xl font-extrabold geometric-font tracking-tight">100%</p>
+                    <p class="text-xs uppercase tracking-wider font-semibold text-neutral-400 mt-2">Mobile Optimized</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl border border-[#1A1A1A]/5 shadow-sm">
+                    <p class="text-4xl font-extrabold geometric-font tracking-tight">707 ms</p>
+                    <p class="text-xs uppercase tracking-wider font-semibold text-neutral-400 mt-2">Load Speed</p>
+                    <p class="text-xs text-neutral-500 mt-1">Tested with Pingdom</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl border border-[#1A1A1A]/5 shadow-sm">
+                    <p class="text-4xl font-extrabold geometric-font tracking-tight">5+</p>
+                    <p class="text-xs uppercase tracking-wider font-semibold text-neutral-400 mt-2">Launches in the UK</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / Booking Section -->
+    <section id="contact" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div class="space-y-6">
+                <p class="text-xs uppercase font-bold tracking-widest text-neutral-400">04 / Connect</p>
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">Ready to collaborate?</h2>
+                <p class="text-neutral-500 leading-relaxed max-w-md">
+                    Have an upcoming project or idea? Leave us a description of your parameters and we will respond with a development framework estimate in 24 hours.
+                </p>
+                <div class="space-y-4 pt-4 text-sm font-semibold">
+                    <p class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-neutral-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        <a href="https://github.com/jamestheakston/" class="hover:underline">github.com/jamestheakston</a>
+                    </p>
+                    <p class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        Manchester, United Kingdom
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sleek Interactive Client Request Form -->
+            <div class="bg-white p-8 md:p-10 rounded-2xl border border-[#1A1A1A]/10 shadow-sm relative">
+                <form id="contactForm" class="space-y-6" action="https://formspree.io/f/xnjrljde" method="POST">
+                    <div>
+                        <label for="name" class="block text-xs uppercase font-bold tracking-widest mb-2">Name</label>
+                        <input required type="text" id="name" name="name" placeholder="Johnathan Doe" class="w-full bg-[#FAF9F6] border border-[#1A1A1A]/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1A1A1A] transition-colors">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-xs uppercase font-bold tracking-widest mb-2">Email</label>
+                        <input required type="email" id="email" name="email" placeholder="john@example.com" class="w-full bg-[#FAF9F6] border border-[#1A1A1A]/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1A1A1A] transition-colors">
+                    </div>
+                    <div>
+                        <label for="projectType" class="block text-xs uppercase font-bold tracking-widest mb-2">What are you looking to build?</label>
+                        <div class="relative" id="customDropdown">
+                            <button type="button" id="dropdownButton" class="w-full bg-[#FAF9F6] border border-[#1A1A1A]/10 rounded-xl px-4 py-3 text-sm text-left focus:outline-none focus:border-[#1A1A1A] transition-colors flex justify-between items-center">
+                                <span id="selectedOption">Select a project type</span>
+                                <svg class="w-4 h-4 text-neutral-400 transition-transform" id="dropdownArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div id="dropdownMenu" class="hidden absolute top-full left-0 right-0 mt-2 bg-white border border-[#1A1A1A]/10 rounded-xl shadow-lg z-10 overflow-hidden">
+                                <div class="py-2">
+                                    <button type="button" class="dropdown-option w-full px-4 py-3 text-sm text-left hover:bg-[#FAF9F6] transition-colors flex items-center gap-3" data-value="website-no-server">
+                                        <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                                        Website with no server required (no database)
+                                    </button>
+                                    <button type="button" class="dropdown-option w-full px-4 py-3 text-sm text-left hover:bg-[#FAF9F6] transition-colors flex items-center gap-3" data-value="fullstack-website">
+                                        <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg>
+                                        Full-stack website with backend
+                                    </button>
+                                    <button type="button" class="dropdown-option w-full px-4 py-3 text-sm text-left hover:bg-[#FAF9F6] transition-colors flex items-center gap-3" data-value="pwa-app">
+                                        <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                                        PWA App
+                                    </button>
+                                    <button type="button" class="dropdown-option w-full px-4 py-3 text-sm text-left hover:bg-[#FAF9F6] transition-colors flex items-center gap-3" data-value="mobile-app">
+                                        <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                                        iOS / Android app
+                                    </button>
+                                </div>
+                            </div>
+                            <input type="hidden" id="projectType" name="projectType" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-xs uppercase font-bold tracking-widest mb-2">Project Brief</label>
+                        <textarea required id="message" name="message" rows="4" placeholder="Tell us about your brand goals..." class="w-full bg-[#FAF9F6] border border-[#1A1A1A]/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1A1A1A] transition-colors resize-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-[#1A1A1A] text-[#FAF9F6] py-4 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-neutral-800 transition-colors">
+                        Send Project Brief
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#1A1A1A]/10 py-12 px-6 md:px-12 bg-white">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
+            <p class="text-xs text-neutral-400">
+                &copy; <span id="year">2026</span> James Studio. All rights engineered under geometric rules.
+            </p>
+            <div class="flex gap-6 text-xs text-neutral-500">
+                <button onclick="openModal('privacyModal')" class="hover:underline">Privacy Policy</button>
+                <button onclick="openModal('termsModal')" class="hover:underline">Terms of Service</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto p-8 md:p-12 relative">
+            <button onclick="closeModal('privacyModal')" class="absolute top-4 right-4 text-neutral-400 hover:text-black transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 class="text-3xl font-extrabold mb-6 geometric-font">Privacy Policy</h2>
+            <div class="space-y-4 text-sm text-neutral-600 leading-relaxed">
+                <p><strong>Last Updated:</strong> May 2026</p>
+                <p>At James Studio, we take your privacy seriously. This policy outlines how we collect, use, and protect your information.</p>
+                <h3 class="font-bold text-black mt-6">Information We Collect</h3>
+                <p>We collect information you provide directly to us through our contact form, including your name, email address, and project brief details. We only collect this information when you voluntarily submit it to us.</p>
+                <h3 class="font-bold text-black mt-6">How We Use Your Information</h3>
+                <p>We use the information you provide to respond to your project inquiries, provide development framework estimates, and communicate with you about potential collaborations. We do not sell, rent, or share your personal information with third parties for marketing purposes.</p>
+                <h3 class="font-bold text-black mt-6">Data Security</h3>
+                <p>We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.</p>
+                <h3 class="font-bold text-black mt-6">Contact Us</h3>
+                <p>If you have questions about this Privacy Policy, please contact us through our contact form or at our GitHub repository.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="termsModal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto p-8 md:p-12 relative">
+            <button onclick="closeModal('termsModal')" class="absolute top-4 right-4 text-neutral-400 hover:text-black transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 class="text-3xl font-extrabold mb-6 geometric-font">Terms of Service</h2>
+            <div class="space-y-4 text-sm text-neutral-600 leading-relaxed">
+                <p><strong>Last Updated:</strong> May 2026</p>
+                <p>By using James Studio's services and website, you agree to these Terms of Service.</p>
+                <h3 class="font-bold text-black mt-6">Services</h3>
+                <p>James Studio provides web development, design, and consulting services. All services are provided on a project-by-project basis with clear deliverables and timelines agreed upon before work begins.</p>
+                <h3 class="font-bold text-black mt-6">Project Proposals</h3>
+                <p>Project briefs submitted through our contact form are for estimation purposes only. No binding agreement is formed until a formal contract is signed by both parties. All estimates are valid for 30 days from the date of issuance.</p>
+                <h3 class="font-bold text-black mt-6">Payment Terms</h3>
+                <p>Payment terms are specified in individual project contracts. Typically, a 50% deposit is required before work begins, with the remaining 50% due upon project completion and delivery.</p>
+                <h3 class="font-bold text-black mt-6">Intellectual Property</h3>
+                <p>Upon full payment, clients receive full ownership of the final deliverables. James Studio retains the right to showcase completed work in our portfolio unless otherwise agreed in writing.</p>
+                <h3 class="font-bold text-black mt-6">Limitation of Liability</h3>
+                <p>James Studio is not liable for any indirect, incidental, or consequential damages arising from the use of our services. Our total liability is limited to the amount paid for the specific services in question.</p>
+                <h3 class="font-bold text-black mt-6">Governing Law</h3>
+                <p>These terms are governed by the laws of the United Kingdom. Any disputes shall be resolved in the courts of Manchester, United Kingdom.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Native Layout JavaScript -->
+    <script>
+        // Update copyright year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile responsive menu controls
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const bar1 = document.getElementById('bar1');
+        const bar2 = document.getElementById('bar2');
+
+        function toggleMenu() {
+            const isOpened = !mobileMenu.classList.contains('hidden');
+            if (isOpened) {
+                mobileMenu.classList.add('hidden');
+                bar1.classList.remove('rotate-45', 'translate-y-[5px]');
+                bar2.classList.remove('-rotate-45', '-translate-y-[5px]');
+            } else {
+                mobileMenu.classList.remove('hidden');
+                bar1.classList.add('rotate-45', 'translate-y-[5px]');
+                bar2.classList.add('-rotate-45', '-translate-y-[5px]');
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+
+        // Custom dropdown controls
+        const dropdownButton = document.getElementById('dropdownButton');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const dropdownArrow = document.getElementById('dropdownArrow');
+        const selectedOption = document.getElementById('selectedOption');
+        const projectTypeInput = document.getElementById('projectType');
+        const dropdownOptions = document.querySelectorAll('.dropdown-option');
+
+        dropdownButton.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('hidden');
+            dropdownArrow.classList.toggle('rotate-180');
+        });
+
+        dropdownOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                selectedOption.textContent = option.textContent;
+                projectTypeInput.value = option.dataset.value;
+                dropdownMenu.classList.add('hidden');
+                dropdownArrow.classList.remove('rotate-180');
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.add('hidden');
+                dropdownArrow.classList.remove('rotate-180');
+            }
+        });
+
+        // Modal controls
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on backdrop click
+        document.querySelectorAll('[id$="Modal"]').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(modal.id);
+                }
+            });
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('[id$="Modal"]').forEach(modal => {
+                    if (!modal.classList.contains('hidden')) {
+                        closeModal(modal.id);
+                    }
+                });
+            }
+        });
+
+        // Scroll animations using Intersection Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
