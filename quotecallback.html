@@ -107,6 +107,13 @@
                         <p class="text-neutral-600">You won't receive an email notification about project availability.</p>
                     </div>
                 </div>
+
+                <div id="signupConfirmation" class="hidden text-center">
+                    <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-200">
+                        <p class="text-emerald-700 font-medium">You've signed up!</p>
+                        <p class="text-emerald-600 text-sm mt-2">We'll email you when we're ready to chat about your project.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -263,9 +270,52 @@
             discardConfirmation.classList.remove('hidden');
         });
 
-        // Request notification button (placeholder functionality)
-        document.getElementById('requestNotification').addEventListener('click', () => {
-            alert('Notification request functionality to be implemented');
+        // Request notification button - send email via Resend
+        document.getElementById('requestNotification').addEventListener('click', async () => {
+            const button = document.getElementById('requestNotification');
+            const originalText = button.textContent;
+            button.textContent = 'Sending...';
+            button.disabled = true;
+
+            try {
+                // Get user data from Supabase
+                const ref = getUrlParameter('ref');
+                const { data: userData } = await supabaseClient
+                    .from(TABLE_NAME)
+                    .select('name, email')
+                    .eq('ref', ref)
+                    .single();
+
+                if (!userData || !userData.email) {
+                    throw new Error('User email not found');
+                }
+
+                // Send email via Cloudflare Pages Function
+                const response = await fetch('/api/send-notification', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: userData.email,
+                        name: userData.name
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to send email');
+                }
+
+                // Show success message
+                resultContent.classList.add('hidden');
+                document.getElementById('signupConfirmation').classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error sending email:', error);
+                alert('Failed to send notification. Please try again later.');
+                button.textContent = originalText;
+                button.disabled = false;
+            }
         });
 
         // Run on page load
