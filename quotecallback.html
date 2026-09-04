@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Callback — James Studio</title>
+    <!-- Tailwind CSS for high-fidelity styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Syne (geometric, wide header) & Space Grotesk (modern mono-ish clean body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #FAF9F6;
+            color: #1A1A1A;
+        }
+        h1, h2, h3, .geometric-font {
+            font-family: 'Syne', sans-serif;
+            letter-spacing: -0.03em;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF9F6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1A1A1A;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#1A1A1A] selection:text-[#FAF9F6]">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#1A1A1A]/10 px-6 py-4 md:px-12 flex justify-between items-center transition-all duration-300">
+        <a href="/index.html" class="geometric-font text-xl md:text-2xl font-extrabold tracking-tighter flex items-center gap-2">
+            JAMES<span class="text-xs bg-[#1A1A1A] text-[#FAF9F6] px-2 py-0.5 rounded-full uppercase tracking-widest">Studio</span>
+        </a>
+        
+        <div class="hidden md:flex items-center gap-8 font-medium text-sm tracking-tight">
+            <a href="/index.html#services" class="hover:text-black/60 transition-colors">Services</a>
+            <a href="/index.html#work" class="hover:text-black/60 transition-colors">Selected Work</a>
+            <a href="/index.html#about" class="hover:text-black/60 transition-colors">About Us</a>
+            <a href="/index.html#contact" class="bg-[#1A1A1A] text-[#FAF9F6] px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider hover:bg-neutral-800 transition-all shadow-sm">
+                Get in Touch
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="px-6 py-20 md:py-32 md:px-12 max-w-7xl mx-auto min-h-[60vh]">
+        <div class="max-w-4xl mx-auto">
+            <div id="loading" class="text-center py-20">
+                <div class="inline-block w-12 h-12 border-4 border-[#1A1A1A]/10 border-t-[#1A1A1A] rounded-full animate-spin"></div>
+                <p class="mt-6 text-neutral-500">Loading quote information...</p>
+            </div>
+
+            <div id="error" class="hidden text-center py-20">
+                <div class="bg-red-50 border border-red-200 rounded-2xl p-8 max-w-lg mx-auto">
+                    <svg class="w-12 h-12 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <h2 class="text-2xl font-bold mb-2">Error Loading Quote</h2>
+                    <p id="errorMessage" class="text-neutral-600"></p>
+                </div>
+            </div>
+
+            <div id="result" class="hidden space-y-8">
+                <div class="bg-white p-8 md:p-10 rounded-2xl border border-[#1A1A1A]/10 shadow-sm">
+                    <div class="space-y-6">
+                        <div>
+                            <p class="text-xs uppercase font-bold tracking-widest text-neutral-400 mb-2">Reference ID</p>
+                            <p id="refId" class="text-2xl font-extrabold geometric-font tracking-tight"></p>
+                        </div>
+                        
+                        <div id="quoteDetails" class="space-y-4">
+                            <!-- Dynamic content will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="/index.html#contact" class="inline-block bg-[#1A1A1A] text-[#FAF9F6] px-8 py-4 rounded-full text-sm font-semibold tracking-wider hover:bg-neutral-800 transition-all transform hover:-translate-y-0.5">
+                        Start a Project
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#1A1A1A]/10 py-12 px-6 md:px-12 bg-white">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
+            <p class="text-xs text-neutral-400">
+                &copy; <span id="year">2026</span> James Studio. All rights engineered under geometric rules.
+            </p>
+            <div class="flex gap-6 text-xs text-neutral-500">
+                <a href="#" class="hover:underline">Privacy Policy</a>
+                <a href="#" class="hover:underline">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Supabase configuration
+        const SUPABASE_URL = 'https://pkqkqijmohbvfxxnzhyy.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_Raqakv5Z4U8Wr7zmzIvLDA_TsnBSFyS';
+        const TABLE_NAME = 'quotes'; // Replace with your actual table name
+
+        // Initialize Supabase client
+        let supabase;
+        try {
+            supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        } catch (error) {
+            console.error('Supabase initialization error:', error);
+        }
+
+        // Get URL parameters
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Main function to fetch and display quote data
+        async function fetchQuoteData() {
+            const ref = getUrlParameter('ref');
+            const loadingEl = document.getElementById('loading');
+            const errorEl = document.getElementById('error');
+            const resultEl = document.getElementById('result');
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (!ref) {
+                loadingEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+                errorMessage.textContent = 'No reference parameter found in URL. Please provide a valid ?ref parameter.';
+                return;
+            }
+
+            if (!supabase) {
+                loadingEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+                errorMessage.textContent = 'Supabase client not properly configured. Please check your credentials.';
+                return;
+            }
+
+            try {
+                // Query Supabase for the reference
+                const { data, error } = await supabase
+                    .from(TABLE_NAME)
+                    .select('*')
+                    .eq('ref', ref)
+                    .single();
+
+                if (error) {
+                    throw error;
+                }
+
+                if (!data) {
+                    loadingEl.classList.add('hidden');
+                    errorEl.classList.remove('hidden');
+                    errorMessage.textContent = `No quote found with reference ID: ${ref}`;
+                    return;
+                }
+
+                // Display the results
+                loadingEl.classList.add('hidden');
+                resultEl.classList.remove('hidden');
+                
+                document.getElementById('refId').textContent = ref;
+                
+                // Display all fields from the database
+                const detailsContainer = document.getElementById('quoteDetails');
+                detailsContainer.innerHTML = '';
+                
+                for (const [key, value] of Object.entries(data)) {
+                    if (key !== 'ref') { // Skip ref as it's already displayed
+                        const fieldDiv = document.createElement('div');
+                        fieldDiv.innerHTML = `
+                            <p class="text-xs uppercase font-bold tracking-widest text-neutral-400 mb-1">${key}</p>
+                            <p class="font-medium text-neutral-800">${value}</p>
+                        `;
+                        detailsContainer.appendChild(fieldDiv);
+                    }
+                }
+
+            } catch (error) {
+                loadingEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+                errorMessage.textContent = `Error fetching data: ${error.message}`;
+                console.error('Supabase query error:', error);
+            }
+        }
+
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', fetchQuoteData);
+    </script>
+</body>
+</html>
