@@ -31,6 +31,17 @@
             background: #1A1A1A;
             border-radius: 3px;
         }
+
+        /* Modal animation */
+        .modal-overlay {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .modal-overlay.is-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-[#1A1A1A] selection:text-[#FAF9F6]">
@@ -72,25 +83,51 @@
             <div id="result" class="hidden space-y-8">
                 <div class="bg-white p-8 md:p-10 rounded-2xl border border-[#1A1A1A]/10 shadow-sm">
                     <div class="space-y-6">
-                        <div>
-                            <p class="text-xs uppercase font-bold tracking-widest text-neutral-400 mb-2">Reference ID</p>
-                            <p id="refId" class="text-2xl font-extrabold geometric-font tracking-tight"></p>
-                        </div>
+                        <h1 id="greeting" class="text-4xl md:text-5xl font-extrabold tracking-tight text-[#1A1A1A]">
+                            Hello, <span id="userName"></span>!
+                        </h1>
                         
-                        <div id="quoteDetails" class="space-y-4">
-                            <!-- Dynamic content will be inserted here -->
+                        <p class="text-lg text-neutral-600 leading-relaxed">
+                            Thanks for your interest in a web project from James Studio. Unfortunately, the team isn't available right now. You can request an email to tell you when we're ready to chat to you about your project.
+                        </p>
+
+                        <div class="flex flex-wrap gap-4 pt-4">
+                            <button id="requestNotification" class="bg-[#1A1A1A] text-[#FAF9F6] px-8 py-4 rounded-full text-sm font-semibold tracking-wider hover:bg-neutral-800 transition-all transform hover:-translate-y-0.5">
+                                Request Notification
+                            </button>
+                            <button id="discardBtn" class="border border-[#1A1A1A] text-[#1A1A1A] px-8 py-4 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all transform hover:-translate-y-0.5">
+                                Discard
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="text-center">
-                    <a href="/index.html#contact" class="inline-block bg-[#1A1A1A] text-[#FAF9F6] px-8 py-4 rounded-full text-sm font-semibold tracking-wider hover:bg-neutral-800 transition-all transform hover:-translate-y-0.5">
-                        Start a Project
-                    </a>
+                <div id="discardConfirmation" class="hidden text-center">
+                    <div class="bg-neutral-100 p-6 rounded-2xl border border-[#1A1A1A]/10">
+                        <p class="text-neutral-600">You won't receive an email notification about project availability.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
+
+    <!-- Discard Confirmation Modal -->
+    <div id="discardModal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="modal-overlay bg-white rounded-2xl max-w-md w-full p-8 md:p-10 relative">
+            <h2 class="text-2xl font-extrabold mb-4 geometric-font">Are you sure?</h2>
+            <p class="text-neutral-600 mb-8 leading-relaxed">
+                Are you sure you want to discard? You won't receive an email back.
+            </p>
+            <div class="flex gap-4">
+                <button id="confirmDiscard" class="flex-1 bg-[#1A1A1A] text-[#FAF9F6] py-3 rounded-xl text-sm font-semibold tracking-wider hover:bg-neutral-800 transition-colors">
+                    Yes
+                </button>
+                <button id="cancelDiscard" class="flex-1 border border-[#1A1A1A] text-[#1A1A1A] py-3 rounded-xl text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-colors">
+                    No
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="border-t border-[#1A1A1A]/10 py-12 px-6 md:px-12 bg-white">
@@ -175,21 +212,11 @@
                 loadingEl.classList.add('hidden');
                 resultEl.classList.remove('hidden');
                 
-                document.getElementById('refId').textContent = ref;
-                
-                // Display all fields from the database
-                const detailsContainer = document.getElementById('quoteDetails');
-                detailsContainer.innerHTML = '';
-                
-                for (const [key, value] of Object.entries(data)) {
-                    if (key !== 'ref') { // Skip ref as it's already displayed
-                        const fieldDiv = document.createElement('div');
-                        fieldDiv.innerHTML = `
-                            <p class="text-xs uppercase font-bold tracking-widest text-neutral-400 mb-1">${key}</p>
-                            <p class="font-medium text-neutral-800">${value}</p>
-                        `;
-                        detailsContainer.appendChild(fieldDiv);
-                    }
+                // Set personalized greeting
+                if (data.name) {
+                    document.getElementById('userName').textContent = data.name;
+                } else {
+                    document.getElementById('greeting').innerHTML = 'Hello!';
                 }
 
             } catch (error) {
@@ -199,6 +226,47 @@
                 console.error('Supabase query error:', error);
             }
         }
+
+        // Modal controls
+        const discardModal = document.getElementById('discardModal');
+        const discardBtn = document.getElementById('discardBtn');
+        const confirmDiscard = document.getElementById('confirmDiscard');
+        const cancelDiscard = document.getElementById('cancelDiscard');
+        const discardConfirmation = document.getElementById('discardConfirmation');
+        const resultContent = document.querySelector('#result > div:first-child');
+
+        discardBtn.addEventListener('click', () => {
+            discardModal.classList.remove('hidden');
+            setTimeout(() => {
+                discardModal.querySelector('.modal-overlay').classList.add('is-visible');
+            }, 10);
+        });
+
+        function closeDiscardModal() {
+            discardModal.querySelector('.modal-overlay').classList.remove('is-visible');
+            setTimeout(() => {
+                discardModal.classList.add('hidden');
+            }, 300);
+        }
+
+        cancelDiscard.addEventListener('click', closeDiscardModal);
+
+        discardModal.addEventListener('click', (e) => {
+            if (e.target === discardModal) {
+                closeDiscardModal();
+            }
+        });
+
+        confirmDiscard.addEventListener('click', () => {
+            closeDiscardModal();
+            resultContent.classList.add('hidden');
+            discardConfirmation.classList.remove('hidden');
+        });
+
+        // Request notification button (placeholder functionality)
+        document.getElementById('requestNotification').addEventListener('click', () => {
+            alert('Notification request functionality to be implemented');
+        });
 
         // Run on page load
         document.addEventListener('DOMContentLoaded', fetchQuoteData);
