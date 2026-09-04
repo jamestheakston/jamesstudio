@@ -2,7 +2,7 @@ export async function onRequestPost(context) {
   const { request, env } = context;
   
   try {
-    const { email, name } = await request.json();
+    const { email, name, ref } = await request.json();
 
     if (!email) {
       return new Response(JSON.stringify({ error: 'Email is required' }), {
@@ -10,6 +10,24 @@ export async function onRequestPost(context) {
         headers: { 'Content-Type': 'application/json' },
       });
     }
+
+    // Insert into callbacks table in Supabase
+    const supabaseUrl = 'https://pkqkqijmohbvfxxnzhyy.supabase.co';
+    const supabaseKey = 'sb_publishable_Raqakv5Z4U8Wr7zmzIvLDA_TsnBSFyS';
+    
+    await fetch(`${supabaseUrl}/rest/v1/callbacks`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${supabaseKey}`,
+        'Content-Type': 'application/json',
+        'apikey': supabaseKey
+      },
+      body: JSON.stringify({
+        ref: ref,
+        name: name,
+        email: email
+      })
+    });
 
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
