@@ -117,9 +117,9 @@
         const TABLE_NAME = 'quotes'; // Replace with your actual table name
 
         // Initialize Supabase client
-        let supabase;
+        let supabaseClient;
         try {
-            supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         } catch (error) {
             console.error('Supabase initialization error:', error);
         }
@@ -145,7 +145,7 @@
                 return;
             }
 
-            if (!supabase) {
+            if (!supabaseClient) {
                 loadingEl.classList.add('hidden');
                 errorEl.classList.remove('hidden');
                 errorMessage.textContent = 'Supabase client not properly configured. Please check your credentials.';
@@ -154,7 +154,7 @@
 
             try {
                 // Query Supabase for the reference
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClient
                     .from(TABLE_NAME)
                     .select('*')
                     .eq('ref', ref)
