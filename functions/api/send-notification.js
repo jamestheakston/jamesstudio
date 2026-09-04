@@ -18,7 +18,7 @@ export async function onRequestPost(context) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'James Studio <noreply@jamesstudio.uk>',
+        from: 'James Studio <noreply@email.jamesstudio.uk>',
         to: email,
         subject: "We'll be in touch soon!",
         html: `
