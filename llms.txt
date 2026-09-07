@@ -1,0 +1,24 @@
+# James Studio
+
+> James Studio is a minimalist web development studio based in Manchester, United Kingdom. We design and build fast, custom-coded websites, browser extensions, and full-stack web applications — no bloated frameworks, no heavy agency overhead.
+
+James Studio specializes in frontend development, backend architecture, and SEO/conversion optimization. Sites are hand-coded for speed and simplicity, typically achieving load times under one second.
+
+## Services
+
+- Frontend Development — responsive, high-performance user interfaces
+- Backend Development — server-side architecture, APIs, and databases
+- SEO & Conversion — semantic structure and performance auditing for search ranking
+
+## Pages
+
+- [Home](https://jamesstudio.uk/): Overview of services, portfolio, and contact form
+- [ClassCharts Improver](https://jamesstudio.uk/projects/classchartsimprover.html): Browser extension enhancing the ClassCharts platform for students and teachers
+- [Scouts Car Wash](https://jamesstudio.uk/projects/scoutscarwash.html): Website built for a car wash business
+- [Montecure Dogs](https://jamesstudio.uk/projects/montecuredogs.html): Website for a dog-related business
+
+## Contact
+
+Inquiries are handled via the contact form on the homepage. Project briefs receive a development framework estimate within 24 hours.
+
+GitHub: https://github.com/jamestheakston
