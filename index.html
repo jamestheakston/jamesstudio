@@ -91,18 +91,22 @@
         /* Cookie Banner Styles */
         .cookie-banner {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 20px;
+            left: 20px;
             background: #1A1A1A;
             color: #FAF9F6;
             padding: 20px;
             z-index: 1000;
-            transform: translateY(100%);
-            transition: transform 0.3s ease-out;
+            border-radius: 12px;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
         }
         .cookie-banner.is-visible {
             transform: translateY(0);
+            opacity: 1;
         }
     </style>
 </head>
@@ -389,8 +393,7 @@
                 &copy; <span id="year">2026</span> James Studio. All rights engineered under geometric rules.
             </p>
             <div class="flex gap-6 text-xs text-neutral-500">
-                <button onclick="openModal('privacyModal')" class="hover:underline">Privacy Policy</button>
-                <button onclick="openModal('termsModal')" class="hover:underline">Terms of Service</button>
+                <a href="/privacy.html" class="hover:underline">Privacy Policy</a>
                 <button onclick="showCookieBanner()" class="hover:underline">Cookie Settings</button>
             </div>
         </div>
@@ -398,66 +401,18 @@
 
     <!-- GDPR Cookie Banner -->
     <div id="cookieBanner" class="cookie-banner">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div class="space-y-4">
             <div class="text-sm">
                 <p class="font-semibold mb-1">We use cookies to improve your experience</p>
-                <p class="text-neutral-400 text-xs">We use essential cookies and analytics to understand how you use our site. <button onclick="openModal('privacyModal')" class="underline hover:text-white">Learn more</button></p>
+                <p class="text-neutral-400 text-xs">We use essential cookies and analytics to understand how you use our site. <a href="/privacy.html" class="underline hover:text-white">Learn more</a></p>
             </div>
             <div class="flex gap-3">
-                <button id="acceptCookies" class="bg-[#FAF9F6] text-[#1A1A1A] px-6 py-2 rounded-full text-xs font-semibold tracking-wider hover:bg-white transition-colors">
+                <button id="acceptCookies" class="bg-[#FAF9F6] text-[#1A1A1A] px-4 py-2 rounded-full text-xs font-semibold tracking-wider hover:bg-white transition-colors flex-1">
                     Accept All
                 </button>
-                <button id="rejectCookies" class="border border-[#FAF9F6] text-[#FAF9F6] px-6 py-2 rounded-full text-xs font-semibold tracking-wider hover:bg-white/10 transition-colors">
+                <button id="rejectCookies" class="border border-[#FAF9F6] text-[#FAF9F6] px-4 py-2 rounded-full text-xs font-semibold tracking-wider hover:bg-white/10 transition-colors flex-1">
                     Essential Only
                 </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Privacy Policy Modal -->
-    <div id="privacyModal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto p-8 md:p-12 relative">
-            <button onclick="closeModal('privacyModal')" class="absolute top-4 right-4 text-neutral-400 hover:text-black transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            <h2 class="text-3xl font-extrabold mb-6 geometric-font">Privacy Policy</h2>
-            <div class="space-y-4 text-sm text-neutral-600 leading-relaxed">
-                <p><strong>Last Updated:</strong> May 2026</p>
-                <p>At James Studio, we take your privacy seriously. This policy outlines how we collect, use, and protect your information.</p>
-                <h3 class="font-bold text-black mt-6">Information We Collect</h3>
-                <p>We collect information you provide directly to us through our contact form, including your name, email address, and project brief details. We only collect this information when you voluntarily submit it to us.</p>
-                <h3 class="font-bold text-black mt-6">How We Use Your Information</h3>
-                <p>We use the information you provide to respond to your project inquiries, provide development framework estimates, and communicate with you about potential collaborations. We do not sell, rent, or share your personal information with third parties for marketing purposes.</p>
-                <h3 class="font-bold text-black mt-6">Data Security</h3>
-                <p>We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.</p>
-                <h3 class="font-bold text-black mt-6">Contact Us</h3>
-                <p>If you have questions about this Privacy Policy, please contact us through our contact form or at our GitHub repository.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Terms of Service Modal -->
-    <div id="termsModal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto p-8 md:p-12 relative">
-            <button onclick="closeModal('termsModal')" class="absolute top-4 right-4 text-neutral-400 hover:text-black transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            <h2 class="text-3xl font-extrabold mb-6 geometric-font">Terms of Service</h2>
-            <div class="space-y-4 text-sm text-neutral-600 leading-relaxed">
-                <p><strong>Last Updated:</strong> May 2026</p>
-                <p>By using James Studio's services and website, you agree to these Terms of Service.</p>
-                <h3 class="font-bold text-black mt-6">Services</h3>
-                <p>James Studio provides web development, design, and consulting services. All services are provided on a project-by-project basis with clear deliverables and timelines agreed upon before work begins.</p>
-                <h3 class="font-bold text-black mt-6">Project Proposals</h3>
-                <p>Project briefs submitted through our contact form are for estimation purposes only. No binding agreement is formed until a formal contract is signed by both parties. All estimates are valid for 30 days from the date of issuance.</p>
-                <h3 class="font-bold text-black mt-6">Payment Terms</h3>
-                <p>Payment terms are specified in individual project contracts. Typically, a 50% deposit is required before work begins, with the remaining 50% due upon project completion and delivery.</p>
-                <h3 class="font-bold text-black mt-6">Intellectual Property</h3>
-                <p>Upon full payment, clients receive full ownership of the final deliverables. James Studio retains the right to showcase completed work in our portfolio unless otherwise agreed in writing.</p>
-                <h3 class="font-bold text-black mt-6">Limitation of Liability</h3>
-                <p>James Studio is not liable for any indirect, incidental, or consequential damages arising from the use of our services. Our total liability is limited to the amount paid for the specific services in question.</p>
-                <h3 class="font-bold text-black mt-6">Governing Law</h3>
-                <p>These terms are governed by the laws of the United Kingdom. Any disputes shall be resolved in the courts of Manchester, United Kingdom.</p>
             </div>
         </div>
     </div>
@@ -518,38 +473,6 @@
             }
         });
 
-        // Modal controls
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close modal on backdrop click
-        document.querySelectorAll('[id$="Modal"]').forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal(modal.id);
-                }
-            });
-        });
-
-        // Close modal on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('[id$="Modal"]').forEach(modal => {
-                    if (!modal.classList.contains('hidden')) {
-                        closeModal(modal.id);
-                    }
-                });
-            }
-        });
 
         // Scroll animations using Intersection Observer
         const observerOptions = {
