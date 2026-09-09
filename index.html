@@ -606,13 +606,17 @@
         function loadAnalyticsScripts() {
             // Load Microsoft Clarity
             const clarityScript = document.getElementById('clarity-script');
-            if (clarityScript) {
-                clarityScript.type = 'text/javascript';
-                clarityScript.classList.remove('cmplz-statistics');
-                // Re-execute the script
+            if (clarityScript && !clarityScript.hasAttribute('data-loaded')) {
+                // Create a new script element with the correct type
                 const newScript = document.createElement('script');
-                newScript.textContent = clarityScript.textContent;
+                newScript.type = 'text/javascript';
+                newScript.async = true;
+                newScript.src = 'https://www.clarity.ms/tag/yf8tf0e7lz';
+                newScript.setAttribute('data-loaded', 'true');
                 document.head.appendChild(newScript);
+                
+                // Mark original as loaded
+                clarityScript.setAttribute('data-loaded', 'true');
             }
         }
 
