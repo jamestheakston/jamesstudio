@@ -22,39 +22,73 @@ export async function onRequest(context) {
             background-color: #FAF9F6;
             color: #1A1A1A;
         }
-        h1, .geometric-font {
+        h1, h2, .geometric-font {
             font-family: 'Syne', sans-serif;
             letter-spacing: -0.03em;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-        .float-animation {
-            animation: float 3s ease-in-out infinite;
         }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center px-6">
     <div class="text-center max-w-2xl">
-        <div class="float-animation mb-8">
-            <svg class="w-24 h-24 mx-auto text-[#1A1A1A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" stroke-width="1.5"/>
-                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" stroke-width="1.5"/>
-                <path d="M2 12h20" stroke-width="1.5"/>
-            </svg>
+        <!-- James Studio Logo -->
+        <div class="mb-12">
+            <a href="#" class="geometric-font text-3xl md:text-4xl font-extrabold tracking-tighter flex items-center justify-center gap-2">
+                JAMES<span class="text-xs bg-[#1A1A1A] text-[#FAF9F6] px-2 py-0.5 rounded-full uppercase tracking-widest">Studio</span>
+            </a>
         </div>
-        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 geometric-font">Under Maintenance</h1>
+        
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">We'll be back soon</h1>
+        
         <p class="text-neutral-600 text-lg leading-relaxed mb-8">
-            We're currently performing some improvements to serve you better. We'll be back shortly.
+            We're currently performing scheduled maintenance to improve our services. This shouldn't take long, and we apologize for any inconvenience.
         </p>
-        <div class="flex items-center justify-center gap-2 text-sm text-neutral-500">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-            </svg>
-            <a href="mailto:hello@jamesstudio.uk" class="hover:underline">hello@jamesstudio.uk</a>
+        
+        <div class="bg-white rounded-2xl border border-[#1A1A1A]/10 p-6 md:p-8 mb-8">
+            <h2 class="text-xl font-bold mb-4">What's happening?</h2>
+            <ul class="text-left text-neutral-600 space-y-3 text-sm">
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-[#1A1A1A] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <span>System upgrades and performance improvements</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-[#1A1A1A] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <span>Enhancing security measures</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-[#1A1A1A] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <span>Deploying new features and improvements</span>
+                </li>
+            </ul>
         </div>
+        
+        <div class="space-y-4">
+            <p class="text-sm text-neutral-500">
+                Need to reach us urgently?
+            </p>
+            <div class="flex items-center justify-center gap-6 text-sm">
+                <a href="mailto:hello@jamesstudio.uk" class="flex items-center gap-2 text-[#1A1A1A] hover:underline">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    hello@jamesstudio.uk
+                </a>
+            </div>
+        </div>
+        
+        <p class="text-xs text-neutral-400 mt-12">
+            &copy; <span id="year">2026</span> James Studio. All rights engineered under geometric rules.
+        </p>
     </div>
+    
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
     `, {
