@@ -6,7 +6,7 @@ export async function onRequest(context) {
   // Set this to 'true' to enable maintenance mode
   // Set this to 'false' to disable maintenance mode
   // ═══════════════════════════════════════════════════════════════
-  const MAINTENANCE_MODE = 'false'; // Change to 'true' to enable
+  const MAINTENANCE_MODE = 'true'; // Change to 'true' to enable
   // ═══════════════════════════════════════════════════════════════
 
   // Environment variable overrides file setting (if set in Cloudflare dashboard)
