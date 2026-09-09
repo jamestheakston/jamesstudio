@@ -112,6 +112,51 @@
             transform: translateY(0);
             opacity: 1;
         }
+
+        /* Custom Context Menu Styles */
+        .context-menu {
+            position: fixed;
+            background: white;
+            border: 1px solid #1A1A1A/10;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            z-index: 10000;
+            min-width: 200px;
+            overflow: hidden;
+            transform: scale(0.95);
+            opacity: 0;
+            transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+            pointer-events: none;
+        }
+        .context-menu.is-visible {
+            transform: scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .context-menu-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #1A1A1A;
+            transition: background 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .context-menu-item:hover {
+            background: #FAF9F6;
+        }
+        .context-menu-item:first-child {
+            border-radius: 12px 12px 0 0;
+        }
+        .context-menu-item:last-child {
+            border-radius: 0 0 12px 12px;
+        }
+        .context-menu-divider {
+            height: 1px;
+            background: #1A1A1A/10;
+            margin: 4px 0;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-[#1A1A1A] selection:text-[#FAF9F6]">
@@ -319,6 +364,9 @@
                 <p class="text-neutral-500 leading-relaxed max-w-md">
                     Have an upcoming project or idea? Leave us a description of your parameters and we will respond with a development framework estimate in 24 hours.
                 </p>
+                <p class="text-neutral-400 text-xs leading-relaxed max-w-md mt-2">
+                    Note: If you contact us via email, we may use AI technology (including Puter.js) to inspect and analyze your project to better understand your requirements and provide more accurate estimates.
+                </p>
                 <div class="space-y-4 pt-4 text-sm font-semibold">
                     <p class="flex items-center gap-3">
                         <svg class="w-5 h-5 text-neutral-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
@@ -425,6 +473,23 @@
                     Essential Only
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- Custom Context Menu -->
+    <div id="contextMenu" class="context-menu">
+        <div class="context-menu-item" onclick="copySelection()">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+            Copy
+        </div>
+        <div class="context-menu-item" onclick="pasteSelection()">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+            Paste
+        </div>
+        <div class="context-menu-divider"></div>
+        <div class="context-menu-item" onclick="showDefaultContextMenu()">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            Default Menu
         </div>
     </div>
 
@@ -557,6 +622,106 @@
             setCookieConsent('rejected');
             cookieBanner.classList.remove('is-visible');
         });
+
+        // Custom Context Menu
+        const contextMenu = document.getElementById('contextMenu');
+        let contextMenuX = 0;
+        let contextMenuY = 0;
+        let allowDefaultMenu = false;
+
+        // Prevent default context menu
+        document.addEventListener('contextmenu', (e) => {
+            if (allowDefaultMenu) {
+                allowDefaultMenu = false;
+                return;
+            }
+            
+            e.preventDefault();
+            
+            // Position the menu
+            contextMenuX = e.clientX;
+            contextMenuY = e.clientY;
+            
+            // Ensure menu doesn't go off screen
+            const menuWidth = 200;
+            const menuHeight = 120;
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            
+            if (contextMenuX + menuWidth > windowWidth) {
+                contextMenuX = windowWidth - menuWidth - 10;
+            }
+            if (contextMenuY + menuHeight > windowHeight) {
+                contextMenuY = windowHeight - menuHeight - 10;
+            }
+            
+            contextMenu.style.left = contextMenuX + 'px';
+            contextMenu.style.top = contextMenuY + 'px';
+            contextMenu.classList.add('is-visible');
+        });
+
+        // Close context menu on click elsewhere
+        document.addEventListener('click', (e) => {
+            if (!contextMenu.contains(e.target)) {
+                contextMenu.classList.remove('is-visible');
+            }
+        });
+
+        // Close context menu on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                contextMenu.classList.remove('is-visible');
+            }
+        });
+
+        // Copy selection
+        function copySelection() {
+            const selection = window.getSelection();
+            if (selection.toString()) {
+                navigator.clipboard.writeText(selection.toString());
+            }
+            contextMenu.classList.remove('is-visible');
+        }
+
+        // Paste selection
+        function pasteSelection() {
+            navigator.clipboard.readText().then(text => {
+                const activeElement = document.activeElement;
+                if (activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA' || activeElement.isContentEditable)) {
+                    const start = activeElement.selectionStart;
+                    const end = activeElement.selectionEnd;
+                    const value = activeElement.value;
+                    activeElement.value = value.substring(0, start) + text + value.substring(end);
+                    activeElement.selectionStart = activeElement.selectionEnd = start + text.length;
+                }
+            });
+            contextMenu.classList.remove('is-visible');
+        }
+
+        // Show default context menu
+        function showDefaultContextMenu() {
+            contextMenu.classList.remove('is-visible');
+            
+            // Set flag to allow default menu on next right-click
+            allowDefaultMenu = true;
+            
+            // Trigger a synthetic right-click event
+            setTimeout(() => {
+                const event = new MouseEvent('contextmenu', {
+                    bubbles: true,
+                    cancelable: true,
+                    clientX: contextMenuX,
+                    clientY: contextMenuY,
+                    button: 2,
+                    buttons: 2
+                });
+                
+                const element = document.elementFromPoint(contextMenuX, contextMenuY);
+                if (element) {
+                    element.dispatchEvent(event);
+                }
+            }, 50);
+        }
     </script>
 </body>
 </html>
