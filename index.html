@@ -3,7 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>James Studio — Minimalist Web Development</title>
+    <title>James Studio — Minimalist Web Development & Design Agency UK</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="James Studio is a UK-based web development and design agency specializing in minimalist, high-performance websites, full-stack applications, and digital solutions. Based in Manchester.">
+    <meta name="keywords" content="web development, web design, minimalist websites, UK web agency, Manchester web developer, full-stack development, SEO, responsive design">
+    <meta name="author" content="James Studio">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jamesstudio.uk/">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="James Studio — Minimalist Web Development">
+    <meta property="og:description" content="We build complete web solutions—from stunning user interfaces to robust server-side architecture. UK-based web development agency.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jamesstudio.uk/">
+    <meta property="og:image" content="https://jamesstudio.uk/assets/og-image.jpg">
+    <meta property="og:site_name" content="James Studio">
+    <meta property="og:locale" content="en_GB">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="James Studio — Minimalist Web Development">
+    <meta name="twitter:description" content="We build complete web solutions—from stunning user interfaces to robust server-side architecture. UK-based web development agency.">
+    <meta name="twitter:image" content="https://jamesstudio.uk/assets/og-image.jpg">
+    
+    <!-- Microsoft Clarity Tracking (will load after consent) -->
+    <script id="clarity-script" type="text/plain" class="cmplz-statistics">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "yf8tf0e7lz");
+    </script>
     <!-- Tailwind CSS for high-fidelity styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Syne (geometric, wide header similar to Kessel-105) & Space Grotesk (modern mono-ish clean body) -->
@@ -55,6 +86,23 @@
 
         .animate-on-scroll.delay-300 {
             transition-delay: 0.3s;
+        }
+
+        /* Cookie Banner Styles */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1A1A1A;
+            color: #FAF9F6;
+            padding: 20px;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-out;
+        }
+        .cookie-banner.is-visible {
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -343,9 +391,28 @@
             <div class="flex gap-6 text-xs text-neutral-500">
                 <button onclick="openModal('privacyModal')" class="hover:underline">Privacy Policy</button>
                 <button onclick="openModal('termsModal')" class="hover:underline">Terms of Service</button>
+                <button onclick="showCookieBanner()" class="hover:underline">Cookie Settings</button>
             </div>
         </div>
     </footer>
+
+    <!-- GDPR Cookie Banner -->
+    <div id="cookieBanner" class="cookie-banner">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="text-sm">
+                <p class="font-semibold mb-1">We use cookies to improve your experience</p>
+                <p class="text-neutral-400 text-xs">We use essential cookies and analytics to understand how you use our site. <button onclick="openModal('privacyModal')" class="underline hover:text-white">Learn more</button></p>
+            </div>
+            <div class="flex gap-3">
+                <button id="acceptCookies" class="bg-[#FAF9F6] text-[#1A1A1A] px-6 py-2 rounded-full text-xs font-semibold tracking-wider hover:bg-white transition-colors">
+                    Accept All
+                </button>
+                <button id="rejectCookies" class="border border-[#FAF9F6] text-[#FAF9F6] px-6 py-2 rounded-full text-xs font-semibold tracking-wider hover:bg-white/10 transition-colors">
+                    Essential Only
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Privacy Policy Modal -->
     <div id="privacyModal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
@@ -501,6 +568,60 @@
 
         document.querySelectorAll('.animate-on-scroll').forEach(el => {
             observer.observe(el);
+        });
+
+        // Cookie Consent Management
+        const cookieBanner = document.getElementById('cookieBanner');
+        const acceptCookiesBtn = document.getElementById('acceptCookies');
+        const rejectCookiesBtn = document.getElementById('rejectCookies');
+
+        // Check if user has already made a choice
+        function getCookieConsent() {
+            return localStorage.getItem('cookieConsent');
+        }
+
+        function setCookieConsent(choice) {
+            localStorage.setItem('cookieConsent', choice);
+        }
+
+        // Show banner if no consent stored
+        if (!getCookieConsent()) {
+            setTimeout(() => {
+                cookieBanner.classList.add('is-visible');
+            }, 1000);
+        } else {
+            // If consent exists, load appropriate scripts
+            if (getCookieConsent() === 'accepted') {
+                loadAnalyticsScripts();
+            }
+        }
+
+        function loadAnalyticsScripts() {
+            // Load Microsoft Clarity
+            const clarityScript = document.getElementById('clarity-script');
+            if (clarityScript) {
+                clarityScript.type = 'text/javascript';
+                clarityScript.classList.remove('cmplz-statistics');
+                // Re-execute the script
+                const newScript = document.createElement('script');
+                newScript.textContent = clarityScript.textContent;
+                document.head.appendChild(newScript);
+            }
+        }
+
+        function showCookieBanner() {
+            cookieBanner.classList.add('is-visible');
+        }
+
+        acceptCookiesBtn.addEventListener('click', () => {
+            setCookieConsent('accepted');
+            loadAnalyticsScripts();
+            cookieBanner.classList.remove('is-visible');
+        });
+
+        rejectCookiesBtn.addEventListener('click', () => {
+            setCookieConsent('rejected');
+            cookieBanner.classList.remove('is-visible');
         });
     </script>
 </body>
