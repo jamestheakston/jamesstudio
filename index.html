@@ -549,8 +549,12 @@
 
         function loadAnalyticsScripts() {
             // Signal consent to Microsoft Clarity using Consent API
+            console.log('loadAnalyticsScripts called, window.clarity:', typeof window.clarity);
             if (typeof window.clarity === 'function') {
-                window.clarity('consentv2', { analytics_storage: 'granted' });
+                console.log('Calling window.clarity("consent")');
+                window.clarity('consent');
+            } else {
+                console.error('window.clarity is not a function');
             }
         }
 
@@ -561,6 +565,7 @@
         acceptCookiesBtn.addEventListener('click', () => {
             setCookieConsent('accepted');
             loadAnalyticsScripts();
+            console.log('Cookies accepted, window.clarity:', typeof window.clarity);
             cookieBanner.classList.remove('is-visible');
         });
 
