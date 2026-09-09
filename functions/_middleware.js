@@ -1,8 +1,19 @@
 export async function onRequest(context) {
   const { request, env } = context;
 
-  // Check if maintenance mode is enabled
-  if (env.UNDER_MAINTENANCE === 'true') {
+  // ═══════════════════════════════════════════════════════════════
+  // MAINTENANCE MODE CONTROL
+  // Set this to 'true' to enable maintenance mode
+  // Set this to 'false' to disable maintenance mode
+  // ═══════════════════════════════════════════════════════════════
+  const MAINTENANCE_MODE = 'false'; // Change to 'true' to enable
+  // ═══════════════════════════════════════════════════════════════
+
+  // Environment variable overrides file setting (if set in Cloudflare dashboard)
+  const envMaintenance = env.UNDER_MAINTENANCE === 'true';
+  const isMaintenanceEnabled = envMaintenance !== undefined ? envMaintenance : MAINTENANCE_MODE === 'true';
+
+  if (isMaintenanceEnabled) {
     // Return maintenance page
     return new Response(`
 <!DOCTYPE html>
