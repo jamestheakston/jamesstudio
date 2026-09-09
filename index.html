@@ -28,8 +28,8 @@
     <meta name="twitter:description" content="We build complete web solutions—from stunning user interfaces to robust server-side architecture. UK-based web development agency.">
     <meta name="twitter:image" content="https://jamesstudio.uk/assets/og-image.jpg">
     
-    <!-- Microsoft Clarity Tracking (will load after consent) -->
-    <script id="clarity-script" type="text/plain" class="cmplz-statistics">
+    <!-- Microsoft Clarity Tracking -->
+    <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
@@ -548,19 +548,9 @@
         }
 
         function loadAnalyticsScripts() {
-            // Load Microsoft Clarity
-            const clarityScript = document.getElementById('clarity-script');
-            if (clarityScript && !clarityScript.hasAttribute('data-loaded')) {
-                // Create a new script element with the correct type
-                const newScript = document.createElement('script');
-                newScript.type = 'text/javascript';
-                newScript.async = true;
-                newScript.src = 'https://www.clarity.ms/tag/yf8tf0e7lz';
-                newScript.setAttribute('data-loaded', 'true');
-                document.head.appendChild(newScript);
-                
-                // Mark original as loaded
-                clarityScript.setAttribute('data-loaded', 'true');
+            // Signal consent to Microsoft Clarity using Consent API
+            if (typeof window.clarity === 'function') {
+                window.clarity('consentv2', { analytics_storage: 'granted' });
             }
         }
 
