@@ -130,6 +130,21 @@
             color: #1A1A1A;
         }
 
+        /* Dropdown animations */
+        #dropdownMenu {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+        }
+        #dropdownMenu.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #dropdownMenu.hide {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
     </style>
 </head>
 <body class="antialiased selection:bg-[#1A1A1A] selection:text-[#FAF9F6]">
@@ -514,24 +529,49 @@
         const dropdownOptions = document.querySelectorAll('.dropdown-option');
 
         dropdownButton.addEventListener('click', () => {
-            dropdownMenu.classList.toggle('hidden');
-            dropdownArrow.classList.toggle('rotate-180');
+            if (dropdownMenu.classList.contains('hidden')) {
+                dropdownMenu.classList.remove('hidden');
+                setTimeout(() => {
+                    dropdownMenu.classList.add('show');
+                }, 10);
+                dropdownArrow.classList.add('rotate-180');
+            } else {
+                dropdownMenu.classList.remove('show');
+                dropdownMenu.classList.add('hide');
+                dropdownArrow.classList.remove('rotate-180');
+                setTimeout(() => {
+                    dropdownMenu.classList.add('hidden');
+                    dropdownMenu.classList.remove('hide');
+                }, 200);
+            }
         });
 
         dropdownOptions.forEach(option => {
             option.addEventListener('click', () => {
                 selectedOption.textContent = option.textContent;
                 projectTypeInput.value = option.dataset.value;
-                dropdownMenu.classList.add('hidden');
+                dropdownMenu.classList.remove('show');
+                dropdownMenu.classList.add('hide');
                 dropdownArrow.classList.remove('rotate-180');
+                setTimeout(() => {
+                    dropdownMenu.classList.add('hidden');
+                    dropdownMenu.classList.remove('hide');
+                }, 200);
             });
         });
 
         // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
             if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                dropdownMenu.classList.add('hidden');
-                dropdownArrow.classList.remove('rotate-180');
+                if (!dropdownMenu.classList.contains('hidden')) {
+                    dropdownMenu.classList.remove('show');
+                    dropdownMenu.classList.add('hide');
+                    dropdownArrow.classList.remove('rotate-180');
+                    setTimeout(() => {
+                        dropdownMenu.classList.add('hidden');
+                        dropdownMenu.classList.remove('hide');
+                    }, 200);
+                }
             }
         });
 
