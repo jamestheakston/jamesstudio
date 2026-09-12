@@ -114,6 +114,12 @@
             opacity: 1;
         }
 
+        .cookie-banner.fade-out {
+            opacity: 0;
+            transform: translateY(100px);
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+
         /* Selection colors for dark backgrounds */
         .bg-\[\\#1A1A1A\] ::selection {
             background-color: #FAF9F6;
@@ -594,7 +600,10 @@
         }
 
         function hideCookieBanner() {
-            cookieBanner.remove();
+            cookieBanner.classList.add('fade-out');
+            setTimeout(() => {
+                cookieBanner.remove();
+            }, 300);
         }
 
         acceptCookiesBtn.addEventListener('click', () => {
