@@ -32,6 +32,17 @@
             background: #1A1A1A;
             border-radius: 3px;
         }
+
+        /* Tab content animations */
+        .tab-content {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .tab-content.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-[#1A1A1A] selection:text-[#FAF9F6]">
@@ -219,15 +230,33 @@
                 tabSite.classList.remove('border-transparent', 'text-neutral-400');
                 tabClient.classList.add('border-transparent', 'text-neutral-400');
                 tabClient.classList.remove('border-[#1A1A1A]', 'text-[#1A1A1A]');
-                contentSite.classList.remove('hidden');
-                contentClient.classList.add('hidden');
+                
+                // Fade out client content
+                contentClient.classList.remove('active');
+                setTimeout(() => {
+                    contentClient.classList.add('hidden');
+                    contentSite.classList.remove('hidden');
+                    // Fade in site content
+                    setTimeout(() => {
+                        contentSite.classList.add('active');
+                    }, 10);
+                }, 300);
             } else {
                 tabClient.classList.add('border-[#1A1A1A]', 'text-[#1A1A1A]');
                 tabClient.classList.remove('border-transparent', 'text-neutral-400');
                 tabSite.classList.add('border-transparent', 'text-neutral-400');
                 tabSite.classList.remove('border-[#1A1A1A]', 'text-[#1A1A1A]');
-                contentClient.classList.remove('hidden');
-                contentSite.classList.add('hidden');
+                
+                // Fade out site content
+                contentSite.classList.remove('active');
+                setTimeout(() => {
+                    contentSite.classList.add('hidden');
+                    contentClient.classList.remove('hidden');
+                    // Fade in client content
+                    setTimeout(() => {
+                        contentClient.classList.add('active');
+                    }, 10);
+                }, 300);
             }
 
             // Update URL without reloading
@@ -262,9 +291,23 @@
             const urlParams = new URLSearchParams(window.location.search);
             const type = urlParams.get('type');
             
+            // Set initial visibility without animation
+            const contentSite = document.getElementById('contentSite');
+            const contentClient = document.getElementById('contentClient');
+            
             if (type === 'clientportal') {
+                contentSite.classList.add('hidden');
+                contentClient.classList.remove('hidden');
+                setTimeout(() => {
+                    contentClient.classList.add('active');
+                }, 10);
                 switchTab('client');
             } else if (type === 'site' || !type) {
+                contentClient.classList.add('hidden');
+                contentSite.classList.remove('hidden');
+                setTimeout(() => {
+                    contentSite.classList.add('active');
+                }, 10);
                 switchTab('site');
             }
         }
