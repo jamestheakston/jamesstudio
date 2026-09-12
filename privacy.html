@@ -82,7 +82,7 @@
 
             <!-- Tab Content -->
             <div id="contentSite" class="tab-content prose prose-neutral max-w-none space-y-6">
-                <div class="flex items-center gap-2 mb-4">
+                <div class="flex justify-end mb-4">
                     <button onclick="copyLink()" class="flex items-center gap-2 bg-[#FAF9F6] border border-[#1A1A1A]/10 px-4 py-2 rounded-lg text-sm font-medium hover:border-[#1A1A1A] transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                         <span>Copy Link</span>
@@ -143,22 +143,22 @@
             </div>
 
             <div id="contentClient" class="tab-content hidden prose prose-neutral max-w-none space-y-6">
-                <div class="flex items-center gap-2 mb-4">
+                <div class="flex justify-end mb-4">
                     <button onclick="copyLink()" class="flex items-center gap-2 bg-[#FAF9F6] border border-[#1A1A1A]/10 px-4 py-2 rounded-lg text-sm font-medium hover:border-[#1A1A1A] transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                         <span>Copy Link</span>
                     </button>
                 </div>
-                <p><strong>What is the Client Portal?</strong> The James Studio Client Portal is a secure dashboard that allows our clients to directly edit their website content without needing to contact our team. Through the portal, clients can access their GitHub repositories, use a visual editor to make text and image changes, and publish updates to their live websites. The portal also includes AI-powered editing assistance (optional) to help with content modifications.</p>
+                <p><strong>What is the Client Portal?</strong> The James Studio Client Portal is a secure dashboard that allows our clients to directly edit their website content without needing to contact our team. When we create a website for you, we set up a GitHub repository for your project. You get access to that repository in the dashboard, where you can use a visual editor to make text and image changes. When you click "Publish", your changes are committed to the repository and automatically pushed to your live website. The portal also includes AI-powered editing assistance (optional) to help with content modifications.</p>
 
                 <p>At James Studio, we take your privacy seriously. This policy outlines how we collect, use, and protect your information when you use our Client Portal.</p>
 
                 <h2 class="text-2xl font-bold mt-8 mb-4">Information We Collect</h2>
-                <p>We collect information you provide directly to us when you sign in to the Client Portal, including your email address and authentication credentials. We also collect information about your GitHub repositories when you grant access to edit your website content.</p>
+                <p>We collect information you provide directly to us when you sign in to the Client Portal, including your email address and authentication credentials. We do not collect any GitHub credentials or require you to connect your GitHub account.</p>
 
                 <h2 class="text-2xl font-bold mt-8 mb-4">How We Use Your Information</h2>
                 <p>We use your information to provide access to the Client Dashboard, authenticate your account, and enable you to edit your website content. We do not sell, rent, or share your personal information with third parties for marketing purposes.</p>
-                <p class="mt-4"><strong>GitHub Integration:</strong> When you connect your GitHub account, we access only the repositories you have been granted permission to edit. We use this to load your website content into our visual editor and save changes back to your repository.</p>
+                <p class="mt-4"><strong>GitHub Integration:</strong> We handle all GitHub integration on our backend. You do not need to connect your GitHub account or provide any GitHub credentials. We only access the repositories you have been granted permission to edit, and we use this to load your website content into our visual editor and save changes back to your repository.</p>
 
                 <h2 class="text-2xl font-bold mt-8 mb-4">Third-Party Services</h2>
                 <p>The Client Portal uses the following third-party services:</p>
@@ -170,14 +170,14 @@
                 </ul>
 
                 <h2 class="text-2xl font-bold mt-8 mb-4">Data Security</h2>
-                <p>We implement appropriate security measures to protect your personal information and repository content. Your GitHub credentials are never stored directly—we use OAuth for authentication. All changes to your repositories are made through GitHub's API with your authorization.</p>
+                <p>We implement appropriate security measures to protect your personal information and repository content. We handle all GitHub integration securely on our backend, and you never need to provide GitHub credentials. All changes to your repositories are made through GitHub's API with our authorization.</p>
 
                 <h2 class="text-2xl font-bold mt-8 mb-4">Your Rights</h2>
                 <p>You have the right to:</p>
                 <ul class="list-disc pl-6 space-y-2">
                     <li>Access your account information</li>
                     <li>Request deletion of your account</li>
-                    <li>Revoke GitHub access at any time</li>
+                    <li>Request removal of repository access</li>
                     <li>Opt-out of AI features (Puter)</li>
                 </ul>
 
