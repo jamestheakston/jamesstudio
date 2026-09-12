@@ -420,6 +420,19 @@
         </div>
     </section>
 
+    <!-- Price Guarantee CTA -->
+    <section class="py-16 px-6 md:px-12 bg-[#1A1A1A] text-[#FAF9F6]">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="geometric-font text-3xl md:text-4xl font-extrabold tracking-tight mb-4">Price Match Guarantee</h2>
+            <p class="text-neutral-300 text-lg mb-8 max-w-2xl mx-auto">
+                We guarantee our quote will be less than your previous quote. If we can't beat it, we'll match it. No questions asked.
+            </p>
+            <a href="#contact" class="inline-block bg-[#FAF9F6] text-[#1A1A1A] px-8 py-4 rounded-full text-sm font-semibold tracking-wider hover:bg-neutral-200 transition-all">
+                Get Your Quote
+            </a>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="border-t border-[#1A1A1A]/10 py-12 px-6 md:px-12 bg-white">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
@@ -581,6 +594,32 @@
             cookieBanner.classList.remove('is-visible');
         });
 
+        // Smooth scroll with offset for sticky header
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerOffset = 80;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        toggleMenu();
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>
