@@ -593,15 +593,19 @@
             cookieBanner.classList.add('is-visible');
         }
 
+        function hideCookieBanner() {
+            cookieBanner.remove();
+        }
+
         acceptCookiesBtn.addEventListener('click', () => {
             setCookieConsent('accepted');
             loadAnalyticsScripts();
-            cookieBanner.classList.remove('is-visible');
+            hideCookieBanner();
         });
 
         rejectCookiesBtn.addEventListener('click', () => {
             setCookieConsent('rejected');
-            cookieBanner.classList.remove('is-visible');
+            hideCookieBanner();
         });
 
         // Smooth scroll with offset for sticky header
