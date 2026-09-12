@@ -43,6 +43,17 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Sliding tab indicator */
+        .tab-indicator {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            height: 2px;
+            background-color: #1A1A1A;
+            transition: all 0.3s ease-out;
+            border-radius: 1px;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-[#1A1A1A] selection:text-[#FAF9F6]">
@@ -73,11 +84,12 @@
             </div>
 
             <!-- Tabs -->
-            <div class="border-b border-[#1A1A1A]/10">
+            <div class="border-b border-[#1A1A1A]/10 relative">
                 <div class="flex gap-8">
-                    <button id="tabSite" class="tab-btn pb-3 text-sm font-semibold tracking-wider border-b-2 border-[#1A1A1A] text-[#1A1A1A]" onclick="switchTab('site')">This Site</button>
-                    <button id="tabClient" class="tab-btn pb-3 text-sm font-semibold tracking-wider border-b-2 border-transparent text-neutral-400 hover:text-[#1A1A1A]" onclick="switchTab('client')">Client Portal</button>
+                    <button id="tabSite" class="tab-btn pb-3 text-sm font-semibold tracking-wider text-[#1A1A1A]" onclick="switchTab('site')">This Site</button>
+                    <button id="tabClient" class="tab-btn pb-3 text-sm font-semibold tracking-wider text-neutral-400 hover:text-[#1A1A1A]" onclick="switchTab('client')">Client Portal</button>
                 </div>
+                <div id="tabIndicator" class="tab-indicator"></div>
             </div>
 
             <!-- Tab Content -->
@@ -224,12 +236,17 @@
             const tabClient = document.getElementById('tabClient');
             const contentSite = document.getElementById('contentSite');
             const contentClient = document.getElementById('contentClient');
+            const indicator = document.getElementById('tabIndicator');
 
             if (tab === 'site') {
-                tabSite.classList.add('border-[#1A1A1A]', 'text-[#1A1A1A]');
-                tabSite.classList.remove('border-transparent', 'text-neutral-400');
-                tabClient.classList.add('border-transparent', 'text-neutral-400');
-                tabClient.classList.remove('border-[#1A1A1A]', 'text-[#1A1A1A]');
+                tabSite.classList.add('text-[#1A1A1A]');
+                tabSite.classList.remove('text-neutral-400');
+                tabClient.classList.add('text-neutral-400');
+                tabClient.classList.remove('text-[#1A1A1A]');
+                
+                // Move indicator to site tab
+                indicator.style.width = tabSite.offsetWidth + 'px';
+                indicator.style.left = tabSite.offsetLeft + 'px';
                 
                 // Fade out client content
                 contentClient.classList.remove('active');
@@ -242,10 +259,14 @@
                     }, 10);
                 }, 300);
             } else {
-                tabClient.classList.add('border-[#1A1A1A]', 'text-[#1A1A1A]');
-                tabClient.classList.remove('border-transparent', 'text-neutral-400');
-                tabSite.classList.add('border-transparent', 'text-neutral-400');
-                tabSite.classList.remove('border-[#1A1A1A]', 'text-[#1A1A1A]');
+                tabClient.classList.add('text-[#1A1A1A]');
+                tabClient.classList.remove('text-neutral-400');
+                tabSite.classList.add('text-neutral-400');
+                tabSite.classList.remove('text-[#1A1A1A]');
+                
+                // Move indicator to client tab
+                indicator.style.width = tabClient.offsetWidth + 'px';
+                indicator.style.left = tabClient.offsetLeft + 'px';
                 
                 // Fade out site content
                 contentSite.classList.remove('active');
@@ -294,8 +315,14 @@
             // Set initial visibility without animation
             const contentSite = document.getElementById('contentSite');
             const contentClient = document.getElementById('contentClient');
+            const indicator = document.getElementById('tabIndicator');
+            const tabSite = document.getElementById('tabSite');
+            const tabClient = document.getElementById('tabClient');
             
+            // Initialize indicator position
             if (type === 'clientportal') {
+                indicator.style.width = tabClient.offsetWidth + 'px';
+                indicator.style.left = tabClient.offsetLeft + 'px';
                 contentSite.classList.add('hidden');
                 contentClient.classList.remove('hidden');
                 setTimeout(() => {
@@ -303,6 +330,8 @@
                 }, 10);
                 switchTab('client');
             } else if (type === 'site' || !type) {
+                indicator.style.width = tabSite.offsetWidth + 'px';
+                indicator.style.left = tabSite.offsetLeft + 'px';
                 contentClient.classList.add('hidden');
                 contentSite.classList.remove('hidden');
                 setTimeout(() => {
