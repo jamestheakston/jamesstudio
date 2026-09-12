@@ -31,4 +31,16 @@
     <priority>0.3</priority>
   </url>
 
+  <url>
+    <loc>https://jamesstudio.uk/privacy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://jamesstudio.uk/businesscard.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
 </urlset>
