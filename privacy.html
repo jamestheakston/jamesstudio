@@ -33,17 +33,6 @@
             border-radius: 3px;
         }
 
-        /* Tab content animations */
-        .tab-content {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-        }
-        .tab-content.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         /* Sliding tab indicator */
         .tab-indicator {
             position: absolute;
@@ -248,16 +237,9 @@
                 indicator.style.width = tabSite.offsetWidth + 'px';
                 indicator.style.left = tabSite.offsetLeft + 'px';
                 
-                // Fade out client content
-                contentClient.classList.remove('active');
-                setTimeout(() => {
-                    contentClient.classList.add('hidden');
-                    contentSite.classList.remove('hidden');
-                    // Fade in site content
-                    setTimeout(() => {
-                        contentSite.classList.add('active');
-                    }, 10);
-                }, 300);
+                // Switch content
+                contentClient.classList.add('hidden');
+                contentSite.classList.remove('hidden');
             } else {
                 tabClient.classList.add('text-[#1A1A1A]');
                 tabClient.classList.remove('text-neutral-400');
@@ -268,16 +250,9 @@
                 indicator.style.width = tabClient.offsetWidth + 'px';
                 indicator.style.left = tabClient.offsetLeft + 'px';
                 
-                // Fade out site content
-                contentSite.classList.remove('active');
-                setTimeout(() => {
-                    contentSite.classList.add('hidden');
-                    contentClient.classList.remove('hidden');
-                    // Fade in client content
-                    setTimeout(() => {
-                        contentClient.classList.add('active');
-                    }, 10);
-                }, 300);
+                // Switch content
+                contentSite.classList.add('hidden');
+                contentClient.classList.remove('hidden');
             }
 
             // Update URL without reloading
@@ -312,7 +287,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const type = urlParams.get('type');
             
-            // Set initial visibility without animation
+            // Set initial visibility
             const contentSite = document.getElementById('contentSite');
             const contentClient = document.getElementById('contentClient');
             const indicator = document.getElementById('tabIndicator');
@@ -325,18 +300,12 @@
                 indicator.style.left = tabClient.offsetLeft + 'px';
                 contentSite.classList.add('hidden');
                 contentClient.classList.remove('hidden');
-                setTimeout(() => {
-                    contentClient.classList.add('active');
-                }, 10);
                 switchTab('client');
             } else if (type === 'site' || !type) {
                 indicator.style.width = tabSite.offsetWidth + 'px';
                 indicator.style.left = tabSite.offsetLeft + 'px';
                 contentClient.classList.add('hidden');
                 contentSite.classList.remove('hidden');
-                setTimeout(() => {
-                    contentSite.classList.add('active');
-                }, 10);
                 switchTab('site');
             }
         }
