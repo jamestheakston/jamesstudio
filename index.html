@@ -740,10 +740,13 @@
                         // Check for any added nodes (iframe, div, etc.)
                         if (mutation.addedNodes.length > 0) {
                             // Check if any Turnstile-related element is visible
-                            const widget = document.querySelector('.cf-turnstile iframe, .cf-turnstile div[style*="display: block"]');
+                            const widget = document.querySelector('.cf-turnstile iframe, .cf-turnstile div');
                             if (widget) {
-                                turnstileLoadedCallback();
-                                observer.disconnect();
+                                // Small delay to ensure widget is actually visible to user
+                                setTimeout(function() {
+                                    turnstileLoadedCallback();
+                                    observer.disconnect();
+                                }, 100);
                             }
                         }
                     });
@@ -770,7 +773,7 @@
             if (helpBtn && helpContent && helpArrow) {
                 helpBtn.addEventListener('click', function() {
                     const isExpanded = helpContent.style.maxHeight !== '0px' && helpContent.style.maxHeight !== '';
-                    
+
                     if (isExpanded) {
                         helpContent.style.maxHeight = '0px';
                         helpContent.style.opacity = '0';
