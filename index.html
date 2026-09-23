@@ -450,6 +450,9 @@
                         <button type="button" id="turnstile-help-btn" class="flex items-center gap-2 text-xs text-neutral-500 hover:text-black transition-colors focus:outline-none">
                             <span class="underline">What's this?</span>
                             <span class="w-4 h-4 rounded-full bg-neutral-200 flex items-center justify-center text-[10px] font-bold">?</span>
+                            <svg id="help-arrow" class="w-3 h-3 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
                         </button>
                         <div id="turnstile-help-content" class="hidden mt-3 p-4 bg-neutral-50 rounded-lg text-xs text-neutral-600 leading-relaxed border border-neutral-200">
                             <p class="mb-2"><strong>Cloudflare Turnstile</strong> is a security service that helps protect our contact form from spam and automated abuse while providing a smooth experience for real users.</p>
@@ -760,10 +763,12 @@
             // Turnstile help toggle
             const helpBtn = document.getElementById('turnstile-help-btn');
             const helpContent = document.getElementById('turnstile-help-content');
+            const helpArrow = document.getElementById('help-arrow');
 
-            if (helpBtn && helpContent) {
+            if (helpBtn && helpContent && helpArrow) {
                 helpBtn.addEventListener('click', function() {
                     helpContent.classList.toggle('hidden');
+                    helpArrow.classList.toggle('rotate-180');
                 });
             }
         });
