@@ -25,9 +25,19 @@ export default {
 
     // Validate required environment variables
     if (!TURNSTILE_SECRET || !RESEND_API_KEY) {
-      console.error('Missing required environment variables');
+      console.error('Missing required environment variables', {
+        hasTurnstileSecret: !!TURNSTILE_SECRET,
+        hasResendApiKey: !!RESEND_API_KEY
+      });
       return new Response(
-        JSON.stringify({ success: false, error: 'Server configuration error' }),
+        JSON.stringify({
+          success: false,
+          error: 'Server configuration error: Missing environment variables',
+          debug: {
+            hasTurnstileSecret: !!TURNSTILE_SECRET,
+            hasResendApiKey: !!RESEND_API_KEY
+          }
+        }),
         {
           status: 500,
           headers: {
@@ -52,6 +62,14 @@ export default {
       const email = formData.get('email');
       const projectType = formData.get('projectType');
       const message = formData.get('message');
+
+      console.log('Form data received:', {
+        hasToken: !!token,
+        hasName: !!name,
+        hasEmail: !!email,
+        hasMessage: !!message,
+        tokenLength: token?.length
+      });
 
       // Validate required fields
       if (!token || !name || !email || !message) {
