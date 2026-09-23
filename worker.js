@@ -23,6 +23,24 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
+    // Handle GET requests for health check
+    if (request.method === 'GET') {
+      return new Response(
+        JSON.stringify({
+          status: 'healthy',
+          hasTurnstileSecret: !!TURNSTILE_SECRET,
+          hasResendApiKey: !!RESEND_API_KEY,
+          timestamp: new Date().toISOString()
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            ...corsHeaders
+          }
+        }
+      );
+    }
+
     // Validate required environment variables
     if (!TURNSTILE_SECRET || !RESEND_API_KEY) {
       console.error('Missing required environment variables', {
@@ -35,7 +53,8 @@ export default {
           error: 'Server configuration error: Missing environment variables',
           debug: {
             hasTurnstileSecret: !!TURNSTILE_SECRET,
-            hasResendApiKey: !!RESEND_API_KEY
+            hasResendApiKey: !!RESEND_API_KEY,
+            message: 'Please set TURNSTILE_SECRET and RESEND_API_KEY in Cloudflare Worker environment variables'
           }
         }),
         {

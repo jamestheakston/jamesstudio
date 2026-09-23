@@ -736,10 +736,13 @@
                         </div>
                     `;
                 } else {
-                    throw new Error('Form submission failed');
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || errorData.message || 'Form submission failed');
                 }
             } catch (error) {
-                alert('There was an error sending your message. Please try again.');
+                console.error('Form submission error:', error);
+                const errorMessage = error.message || 'There was an error sending your message. Please try again.';
+                alert(errorMessage);
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Send Project Brief';
             }
