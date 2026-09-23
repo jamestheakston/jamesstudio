@@ -435,7 +435,7 @@
                     </div>
 
                     <!-- Cloudflare Turnstile Widget -->
-                    <div class="flex justify-center">
+                    <div class="flex justify-start">
                         <div class="cf-turnstile" data-sitekey="0x4AAAAAAFBQ4cu_DtBRZnzM" data-callback="turnstileCallback" data-expired-callback="turnstileExpiredCallback"></div>
                     </div>
 
@@ -718,19 +718,16 @@
             formData.append('cf-turnstile-response', turnstileToken);
 
             try {
-                const response = await fetch('https://formspree.io/f/xnjrljde', {
+                const response = await fetch('https://contactformapi.jamesstudio.uk/', {
                     method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
+                    body: formData
                 });
 
                 if (response.ok) {
                     // Show success message
                     contactForm.innerHTML = `
-                        <div class="text-center py-8">
-                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div class="flex flex-col items-center justify-center text-center py-8">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
                                 <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
