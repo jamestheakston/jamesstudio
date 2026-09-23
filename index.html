@@ -718,7 +718,7 @@
             formData.append('cf-turnstile-response', turnstileToken);
 
             try {
-                const response = await fetch('https://contactformapi.jamesstudio.uk/', {
+                const response = await fetch('https://contactform.cookery.workers.dev/', {
                     method: 'POST',
                     body: formData
                 });
