@@ -732,8 +732,10 @@
                 // Use MutationObserver to detect when the widget is rendered
                 const observer = new MutationObserver(function(mutations) {
                     mutations.forEach(function(mutation) {
+                        // Check for any added nodes (iframe, div, etc.)
                         if (mutation.addedNodes.length > 0) {
-                            const widget = document.querySelector('.cf-turnstile iframe');
+                            // Check if any Turnstile-related element is visible
+                            const widget = document.querySelector('.cf-turnstile iframe, .cf-turnstile div[style*="display: block"]');
                             if (widget) {
                                 turnstileLoadedCallback();
                                 observer.disconnect();
