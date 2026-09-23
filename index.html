@@ -747,12 +747,12 @@
                     subtree: true
                 });
 
-                // Fallback: hide spinner after 3 seconds if widget doesn't load
+                // Fallback: hide spinner after 5 seconds if widget doesn't load
                 setTimeout(function() {
                     if (document.getElementById('turnstile-loading')) {
                         turnstileLoadedCallback();
                     }
-                }, 3000);
+                }, 5000);
             }
 
             // Turnstile help toggle
