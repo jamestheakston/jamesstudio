@@ -436,7 +436,13 @@
 
                     <!-- Cloudflare Turnstile Widget -->
                     <div class="flex justify-start">
-                        <div class="cf-turnstile" data-sitekey="0x4AAAAAAFBQ4cu_DtBRZnzM" data-callback="turnstileCallback" data-expired-callback="turnstileExpiredCallback" data-form="contactForm"></div>
+                        <div id="turnstile-container" class="relative">
+                            <div id="turnstile-loading" class="flex items-center gap-3 py-4">
+                                <div class="w-5 h-5 border-2 border-[#1A1A1A] border-t-transparent rounded-full animate-spin"></div>
+                                <span class="text-sm text-neutral-600">Preparing security verification...</span>
+                            </div>
+                            <div class="cf-turnstile" data-sitekey="0x4AAAAAAFBQ4cu_DtBRZnzM" data-callback="turnstileCallback" data-expired-callback="turnstileExpiredCallback"></div>
+                        </div>
                     </div>
 
                     <button type="submit" id="submitBtn" class="w-full bg-[#1A1A1A] text-[#FAF9F6] py-4 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
@@ -698,6 +704,45 @@
             turnstileToken = null;
             submitBtn.disabled = true;
         }
+
+        // Hide loading spinner when Turnstile widget is loaded
+        function turnstileLoadedCallback() {
+            const loadingSpinner = document.getElementById('turnstile-loading');
+            if (loadingSpinner) {
+                loadingSpinner.style.display = 'none';
+            }
+        }
+
+        // Listen for Turnstile widget to be rendered
+        document.addEventListener('DOMContentLoaded', function() {
+            const turnstileContainer = document.querySelector('.cf-turnstile');
+            if (turnstileContainer) {
+                // Use MutationObserver to detect when the widget is rendered
+                const observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        if (mutation.addedNodes.length > 0) {
+                            const widget = document.querySelector('.cf-turnstile iframe');
+                            if (widget) {
+                                turnstileLoadedCallback();
+                                observer.disconnect();
+                            }
+                        }
+                    });
+                });
+
+                observer.observe(turnstileContainer, {
+                    childList: true,
+                    subtree: true
+                });
+
+                // Fallback: hide spinner after 3 seconds if widget doesn't load
+                setTimeout(function() {
+                    if (document.getElementById('turnstile-loading')) {
+                        turnstileLoadedCallback();
+                    }
+                }, 3000);
+            }
+        });
 
         // Form submission validation
         const contactForm = document.getElementById('contactForm');
