@@ -134,7 +134,7 @@ export default {
       const emailResult = await sendEmail({
         apiKey: RESEND_API_KEY,
         to: DESTINATION_EMAIL,
-        from: 'James Studio <noreply@jamesstudio.uk>', // Update with your verified domain
+        from: 'James Studio <noreply@email.jamesstudio.uk>',
         subject: `New Project Brief from ${name}`,
         text: `
 Name: ${name}
