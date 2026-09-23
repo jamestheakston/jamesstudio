@@ -11,20 +11,38 @@ export default {
     const RESEND_API_KEY = env.RESEND_API_KEY;
     const DESTINATION_EMAIL = env.DESTINATION_EMAIL || 'hello@jamesstudio.uk';
 
+    // CORS headers
+    const corsHeaders = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    };
+
+    // Handle preflight requests
+    if (request.method === 'OPTIONS') {
+      return new Response(null, { headers: corsHeaders });
+    }
+
     // Validate required environment variables
     if (!TURNSTILE_SECRET || !RESEND_API_KEY) {
       console.error('Missing required environment variables');
       return new Response(
         JSON.stringify({ success: false, error: 'Server configuration error' }),
-        { 
-          status: 500, 
-          headers: { 'Content-Type': 'application/json' } 
+        {
+          status: 500,
+          headers: {
+            'Content-Type': 'application/json',
+            ...corsHeaders
+          }
         }
       );
     }
     // Only handle POST requests
     if (request.method !== 'POST') {
-      return new Response('Method not allowed', { status: 405 });
+      return new Response('Method not allowed', {
+        status: 405,
+        headers: corsHeaders
+      });
     }
 
     try {
@@ -39,9 +57,12 @@ export default {
       if (!token || !name || !email || !message) {
         return new Response(
           JSON.stringify({ success: false, error: 'Missing required fields' }),
-          { 
-            status: 400, 
-            headers: { 'Content-Type': 'application/json' } 
+          {
+            status: 400,
+            headers: {
+              'Content-Type': 'application/json',
+              ...corsHeaders
+            }
           }
         );
       }
@@ -57,14 +78,17 @@ export default {
       if (!turnstileValidation.success) {
         console.error('Turnstile validation failed:', turnstileValidation['error-codes']);
         return new Response(
-          JSON.stringify({ 
-            success: false, 
+          JSON.stringify({
+            success: false,
             error: 'Security verification failed',
-            codes: turnstileValidation['error-codes'] 
+            codes: turnstileValidation['error-codes']
           }),
-          { 
-            status: 400, 
-            headers: { 'Content-Type': 'application/json' } 
+          {
+            status: 400,
+            headers: {
+              'Content-Type': 'application/json',
+              ...corsHeaders
+            }
           }
         );
       }
@@ -101,35 +125,44 @@ Turnstile verified: ${turnstileValidation.hostname}
       if (!emailResult.success) {
         console.error('Email sending failed:', emailResult.error);
         return new Response(
-          JSON.stringify({ 
-            success: false, 
-            error: 'Failed to send message' 
+          JSON.stringify({
+            success: false,
+            error: 'Failed to send message'
           }),
-          { 
-            status: 500, 
-            headers: { 'Content-Type': 'application/json' } 
+          {
+            status: 500,
+            headers: {
+              'Content-Type': 'application/json',
+              ...corsHeaders
+            }
           }
         );
       }
 
       return new Response(
         JSON.stringify({ success: true, message: 'Message sent successfully' }),
-        { 
-          status: 200, 
-          headers: { 'Content-Type': 'application/json' } 
+        {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            ...corsHeaders
+          }
         }
       );
 
     } catch (error) {
       console.error('Worker error:', error);
       return new Response(
-        JSON.stringify({ 
-          success: false, 
-          error: 'Internal server error' 
+        JSON.stringify({
+          success: false,
+          error: 'Internal server error'
         }),
-        { 
-          status: 500, 
-          headers: { 'Content-Type': 'application/json' } 
+        {
+          status: 500,
+          headers: {
+            'Content-Type': 'application/json',
+            ...corsHeaders
+          }
         }
       );
     }
