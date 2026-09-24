@@ -387,83 +387,87 @@
         // Initialize
         handleUrlParams();
 
-        // Email Modal Functionality
-        const legalEmailLinks = document.querySelectorAll('.legal-email-link');
-        const emailModal = document.getElementById('email-modal');
-        const closeModal = document.getElementById('close-modal');
-        const gmailBtn = document.getElementById('gmail-btn');
-        const defaultBtn = document.getElementById('default-btn');
-        const outlookBtn = document.getElementById('outlook-btn');
-        const toggleDetails = document.getElementById('toggle-details');
-        const emailDetails = document.getElementById('email-details');
-        const detailsArrow = document.getElementById('details-arrow');
+        // Email Modal Functionality - wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const legalEmailLinks = document.querySelectorAll('.legal-email-link');
+            const emailModal = document.getElementById('email-modal');
+            const closeModal = document.getElementById('close-modal');
+            const gmailBtn = document.getElementById('gmail-btn');
+            const defaultBtn = document.getElementById('default-btn');
+            const outlookBtn = document.getElementById('outlook-btn');
+            const toggleDetails = document.getElementById('toggle-details');
+            const emailDetails = document.getElementById('email-details');
+            const detailsArrow = document.getElementById('details-arrow');
 
-        let currentEmail = 'legal@jamesstudio.uk';
+            let currentEmail = 'legal@jamesstudio.uk';
 
-        legalEmailLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                currentEmail = 'legal@jamesstudio.uk';
-                emailModal.classList.remove('hidden');
-                emailModal.classList.add('flex');
-            });
-        });
+            if (legalEmailLinks.length > 0 && emailModal) {
+                legalEmailLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        currentEmail = 'legal@jamesstudio.uk';
+                        emailModal.classList.remove('hidden');
+                        emailModal.classList.add('flex');
+                    });
+                });
+            }
 
-        if (closeModal) {
-            closeModal.addEventListener('click', function() {
-                emailModal.classList.add('hidden');
-                emailModal.classList.remove('flex');
-            });
-        }
-
-        if (emailModal) {
-            emailModal.addEventListener('click', function(e) {
-                if (e.target === emailModal) {
+            if (closeModal && emailModal) {
+                closeModal.addEventListener('click', function() {
                     emailModal.classList.add('hidden');
                     emailModal.classList.remove('flex');
-                }
-            });
-        }
+                });
+            }
 
-        if (gmailBtn) {
-            gmailBtn.addEventListener('click', function() {
-                window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(currentEmail)}&su=Privacy+Policy+Inquiry`, '_blank');
-                emailModal.classList.add('hidden');
-                emailModal.classList.remove('flex');
-            });
-        }
+            if (emailModal) {
+                emailModal.addEventListener('click', function(e) {
+                    if (e.target === emailModal) {
+                        emailModal.classList.add('hidden');
+                        emailModal.classList.remove('flex');
+                    }
+                });
+            }
 
-        if (defaultBtn) {
-            defaultBtn.addEventListener('click', function() {
-                window.location.href = `mailto:${currentEmail}?subject=Privacy+Policy+Inquiry`;
-                emailModal.classList.add('hidden');
-                emailModal.classList.remove('flex');
-            });
-        }
+            if (gmailBtn && emailModal) {
+                gmailBtn.addEventListener('click', function() {
+                    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(currentEmail)}&su=Privacy+Policy+Inquiry`, '_blank');
+                    emailModal.classList.add('hidden');
+                    emailModal.classList.remove('flex');
+                });
+            }
 
-        if (outlookBtn) {
-            outlookBtn.addEventListener('click', function() {
-                window.open(`https://outlook.live.com/owa/?path=/mail/action/compose&to=${encodeURIComponent(currentEmail)}&subject=Privacy+Policy+Inquiry`, '_blank');
-                emailModal.classList.add('hidden');
-                emailModal.classList.remove('flex');
-            });
-        }
+            if (defaultBtn && emailModal) {
+                defaultBtn.addEventListener('click', function() {
+                    window.location.href = `mailto:${currentEmail}?subject=Privacy+Policy+Inquiry`;
+                    emailModal.classList.add('hidden');
+                    emailModal.classList.remove('flex');
+                });
+            }
 
-        if (toggleDetails && emailDetails && detailsArrow) {
-            toggleDetails.addEventListener('click', function() {
-                const isExpanded = emailDetails.style.maxHeight !== '0px' && emailDetails.style.maxHeight !== '';
+            if (outlookBtn && emailModal) {
+                outlookBtn.addEventListener('click', function() {
+                    window.open(`https://outlook.live.com/owa/?path=/mail/action/compose&to=${encodeURIComponent(currentEmail)}&subject=Privacy+Policy+Inquiry`, '_blank');
+                    emailModal.classList.add('hidden');
+                    emailModal.classList.remove('flex');
+                });
+            }
 
-                if (isExpanded) {
-                    emailDetails.style.maxHeight = '0px';
-                    emailDetails.style.opacity = '0';
-                    detailsArrow.classList.remove('rotate-180');
-                } else {
-                    emailDetails.style.maxHeight = emailDetails.scrollHeight + 'px';
-                    emailDetails.style.opacity = '1';
-                    detailsArrow.classList.add('rotate-180');
-                }
-            });
-        }
+            if (toggleDetails && emailDetails && detailsArrow) {
+                toggleDetails.addEventListener('click', function() {
+                    const isExpanded = emailDetails.style.maxHeight !== '0px' && emailDetails.style.maxHeight !== '';
+
+                    if (isExpanded) {
+                        emailDetails.style.maxHeight = '0px';
+                        emailDetails.style.opacity = '0';
+                        detailsArrow.classList.remove('rotate-180');
+                    } else {
+                        emailDetails.style.maxHeight = emailDetails.scrollHeight + 'px';
+                        emailDetails.style.opacity = '1';
+                        detailsArrow.classList.add('rotate-180');
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>
