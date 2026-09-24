@@ -324,7 +324,7 @@
             </button>
 
             <div id="more-clients" class="hidden mt-3 overflow-hidden transition-all duration-300 ease-in-out">
-                <div class="grid grid-cols-4 gap-2">
+                <div class="grid grid-cols-3 gap-2">
                     <button id="apple-mail-btn" class="flex flex-col items-center gap-1 p-3 border border-[#1A1A1A]/10 rounded-lg hover:border-[#1A1A1A] transition-all">
                         <div class="w-8 h-8 flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="w-6 h-6">
@@ -350,13 +350,6 @@
                             </svg>
                         </div>
                         <span class="text-[10px] font-semibold">AOL Mail</span>
-                    </button>
-
-                    <button id="zoho-btn" class="flex flex-col items-center gap-1 p-3 border border-[#1A1A1A]/10 rounded-lg hover:border-[#1A1A1A] transition-all">
-                        <div class="w-8 h-8 flex items-center justify-center">
-                            <img src="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/zohomail.svg" alt="Zoho Mail" class="w-6 h-6">
-                        </div>
-                        <span class="text-[10px] font-semibold">Zoho Mail</span>
                     </button>
 
                     <button id="james-btn" class="flex flex-col items-center gap-1 p-3 border border-[#1A1A1A]/10 rounded-lg hover:border-[#1A1A1A] transition-all">
@@ -521,7 +514,6 @@
             const protonBtn = document.getElementById('proton-btn');
             const yahooBtn = document.getElementById('yahoo-btn');
             const aolBtn = document.getElementById('aol-btn');
-            const zohoBtn = document.getElementById('zoho-btn');
             const jamesBtn = document.getElementById('james-btn');
             const defaultBtn = document.getElementById('default-btn');
             const moreClientsBtn = document.getElementById('more-clients-btn');
@@ -661,14 +653,6 @@
                 aolBtn.addEventListener('click', function() {
                     window.open(`https://mail.aol.com/webmail-std/en-us/composemessage?to=${encodeURIComponent(currentEmail)}&subject=Privacy+Policy+Inquiry`, '_blank');
                     showToast('Opening AOL Mail compose window...');
-                    closeModalWithAnimation();
-                });
-            }
-
-            if (zohoBtn && emailModal) {
-                zohoBtn.addEventListener('click', function() {
-                    window.open(`https://mail.zoho.com/zm/mail/compose.do?to=${encodeURIComponent(currentEmail)}&subject=Privacy+Policy+Inquiry`, '_blank');
-                    showToast('Opening Zoho Mail compose window...');
                     closeModalWithAnimation();
                 });
             }
