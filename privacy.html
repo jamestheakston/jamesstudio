@@ -359,6 +359,13 @@
                         <span class="text-[10px] font-semibold">Zoho Mail</span>
                     </button>
 
+                    <button id="james-btn" class="flex flex-col items-center gap-1 p-3 border border-[#1A1A1A]/10 rounded-lg hover:border-[#1A1A1A] transition-all">
+                        <div class="w-8 h-8 flex items-center justify-center bg-[#1A1A1A] rounded-lg">
+                            <span class="text-[#FAF9F6] text-[10px] font-bold">JS</span>
+                        </div>
+                        <span class="text-[10px] font-semibold">James Studio</span>
+                    </button>
+
                     <button id="default-btn" class="flex flex-col items-center gap-1 p-3 border border-[#1A1A1A]/10 rounded-lg hover:border-[#1A1A1A] transition-all">
                         <div class="w-8 h-8 flex items-center justify-center">
                             <svg class="w-5 h-5 text-[#1A1A1A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -515,6 +522,7 @@
             const yahooBtn = document.getElementById('yahoo-btn');
             const aolBtn = document.getElementById('aol-btn');
             const zohoBtn = document.getElementById('zoho-btn');
+            const jamesBtn = document.getElementById('james-btn');
             const defaultBtn = document.getElementById('default-btn');
             const moreClientsBtn = document.getElementById('more-clients-btn');
             const moreClients = document.getElementById('more-clients');
@@ -659,8 +667,16 @@
 
             if (zohoBtn && emailModal) {
                 zohoBtn.addEventListener('click', function() {
-                    window.open(`https://mail.zoho.com/mail/compose.do?to=${encodeURIComponent(currentEmail)}&subject=Privacy+Policy+Inquiry`, '_blank');
+                    window.open(`https://mail.zoho.com/zm/mail/compose.do?to=${encodeURIComponent(currentEmail)}&subject=Privacy+Policy+Inquiry`, '_blank');
                     showToast('Opening Zoho Mail compose window...');
+                    closeModalWithAnimation();
+                });
+            }
+
+            if (jamesBtn && emailModal) {
+                jamesBtn.addEventListener('click', function() {
+                    window.location.href = `mailto:${currentEmail}?subject=Privacy+Policy+Inquiry`;
+                    showToast('Opening your default email app...');
                     closeModalWithAnimation();
                 });
             }
