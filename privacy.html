@@ -223,11 +223,33 @@
                 </button>
             </div>
 
-            <div class="grid grid-cols-2 gap-3 mb-6">
+            <div class="grid grid-cols-3 gap-3 mb-6">
                 <button id="gmail-btn" class="flex flex-col items-center gap-2 p-4 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all">
                     <div class="w-12 h-12 flex items-center justify-center">
-                        <svg viewBox="0 0 24 24" class="w-10 h-10">
-                            <path fill="#EA4335" d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 192 192">
+                            <path fill="url(#a)" d="M146 44h38v110c0 6.627-5.373 12-12 12h-20a6 6 0 0 1-6-6z"/>
+                            <path fill="#fc413d" d="M46 44H8v110c0 6.627 5.373 12 12 12h20a6 6 0 0 0 6-6z"/>
+                            <path fill="url(#b)" d="M39.226 30.456c-8.033-6.752-20.018-5.714-26.77 2.319-6.752 8.032-5.714 20.017 2.319 26.77l76.078 63.949a8 8 0 0 0 10.295 0l76.078-63.95c8.032-6.752 9.07-18.737 2.318-26.77-6.752-8.032-18.737-9.07-26.769-2.318L96 78.18z"/>
+                            <defs>
+                                <linearGradient id="a" x1="165" x2="165" y1="44" y2="166" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#60d673"/>
+                                    <stop offset=".17" stop-color="#42c868"/>
+                                    <stop offset=".39" stop-color="#0ebc5f"/>
+                                    <stop offset=".62" stop-color="#00a9bb"/>
+                                    <stop offset=".86" stop-color="#3c90ff"/>
+                                    <stop offset="1" stop-color="#3186ff"/>
+                                </linearGradient>
+                                <linearGradient id="b" x1="8" x2="184" y1="46.13" y2="46.13" gradientUnits="userSpaceOnUse">
+                                    <stop offset=".08" stop-color="#ff63a0"/>
+                                    <stop offset=".3" stop-color="#fc413d"/>
+                                    <stop offset=".5" stop-color="#fc413d"/>
+                                    <stop offset=".65" stop-color="#fc413d"/>
+                                    <stop offset=".72" stop-color="#fc5c30"/>
+                                    <stop offset=".86" stop-color="#feb10c"/>
+                                    <stop offset=".91" stop-color="#fec700"/>
+                                    <stop offset=".96" stop-color="#ffdb0f"/>
+                                </linearGradient>
+                            </defs>
                         </svg>
                     </div>
                     <span class="text-xs font-semibold">Gmail</span>
@@ -235,39 +257,103 @@
 
                 <button id="outlook-btn" class="flex flex-col items-center gap-2 p-4 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all">
                     <div class="w-12 h-12 flex items-center justify-center">
-                        <svg viewBox="0 0 24 24" class="w-10 h-10">
-                            <path fill="#0078D4" d="M22 12V19.81Q22 20.2 21.73 20.5 21.45 20.75 21.06 20.75H7.94Q7.55 20.75 7.27 20.5 7 20.2 7 19.81V17H2.83Q2.5 17 2.24 16.76 2 16.5 2 16.17V7.83Q2 7.5 2.24 7.24 2.5 7 2.83 7H8.25V4.13Q8.25 3.76 8.5 3.5 8.76 3.25 9.13 3.25H19.87Q20.24 3.25 20.5 3.5 20.75 3.76 20.75 4.13V11.04L21.79 11.64H21.8Q21.88 11.7 21.94 11.8 22 11.89 22 12M17 5.13V7.63H19.5V5.13M17 8.88V11.38H19.5V8.88M17 12.63V14.15L19.54 12.63M12.63 5.13V7.63H15.75V5.13M12.63 8.88V11.38H15.75V8.88M12.63 12.63V14.32L14.64 15.56L15.75 14.9V12.63M9.5 5.13V7H11.27Q11.33 7 11.38 7.04V5.12M7 15.32Q7.73 15.32 8.32 15.06 8.9 14.8 9.31 14.35 9.71 13.9 9.91 13.28 10.12 12.66 10.13 11.94 10.13 11.25 9.92 10.65 9.72 10.06 9.32 9.62 8.93 9.18 8.37 8.93 7.8 8.68 7.08 8.68 6.31 8.68 5.71 8.93 5.12 9.18 4.71 9.63 4.3 10.09 4.09 10.71 3.88 11.34 3.88 12.08 3.88 12.78 4.09 13.38 4.31 13.97 4.71 14.4 5.11 14.83 5.68 15.08 6.26 15.32 7 15.32M8.25 19.5H18.57L12 15.4V16.17Q12 16.5 11.76 16.76 11.5 17 11.17 17H8.25M20.75 19.39V13.36L15.83 16.31Z"/>
+                        <svg viewBox="0 0 512 512" class="w-10 h-10">
+                            <path fill="#0078D4" d="M512 267.91c0.03-4-2.04-7.73-5.45-9.82h-0.06l-0.21-0.12L328.86 152.95c-0.77-0.52-1.56-0.99-2.38-1.42c-6.85-3.53-14.99-3.53-21.84 0c-0.82 0.43-1.62 0.9-2.38 1.42L124.84 257.96l-0.21 0.12c-5.42 3.37-7.08 10.5-3.71 15.92c0.99 1.6 2.36 2.93 3.99 3.88L302.32 382.9c0.77 0.51 1.56 0.99 2.38 1.42c6.85 3.53 14.99 3.53 21.84 0c0.82-0.43 1.61-0.9 2.38-1.42l177.41-105.02C509.88 275.82 512.04 272.01 512 267.91z"/>
+                            <path fill="#0364B8" d="M145.53 197.79h116.43v106.72H145.53V197.79z M488.19 89.3V40.48c0.28-12.21-9.38-22.33-21.59-22.62H164.47c-12.21 0.29-21.87 10.42-21.59 22.62V89.3l178.6 47.63L488.19 89.3z"/>
+                            <path fill="#0078D4" d="M142.88 89.3h119.07v107.16H142.88V89.3z"/>
+                            <path fill="#28A8EA" d="M381.02 89.3H261.95v107.16l119.07 107.16h107.16V196.47L381.02 89.3z"/>
+                            <path fill="#0078D4" d="M261.95 196.47h119.07v107.16H261.95V196.47z"/>
+                            <path fill="#0364B8" d="M261.95 303.63h119.07v107.16H261.95V303.63z"/>
+                            <path fill="#14447D" d="M145.53 304.51h116.43v97.02H145.53V304.51z"/>
+                            <path fill="#0078D4" d="M381.02 303.63h107.16v107.16H381.02V303.63z"/>
                         </svg>
                     </div>
                     <span class="text-xs font-semibold">Outlook</span>
                 </button>
 
-                <button id="apple-mail-btn" class="flex flex-col items-center gap-2 p-4 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all">
-                    <div class="w-12 h-12 flex items-center justify-center">
-                        <svg viewBox="0 0 24 24" class="w-10 h-10">
-                            <path fill="#1A6AE7" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                        </svg>
-                    </div>
-                    <span class="text-xs font-semibold">Apple Mail</span>
-                </button>
-
                 <button id="proton-btn" class="flex flex-col items-center gap-2 p-4 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all">
                     <div class="w-12 h-12 flex items-center justify-center">
-                        <svg viewBox="0 0 24 24" class="w-10 h-10">
-                            <path fill="#6D4AFF" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z"/>
+                        <svg viewBox="0 0 512 512" class="w-10 h-10">
+                            <path fill="url(#prefix___Linear1)" d="M22.86 13.464l.002.002-10.005 11.105L0 10.419V4.315a.827.827 0 011.356-.637l14.265 11.846a3.722 3.722 0 004.758 0l2.481-2.06z" transform="matrix(13.8889 0 0 13.8889 6 6)"/>
+                            <path fill="url(#prefix___Radial2)" d="M28.286 8.958l-5.426 4.506.002.002-7.184 6.345a3.31 3.31 0 01-4.308.065L0 10.42v18.142a3.724 3.724 0 003.724 3.724h24.562l2.571-11.664-2.571-11.664z" transform="matrix(13.8889 0 0 13.8889 6 6)"/>
+                            <path fill="url(#prefix___Linear3)" d="M28.286 8.963v23.323h3.99A3.724 3.724 0 0036 28.562V4.315a.827.827 0 00-1.356-.637l-6.358 5.285z" transform="matrix(13.8889 0 0 13.8889 6 6)"/>
+                            <defs>
+                                <linearGradient id="prefix___Linear1" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="scale(-43.6455) rotate(73.941 .222 -.49)">
+                                    <stop offset="0" stop-color="#e3d9ff"/>
+                                    <stop offset="1" stop-color="#7341ff"/>
+                                </linearGradient>
+                                <linearGradient id="prefix___Linear3" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="scale(-66.0342) rotate(65.129 .243 -.95)">
+                                    <stop offset="0" stop-color="#e3d9ff"/>
+                                    <stop offset=".27" stop-color="#e3d9ff"/>
+                                    <stop offset="1" stop-color="#7341ff"/>
+                                </linearGradient>
+                                <radialGradient id="prefix___Radial2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(35.9848 0 0 33.9185 30.723 11.814)">
+                                    <stop offset="0" stop-color="#6d4aff"/>
+                                    <stop offset=".56" stop-color="#6d4aff"/>
+                                    <stop offset=".99" stop-color="#aa8eff"/>
+                                    <stop offset="1" stop-color="#aa8eff"/>
+                                </radialGradient>
+                            </defs>
                         </svg>
                     </div>
                     <span class="text-xs font-semibold">ProtonMail</span>
                 </button>
+            </div>
 
-                <button id="default-btn" class="flex flex-col items-center gap-2 p-4 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all">
-                    <div class="w-12 h-12 flex items-center justify-center">
-                        <svg class="w-6 h-6 text-[#1A1A1A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <span class="text-xs font-semibold">Copy</span>
-                </button>
+            <button id="more-clients-btn" class="w-full flex items-center justify-center gap-2 p-3 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all text-sm text-neutral-600 hover:text-black">
+                <span>More clients</span>
+                <svg id="more-clients-arrow" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+
+            <div id="more-clients" class="hidden mt-3">
+                <div class="grid grid-cols-3 gap-3">
+                    <button id="apple-mail-btn" class="flex flex-col items-center gap-2 p-4 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all">
+                        <div class="w-12 h-12 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" class="w-10 h-10">
+                                <path fill="#1A6AE7" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xs font-semibold">Apple Mail</span>
+                    </button>
+
+                    <button id="yahoo-btn" class="flex flex-col items-center gap-2 p-4 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all">
+                        <div class="w-12 h-12 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" class="w-10 h-10">
+                                <path fill="#6001D2" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xs font-semibold">Yahoo Mail</span>
+                    </button>
+
+                    <button id="aol-btn" class="flex flex-col items-center gap-2 p-4 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all">
+                        <div class="w-12 h-12 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" class="w-10 h-10">
+                                <path fill="#0078D4" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xs font-semibold">AOL Mail</span>
+                    </button>
+
+                    <button id="icloud-btn" class="flex flex-col items-center gap-2 p-4 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all">
+                        <div class="w-12 h-12 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" class="w-10 h-10">
+                                <path fill="#007AFF" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xs font-semibold">iCloud Mail</span>
+                    </button>
+
+                    <button id="default-btn" class="flex flex-col items-center gap-2 p-4 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all">
+                        <div class="w-12 h-12 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-[#1A1A1A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-xs font-semibold">Copy</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -412,9 +498,28 @@
             const outlookBtn = document.getElementById('outlook-btn');
             const appleMailBtn = document.getElementById('apple-mail-btn');
             const protonBtn = document.getElementById('proton-btn');
+            const yahooBtn = document.getElementById('yahoo-btn');
+            const aolBtn = document.getElementById('aol-btn');
+            const icloudBtn = document.getElementById('icloud-btn');
             const defaultBtn = document.getElementById('default-btn');
+            const moreClientsBtn = document.getElementById('more-clients-btn');
+            const moreClients = document.getElementById('more-clients');
+            const moreClientsArrow = document.getElementById('more-clients-arrow');
+            const toast = document.getElementById('toast');
 
             let currentEmail = 'legal@jamesstudio.uk';
+
+            function showToast(message) {
+                if (toast) {
+                    toast.querySelector('span').textContent = message;
+                    toast.classList.remove('translate-y-20', 'opacity-0');
+                    toast.classList.add('translate-y-0', 'opacity-100');
+                    setTimeout(() => {
+                        toast.classList.add('translate-y-20', 'opacity-0');
+                        toast.classList.remove('translate-y-0', 'opacity-100');
+                    }, 3000);
+                }
+            }
 
             if (legalEmailLinks.length > 0 && emailModal) {
                 legalEmailLinks.forEach(link => {
@@ -473,14 +578,6 @@
                 });
             }
 
-            if (appleMailBtn && emailModal) {
-                appleMailBtn.addEventListener('click', function() {
-                    // Open Apple Mail (mailto will open default Apple Mail on macOS/iOS)
-                    window.location.href = `mailto:${currentEmail}?subject=Privacy+Policy+Inquiry`;
-                    closeModalWithAnimation();
-                });
-            }
-
             if (protonBtn && emailModal) {
                 protonBtn.addEventListener('click', function() {
                     window.open(`https://mail.proton.me/mailto=${encodeURIComponent(currentEmail)}?subject=Privacy+Policy+Inquiry`, '_blank');
@@ -488,16 +585,56 @@
                 });
             }
 
+            if (appleMailBtn && emailModal) {
+                appleMailBtn.addEventListener('click', function() {
+                    window.location.href = `mailto:${currentEmail}?subject=Privacy+Policy+Inquiry`;
+                    closeModalWithAnimation();
+                });
+            }
+
+            if (yahooBtn && emailModal) {
+                yahooBtn.addEventListener('click', function() {
+                    window.open(`https://mail.yahoo.com/compose/?to=${encodeURIComponent(currentEmail)}&subject=Privacy+Policy+Inquiry`, '_blank');
+                    closeModalWithAnimation();
+                });
+            }
+
+            if (aolBtn && emailModal) {
+                aolBtn.addEventListener('click', function() {
+                    window.open(`https://mail.aol.com/compose/?to=${encodeURIComponent(currentEmail)}&subject=Privacy+Policy+Inquiry`, '_blank');
+                    closeModalWithAnimation();
+                });
+            }
+
+            if (icloudBtn && emailModal) {
+                icloudBtn.addEventListener('click', function() {
+                    window.location.href = `mailto:${currentEmail}?subject=Privacy+Policy+Inquiry`;
+                    closeModalWithAnimation();
+                });
+            }
+
             if (defaultBtn && emailModal) {
                 defaultBtn.addEventListener('click', function() {
-                    // Copy email to clipboard
                     navigator.clipboard.writeText(currentEmail).then(() => {
-                        alert('Email copied to clipboard: ' + currentEmail);
+                        showToast('Email copied to clipboard: ' + currentEmail);
                         closeModalWithAnimation();
                     }).catch(err => {
                         console.error('Failed to copy email:', err);
-                        alert('Failed to copy email. Please try again.');
+                        showToast('Failed to copy email. Please try again.');
                     });
+                });
+            }
+
+            if (moreClientsBtn && moreClients && moreClientsArrow) {
+                moreClientsBtn.addEventListener('click', function() {
+                    const isHidden = moreClients.classList.contains('hidden');
+                    if (isHidden) {
+                        moreClients.classList.remove('hidden');
+                        moreClientsArrow.classList.add('rotate-180');
+                    } else {
+                        moreClients.classList.add('hidden');
+                        moreClientsArrow.classList.remove('rotate-180');
+                    }
                 });
             }
         });
