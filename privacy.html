@@ -517,7 +517,7 @@
 
             function isAppleDevice() {
                 const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-                return /iPhone|iPad|iPod|Macintosh/.test(userAgent) && !/Windows|Linux|Android/.test(userAgent);
+                return /iPhone|iPad|iPod/.test(userAgent) || (/Macintosh/.test(userAgent) && !/Windows|Linux|Android/.test(userAgent));
             }
 
             // Disable Apple Mail button on non-Apple devices
