@@ -307,8 +307,8 @@
                 </svg>
             </button>
 
-            <div id="more-clients" class="hidden mt-3">
-                <div class="grid grid-cols-3 gap-2">
+            <div id="more-clients" class="hidden mt-3 overflow-hidden transition-all duration-300 ease-in-out">
+                <div class="grid grid-cols-2 gap-2">
                     <button id="apple-mail-btn" class="flex flex-col items-center gap-1 p-3 border border-[#1A1A1A]/10 rounded-lg hover:border-[#1A1A1A] transition-all">
                         <div class="w-8 h-8 flex items-center justify-center">
                             <svg viewBox="0 0 24 24" class="w-6 h-6">
@@ -316,33 +316,6 @@
                             </svg>
                         </div>
                         <span class="text-[10px] font-semibold">Apple Mail</span>
-                    </button>
-
-                    <button id="yahoo-btn" class="flex flex-col items-center gap-1 p-3 border border-[#1A1A1A]/10 rounded-lg hover:border-[#1A1A1A] transition-all">
-                        <div class="w-8 h-8 flex items-center justify-center">
-                            <svg viewBox="0 0 24 24" class="w-6 h-6">
-                                <path fill="#6001D2" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z"/>
-                            </svg>
-                        </div>
-                        <span class="text-[10px] font-semibold">Yahoo Mail</span>
-                    </button>
-
-                    <button id="aol-btn" class="flex flex-col items-center gap-1 p-3 border border-[#1A1A1A]/10 rounded-lg hover:border-[#1A1A1A] transition-all">
-                        <div class="w-8 h-8 flex items-center justify-center">
-                            <svg viewBox="0 0 24 24" class="w-6 h-6">
-                                <path fill="#0078D4" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                            </svg>
-                        </div>
-                        <span class="text-[10px] font-semibold">AOL Mail</span>
-                    </button>
-
-                    <button id="icloud-btn" class="flex flex-col items-center gap-1 p-3 border border-[#1A1A1A]/10 rounded-lg hover:border-[#1A1A1A] transition-all">
-                        <div class="w-8 h-8 flex items-center justify-center">
-                            <svg viewBox="0 0 24 24" class="w-6 h-6">
-                                <path fill="#007AFF" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                            </svg>
-                        </div>
-                        <span class="text-[10px] font-semibold">iCloud Mail</span>
                     </button>
 
                     <button id="default-btn" class="flex flex-col items-center gap-1 p-3 border border-[#1A1A1A]/10 rounded-lg hover:border-[#1A1A1A] transition-all">
@@ -384,8 +357,8 @@
     <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-6 right-6 bg-[#1A1A1A] text-[#FAF9F6] px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50">
         <div class="flex items-center gap-3">
-            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            <span class="text-sm font-medium">Link copied to clipboard</span>
+            <svg id="toast-icon" class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span id="toast-message" class="text-sm font-medium">Link copied to clipboard</span>
         </div>
     </div>
 
@@ -498,9 +471,8 @@
             const outlookBtn = document.getElementById('outlook-btn');
             const appleMailBtn = document.getElementById('apple-mail-btn');
             const protonBtn = document.getElementById('proton-btn');
-            const yahooBtn = document.getElementById('yahoo-btn');
-            const aolBtn = document.getElementById('aol-btn');
-            const icloudBtn = document.getElementById('icloud-btn');
+            const appleMailBtn = document.getElementById('apple-mail-btn');
+            const protonBtn = document.getElementById('proton-btn');
             const defaultBtn = document.getElementById('default-btn');
             const moreClientsBtn = document.getElementById('more-clients-btn');
             const moreClients = document.getElementById('more-clients');
@@ -509,9 +481,27 @@
 
             let currentEmail = 'legal@jamesstudio.uk';
 
-            function showToast(message) {
+            function showToast(message, isError = false) {
                 if (toast) {
-                    toast.querySelector('span').textContent = message;
+                    const toastMessage = toast.querySelector('#toast-message');
+                    const toastIcon = toast.querySelector('#toast-icon');
+                    
+                    if (toastMessage) {
+                        toastMessage.textContent = message;
+                    }
+                    
+                    if (toastIcon) {
+                        if (isError) {
+                            toastIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+                            toastIcon.classList.remove('text-green-400');
+                            toastIcon.classList.add('text-red-400');
+                        } else {
+                            toastIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>';
+                            toastIcon.classList.remove('text-red-400');
+                            toastIcon.classList.add('text-green-400');
+                        }
+                    }
+                    
                     toast.classList.remove('translate-y-20', 'opacity-0');
                     toast.classList.add('translate-y-0', 'opacity-100');
                     setTimeout(() => {
@@ -567,6 +557,7 @@
             if (gmailBtn && emailModal) {
                 gmailBtn.addEventListener('click', function() {
                     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(currentEmail)}&su=Privacy+Policy+Inquiry`, '_blank');
+                    showToast('Opening Gmail compose window...');
                     closeModalWithAnimation();
                 });
             }
@@ -574,6 +565,7 @@
             if (outlookBtn && emailModal) {
                 outlookBtn.addEventListener('click', function() {
                     window.open(`https://outlook.live.com/owa/?path=/mail/action/compose&to=${encodeURIComponent(currentEmail)}&subject=Privacy+Policy+Inquiry`, '_blank');
+                    showToast('Opening Outlook compose window...');
                     closeModalWithAnimation();
                 });
             }
@@ -581,6 +573,7 @@
             if (protonBtn && emailModal) {
                 protonBtn.addEventListener('click', function() {
                     window.open(`https://mail.proton.me/mailto=${encodeURIComponent(currentEmail)}?subject=Privacy+Policy+Inquiry`, '_blank');
+                    showToast('Opening ProtonMail compose window...');
                     closeModalWithAnimation();
                 });
             }
@@ -588,27 +581,7 @@
             if (appleMailBtn && emailModal) {
                 appleMailBtn.addEventListener('click', function() {
                     window.location.href = `mailto:${currentEmail}?subject=Privacy+Policy+Inquiry`;
-                    closeModalWithAnimation();
-                });
-            }
-
-            if (yahooBtn && emailModal) {
-                yahooBtn.addEventListener('click', function() {
-                    window.open(`https://mail.yahoo.com/compose/?to=${encodeURIComponent(currentEmail)}&subject=Privacy+Policy+Inquiry`, '_blank');
-                    closeModalWithAnimation();
-                });
-            }
-
-            if (aolBtn && emailModal) {
-                aolBtn.addEventListener('click', function() {
-                    window.open(`https://mail.aol.com/compose/?to=${encodeURIComponent(currentEmail)}&subject=Privacy+Policy+Inquiry`, '_blank');
-                    closeModalWithAnimation();
-                });
-            }
-
-            if (icloudBtn && emailModal) {
-                icloudBtn.addEventListener('click', function() {
-                    window.location.href = `mailto:${currentEmail}?subject=Privacy+Policy+Inquiry`;
+                    showToast('Opening Apple Mail app...');
                     closeModalWithAnimation();
                 });
             }
@@ -616,11 +589,11 @@
             if (defaultBtn && emailModal) {
                 defaultBtn.addEventListener('click', function() {
                     navigator.clipboard.writeText(currentEmail).then(() => {
-                        showToast('Email copied to clipboard: ' + currentEmail);
+                        showToast('Email address copied to clipboard: ' + currentEmail);
                         closeModalWithAnimation();
                     }).catch(err => {
                         console.error('Failed to copy email:', err);
-                        showToast('Failed to copy email. Please try again.');
+                        showToast('Failed to copy email address. Please try again.', true);
                     });
                 });
             }
@@ -630,10 +603,23 @@
                     const isHidden = moreClients.classList.contains('hidden');
                     if (isHidden) {
                         moreClients.classList.remove('hidden');
+                        moreClients.style.maxHeight = '0px';
+                        moreClients.style.opacity = '0';
                         moreClientsArrow.classList.add('rotate-180');
+                        
+                        setTimeout(() => {
+                            moreClients.style.maxHeight = moreClients.scrollHeight + 'px';
+                            moreClients.style.opacity = '1';
+                            moreClients.style.transition = 'all 0.3s ease-in-out';
+                        }, 10);
                     } else {
-                        moreClients.classList.add('hidden');
+                        moreClients.style.maxHeight = '0px';
+                        moreClients.style.opacity = '0';
                         moreClientsArrow.classList.remove('rotate-180');
+                        
+                        setTimeout(() => {
+                            moreClients.classList.add('hidden');
+                        }, 300);
                     }
                 });
             }
