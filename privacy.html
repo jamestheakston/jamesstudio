@@ -212,8 +212,8 @@
     </footer>
 
     <!-- Email Client Modal -->
-    <div id="email-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
+    <div id="email-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4 transition-all duration-300 ease-in-out">
+        <div id="email-modal-content" class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl transform scale-95 opacity-0 transition-all duration-300 ease-in-out">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-bold">Choose Email Client</h3>
                 <button id="close-modal" class="text-neutral-400 hover:text-black transition-colors">
@@ -278,6 +278,29 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .email-modal-hidden {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        .email-modal-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .opacity-0 {
+            opacity: 0;
+        }
+        .opacity-100 {
+            opacity: 1;
+        }
+        .scale-95 {
+            transform: scale(0.95);
+        }
+        .scale-100 {
+            transform: scale(1);
+        }
+    </style>
 
     <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-6 right-6 bg-[#1A1A1A] text-[#FAF9F6] px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50">
@@ -408,22 +431,38 @@
                         currentEmail = 'legal@jamesstudio.uk';
                         emailModal.classList.remove('hidden');
                         emailModal.classList.add('flex');
+                        // Add animation classes
+                        setTimeout(() => {
+                            const modalContent = document.getElementById('email-modal-content');
+                            if (modalContent) {
+                                modalContent.classList.remove('opacity-0', 'scale-95');
+                                modalContent.classList.add('opacity-100', 'scale-100');
+                            }
+                        }, 10);
                     });
                 });
             }
 
-            if (closeModal && emailModal) {
-                closeModal.addEventListener('click', function() {
+            function closeModalWithAnimation() {
+                const modalContent = document.getElementById('email-modal-content');
+                if (modalContent) {
+                    modalContent.classList.remove('opacity-100', 'scale-100');
+                    modalContent.classList.add('opacity-0', 'scale-95');
+                }
+                setTimeout(() => {
                     emailModal.classList.add('hidden');
                     emailModal.classList.remove('flex');
-                });
+                }, 300);
+            }
+
+            if (closeModal && emailModal) {
+                closeModal.addEventListener('click', closeModalWithAnimation);
             }
 
             if (emailModal) {
                 emailModal.addEventListener('click', function(e) {
                     if (e.target === emailModal) {
-                        emailModal.classList.add('hidden');
-                        emailModal.classList.remove('flex');
+                        closeModalWithAnimation();
                     }
                 });
             }
@@ -431,8 +470,7 @@
             if (gmailBtn && emailModal) {
                 gmailBtn.addEventListener('click', function() {
                     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(currentEmail)}&su=Privacy+Policy+Inquiry`, '_blank');
-                    emailModal.classList.add('hidden');
-                    emailModal.classList.remove('flex');
+                    closeModalWithAnimation();
                 });
             }
 
@@ -441,8 +479,7 @@
                     // Copy email to clipboard instead of opening mailto
                     navigator.clipboard.writeText(currentEmail).then(() => {
                         alert('Email copied to clipboard: ' + currentEmail);
-                        emailModal.classList.add('hidden');
-                        emailModal.classList.remove('flex');
+                        closeModalWithAnimation();
                     }).catch(err => {
                         console.error('Failed to copy email:', err);
                         alert('Failed to copy email. Please try again.');
@@ -453,8 +490,7 @@
             if (outlookBtn && emailModal) {
                 outlookBtn.addEventListener('click', function() {
                     window.open(`https://outlook.live.com/owa/?path=/mail/action/compose&to=${encodeURIComponent(currentEmail)}&subject=Privacy+Policy+Inquiry`, '_blank');
-                    emailModal.classList.add('hidden');
-                    emailModal.classList.remove('flex');
+                    closeModalWithAnimation();
                 });
             }
 
