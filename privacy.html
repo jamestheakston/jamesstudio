@@ -193,7 +193,7 @@
                 <p class="mt-4"><strong>Disclaimer:</strong> As a beta service, features may break unexpectedly without warning. We take no liability for any issues, data loss, or service interruptions that may occur while using the Client Portal. We recommend backing up your data regularly.</p>
 
                 <h2 class="text-2xl font-bold mt-8 mb-4">Contact Us</h2>
-                <p>If you have questions about this Privacy Policy or our data practices regarding the Client Portal, please contact us at <a href="mailto:hello@jamesstudio.uk" class="underline hover:text-black">hello@jamesstudio.uk</a> or <a href="mailto:legal@jamesstudio.uk" class="underline hover:text-black">legal@jamesstudio.uk</a> for privacy concerns.</p>
+                <p>If you have questions about this Privacy Policy or our data practices regarding the Client Portal, please contact us at <a href="mailto:legal@jamesstudio.uk" class="underline hover:text-black legal-email-link">legal@jamesstudio.uk</a> for privacy concerns.</p>
             </div>
         </div>
     </main>
@@ -388,7 +388,7 @@
         handleUrlParams();
 
         // Email Modal Functionality
-        const legalEmailLink = document.getElementById('legal-email-link');
+        const legalEmailLinks = document.querySelectorAll('.legal-email-link');
         const emailModal = document.getElementById('email-modal');
         const closeModal = document.getElementById('close-modal');
         const gmailBtn = document.getElementById('gmail-btn');
@@ -400,14 +400,14 @@
 
         let currentEmail = 'legal@jamesstudio.uk';
 
-        if (legalEmailLink) {
-            legalEmailLink.addEventListener('click', function(e) {
+        legalEmailLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
                 e.preventDefault();
                 currentEmail = 'legal@jamesstudio.uk';
                 emailModal.classList.remove('hidden');
                 emailModal.classList.add('flex');
             });
-        }
+        });
 
         if (closeModal) {
             closeModal.addEventListener('click', function() {
