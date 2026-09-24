@@ -239,12 +239,12 @@
                 <button id="default-btn" class="w-full flex items-center gap-4 p-4 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all text-left">
                     <div class="w-10 h-10 bg-[#1A1A1A] rounded-full flex items-center justify-center">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                         </svg>
                     </div>
                     <div>
-                        <p class="font-semibold">Default Email Client</p>
-                        <p class="text-xs text-neutral-500">Open in your default app</p>
+                        <p class="font-semibold">Copy Email</p>
+                        <p class="text-xs text-neutral-500">Copy to clipboard</p>
                     </div>
                 </button>
 
@@ -438,9 +438,15 @@
 
             if (defaultBtn && emailModal) {
                 defaultBtn.addEventListener('click', function() {
-                    window.location.href = `mailto:${currentEmail}?subject=Privacy+Policy+Inquiry`;
-                    emailModal.classList.add('hidden');
-                    emailModal.classList.remove('flex');
+                    // Copy email to clipboard instead of opening mailto
+                    navigator.clipboard.writeText(currentEmail).then(() => {
+                        alert('Email copied to clipboard: ' + currentEmail);
+                        emailModal.classList.add('hidden');
+                        emailModal.classList.remove('flex');
+                    }).catch(err => {
+                        console.error('Failed to copy email:', err);
+                        alert('Failed to copy email. Please try again.');
+                    });
                 });
             }
 
