@@ -515,6 +515,18 @@
 
             let currentEmail = 'legal@jamesstudio.uk';
 
+            function isAppleDevice() {
+                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                return /iPhone|iPad|iPod|Macintosh/.test(userAgent) && !/Windows|Linux|Android/.test(userAgent);
+            }
+
+            // Disable Apple Mail button on non-Apple devices
+            if (appleMailBtn && !isAppleDevice()) {
+                appleMailBtn.disabled = true;
+                appleMailBtn.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+                appleMailBtn.querySelector('span').textContent = 'Unavailable on your device';
+            }
+
             function showToast(message, isError = false) {
                 if (toast) {
                     const toastMessage = toast.querySelector('#toast-message');
@@ -614,6 +626,7 @@
 
             if (appleMailBtn && emailModal) {
                 appleMailBtn.addEventListener('click', function() {
+                    if (this.disabled) return;
                     window.location.href = `mailto:${currentEmail}?subject=Privacy+Policy+Inquiry`;
                     showToast('Opening Apple Mail app...');
                     closeModalWithAnimation();
