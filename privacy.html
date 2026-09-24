@@ -659,8 +659,8 @@
 
             if (jamesBtn && emailModal) {
                 jamesBtn.addEventListener('click', function() {
-                    window.location.href = `mailto:${currentEmail}?subject=Privacy+Policy+Inquiry`;
-                    showToast('Opening your default email app...');
+                    window.open(`https://admin.jamesstudio.uk/mail?subject=Privacy+Policy+Inquiry&to=legalemail&warn=true&identifier=jamesstudiochooseemailclientmodal`, '_blank');
+                    showToast('Opening James Studio admin panel...');
                     closeModalWithAnimation();
                 });
             }
