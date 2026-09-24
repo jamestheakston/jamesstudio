@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /worker.js
+Disallow: /wrangler.toml
 
 Sitemap: https://jamesstudio.uk/sitemap.xml
