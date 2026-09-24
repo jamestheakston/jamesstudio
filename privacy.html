@@ -622,16 +622,16 @@
 
             if (yahooBtn && emailModal) {
                 yahooBtn.addEventListener('click', function() {
-                    window.location.href = `mailto:${currentEmail}?subject=Privacy+Policy+Inquiry`;
-                    showToast('Opening your default email app for Yahoo Mail...');
+                    window.open(`https://compose.mail.yahoo.com/?to=${encodeURIComponent(currentEmail)}&subject=Privacy+Policy+Inquiry`, '_blank');
+                    showToast('Opening Yahoo Mail compose window...');
                     closeModalWithAnimation();
                 });
             }
 
             if (aolBtn && emailModal) {
                 aolBtn.addEventListener('click', function() {
-                    window.location.href = `mailto:${currentEmail}?subject=Privacy+Policy+Inquiry`;
-                    showToast('Opening your default email app for AOL Mail...');
+                    window.open(`https://mail.aol.com/webmail-std/en-us/composemessage?to=${encodeURIComponent(currentEmail)}&subject=Privacy+Policy+Inquiry`, '_blank');
+                    showToast('Opening AOL Mail compose window...');
                     closeModalWithAnimation();
                 });
             }
