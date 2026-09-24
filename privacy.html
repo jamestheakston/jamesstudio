@@ -659,7 +659,7 @@
 
             if (jamesBtn && emailModal) {
                 jamesBtn.addEventListener('click', function() {
-                    window.open(`https://admin.jamesstudio.uk/mail?subject=Privacy+Policy+Inquiry&to=legalemail&warn=true&identifier=jamesstudiochooseemailclientmodal`, '_blank');
+                    window.open(`https://admin.jamesstudio.uk/mail?subject=Privacy+Policy+Inquiry&to=${encodeURIComponent(currentEmail)}&warn=true&identifier=jamesstudiochooseemailclientmodal`, '_blank');
                     showToast('Opening James Studio admin panel...');
                     closeModalWithAnimation();
                 });
