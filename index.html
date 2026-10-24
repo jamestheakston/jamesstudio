@@ -147,9 +147,123 @@
             transform: translateY(-10px);
         }
 
+        /* Mobile menu */
+        @keyframes menuIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .menu-item {
+            opacity: 0;
+            animation: menuIn 0.45s ease-out forwards;
+        }
+        .menu-link {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1.15rem 0;
+            border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+            color: #1A1A1A;
+            text-align: left;
+        }
+        .menu-num {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: #a3a3a3;
+            min-width: 1.5rem;
+        }
+        .menu-text {
+            font-size: 2.1rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            padding-bottom: 4px;
+            background-image: linear-gradient(currentColor, currentColor);
+            background-repeat: no-repeat;
+            background-position: 0 100%;
+            background-size: 0% 3px;
+            transition: background-size 0.35s ease;
+        }
+        .menu-link .menu-arrow {
+            width: 1.6rem;
+            height: 1.6rem;
+            margin-left: auto;
+            align-self: center;
+            opacity: 0.3;
+            transform: translateX(-8px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .menu-link:hover .menu-text,
+        .menu-link:active .menu-text,
+        .menu-link:focus-visible .menu-text {
+            background-size: 100% 3px;
+        }
+        .menu-link:hover .menu-arrow,
+        .menu-link:active .menu-arrow,
+        .menu-link:focus-visible .menu-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .menu-link:hover .menu-num,
+        .menu-link:active .menu-num {
+            color: #1A1A1A;
+        }
+        .menu-cta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #1A1A1A;
+            color: #FAF9F6;
+            padding: 1.1rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-align: left;
+            transition: background 0.2s ease;
+        }
+        .menu-cta .menu-arrow {
+            width: 1.2rem;
+            height: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        .menu-cta:hover,
+        .menu-cta:active {
+            background: #333;
+        }
+        .menu-cta:hover .menu-arrow,
+        .menu-cta:active .menu-arrow {
+            transform: translateX(6px);
+        }
+
+        /* Security statement modal */
+        #securityModal {
+            opacity: 0;
+            transition: opacity 0.25s ease-out;
+        }
+        #securityModal.show {
+            opacity: 1;
+        }
+        #securityModal .modal-panel {
+            transform: translateY(16px);
+            transition: transform 0.25s ease-out;
+        }
+        #securityModal.show .modal-panel {
+            transform: translateY(0);
+        }
+
     </style>
 </head>
 <body class="antialiased selection:bg-[#1A1A1A] selection:text-[#FAF9F6]">
+
+    <!-- Security Statement Banner -->
+    <div class="bg-[#1A1A1A] text-[#FAF9F6] px-6 py-2.5 text-center text-xs md:text-sm tracking-tight">
+        <span class="text-neutral-400">Security Questions?</span>
+        <button type="button" id="securityBannerBtn" data-security-open aria-haspopup="dialog" aria-controls="securityModal" class="ml-1 font-semibold underline underline-offset-4 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FAF9F6] rounded">
+            Read our statement &rarr;
+        </button>
+    </div>
 
     <!-- Navigation -->
     <nav class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#1A1A1A]/10 px-6 py-4 md:px-12 flex justify-between items-center transition-all duration-300">
@@ -175,13 +289,74 @@
     </nav>
 
     <!-- Mobile Navigation Overlay -->
-    <div id="mobileMenu" class="hidden fixed inset-0 z-40 bg-[#FAF9F6] flex flex-col justify-center items-center gap-8 text-2xl font-bold border-t border-[#1A1A1A]/10">
-        <a href="#services" onclick="toggleMenu()" class="hover:underline">Services</a>
-        <a href="#work" onclick="toggleMenu()" class="hover:underline">Selected Work</a>
-        <a href="#about" onclick="toggleMenu()" class="hover:underline">About Us</a>
-        <a href="#contact" onclick="toggleMenu()" class="bg-[#1A1A1A] text-[#FAF9F6] px-6 py-3 rounded-full text-sm font-semibold tracking-wider">
-            Get in Touch
+    <div id="mobileMenu" class="hidden fixed inset-0 z-40 bg-[#FAF9F6] flex flex-col justify-center items-stretch px-8 pt-28 pb-24 border-t border-[#1A1A1A]/10 overflow-y-auto">
+        <div class="flex flex-col" role="navigation" aria-label="Mobile">
+            <a href="#services" onclick="toggleMenu()" class="menu-link menu-item" style="animation-delay:.05s">
+                <span class="menu-num">01</span>
+                <span class="menu-text geometric-font">Services</span>
+                <svg class="menu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6l6 6-6 6"></path></svg>
+            </a>
+            <a href="#work" onclick="toggleMenu()" class="menu-link menu-item" style="animation-delay:.1s">
+                <span class="menu-num">02</span>
+                <span class="menu-text geometric-font">Selected Work</span>
+                <svg class="menu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6l6 6-6 6"></path></svg>
+            </a>
+            <a href="#about" onclick="toggleMenu()" class="menu-link menu-item" style="animation-delay:.15s">
+                <span class="menu-num">03</span>
+                <span class="menu-text geometric-font">About Us</span>
+                <svg class="menu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6l6 6-6 6"></path></svg>
+            </a>
+        </div>
+
+        <a href="#contact" onclick="toggleMenu()" class="menu-cta menu-item mt-10" style="animation-delay:.2s">
+            <span>Get in Touch</span>
+            <svg class="menu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6l6 6-6 6"></path></svg>
         </a>
+
+        <p class="menu-item absolute bottom-6 left-8 right-8 text-xs text-neutral-400 tracking-tight" style="animation-delay:.3s">
+            hello@jamesstudio.uk &nbsp;·&nbsp; Manchester, UK
+        </p>
+    </div>
+
+    <!-- Security Statement Banner (menu copy, pinned above the header while the menu is open) -->
+    <div id="mobileMenuBanner" class="hidden fixed top-0 left-0 right-0 z-[60] bg-[#1A1A1A] text-[#FAF9F6] px-6 py-2.5 text-center text-xs tracking-tight">
+        <span class="text-neutral-400">Security Questions?</span>
+        <button type="button" data-security-open aria-haspopup="dialog" aria-controls="securityModal" class="ml-1 font-semibold underline underline-offset-4 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FAF9F6] rounded">
+            Read our statement &rarr;
+        </button>
+    </div>
+
+    <!-- Security Statement Modal -->
+    <div id="securityModal" class="hidden fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-[#1A1A1A]/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="securityModalTitle">
+        <div class="modal-panel bg-[#FAF9F6] text-[#1A1A1A] w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl border border-[#1A1A1A]/10 shadow-2xl p-8 md:p-10 relative">
+            <button type="button" id="securityModalClose" class="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#1A1A1A]/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1A1A]" aria-label="Close statement">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <p class="text-xs uppercase font-bold tracking-widest text-neutral-400 mb-3">Security Statement</p>
+            <h2 id="securityModalTitle" class="geometric-font text-2xl md:text-3xl font-extrabold tracking-tight mb-5">Good news: your website is safe with us.</h2>
+
+            <div class="space-y-4 text-sm text-neutral-600 leading-relaxed">
+                <p>
+                    You may have seen the news about a serious security problem found in PHP, a popular tool that lots of websites around the world are built with. The people who look after PHP have already released a fix, but any website still running an older version could be at risk.
+                </p>
+                <p>
+                    <span class="font-semibold text-[#1A1A1A]">We don't build websites with PHP, so this doesn't affect any site we've made for you.</span>
+                    There's nothing you need to do.
+                </p>
+                <p>
+                    And if a security problem ever does affect your website, <span class="font-semibold text-[#1A1A1A]">we'll tell you straight away.</span>
+                </p>
+                <p>
+                    Got a question? Just drop us a line at <a href="mailto:hello@jamesstudio.uk" class="underline hover:text-black">hello@jamesstudio.uk</a>. If you'd like to read more about the PHP issue, you can find it in the
+                    <a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener noreferrer" class="underline hover:text-black">official PHP announcement</a>.
+                </p>
+            </div>
+
+            <button type="button" id="securityModalDone" class="mt-8 w-full bg-[#1A1A1A] text-[#FAF9F6] py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-neutral-800 transition-colors">
+                Close
+            </button>
+        </div>
     </div>
 
     <!-- Hero Section -->
@@ -613,16 +788,56 @@
             const isOpened = !mobileMenu.classList.contains('hidden');
             if (isOpened) {
                 mobileMenu.classList.add('hidden');
+                document.getElementById('mobileMenuBanner').classList.add('hidden');
+                document.querySelector('nav').style.top = '';
                 bar1.classList.remove('rotate-45', 'translate-y-[5px]');
                 bar2.classList.remove('-rotate-45', '-translate-y-[5px]');
             } else {
                 mobileMenu.classList.remove('hidden');
+                // Pin the security banner above the header while the menu is open
+                const menuBanner = document.getElementById('mobileMenuBanner');
+                menuBanner.classList.remove('hidden');
+                document.querySelector('nav').style.top = menuBanner.offsetHeight + 'px';
                 bar1.classList.add('rotate-45', 'translate-y-[5px]');
                 bar2.classList.add('-rotate-45', '-translate-y-[5px]');
             }
         }
 
         mobileMenuBtn.addEventListener('click', toggleMenu);
+
+        // Security statement modal
+        const securityModal = document.getElementById('securityModal');
+        const securityOpenBtns = document.querySelectorAll('[data-security-open]');
+        const securityModalClose = document.getElementById('securityModalClose');
+        const securityModalDone = document.getElementById('securityModalDone');
+        let securityOpener = null;
+
+        function openSecurityModal(e) {
+            securityOpener = e && e.currentTarget ? e.currentTarget : null;
+            securityModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => securityModal.classList.add('show'), 10);
+            securityModalClose.focus();
+        }
+
+        function closeSecurityModal() {
+            securityModal.classList.remove('show');
+            document.body.style.overflow = '';
+            setTimeout(() => securityModal.classList.add('hidden'), 250);
+            if (securityOpener) securityOpener.focus();
+        }
+
+        securityOpenBtns.forEach(btn => btn.addEventListener('click', openSecurityModal));
+        securityModalClose.addEventListener('click', closeSecurityModal);
+        securityModalDone.addEventListener('click', closeSecurityModal);
+        securityModal.addEventListener('click', (e) => {
+            if (e.target === securityModal) closeSecurityModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !securityModal.classList.contains('hidden')) {
+                closeSecurityModal();
+            }
+        });
 
         // Custom dropdown controls
         const dropdownButton = document.getElementById('dropdownButton');
