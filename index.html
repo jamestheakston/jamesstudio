@@ -661,6 +661,9 @@
 
         .chat-modal.open {
             display: flex;
+        }
+
+        .chat-modal.open {
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
         }
@@ -727,7 +730,10 @@
             padding: 16px 20px;
             border-top: 1px solid #1A1A1A/10;
             display: flex;
+            flex-direction: column;
             gap: 12px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
 
         .chat-expand-btn {
