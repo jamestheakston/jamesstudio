@@ -526,7 +526,7 @@
         .chat-input {
             flex: 1;
             padding: 12px 16px;
-            border: 1px solid #1A1A1A/10;
+            border: 1px solid #1A1A1A/20;
             border-radius: 12px;
             font-size: 14px;
             outline: none;
@@ -656,16 +656,15 @@
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease, pointer-events 0.3s ease;
         }
 
         .chat-modal.open {
             display: flex;
-        }
-
-        .chat-modal.open {
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
+            pointer-events: all;
         }
 
         .chat-modal-backdrop {
