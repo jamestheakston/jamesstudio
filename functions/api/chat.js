@@ -18,7 +18,10 @@ export async function onRequestPost(context) {
       });
     }
 
-    // Call Groq API
+    // Fetch site content for context
+    const siteContent = await fetchSiteContent();
+
+    // Call Groq API with site context
     const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -30,7 +33,13 @@ export async function onRequestPost(context) {
         messages: [
           {
             role: 'system',
-            content: 'You are a helpful assistant for James Studio, a UK-based web development and design agency. Be friendly, professional, and helpful. Keep responses concise and relevant to web development, design, and the agency\'s services.'
+            content: `You are a helpful assistant for James Studio, a UK-based web development and design agency. Be friendly, professional, and helpful. Keep responses concise and relevant to web development, design, and the agency's services.
+
+Here is information about James Studio from their website https://jamesstudio.uk:
+
+${siteContent}
+
+When answering questions, use this information. If the information isn't available here, suggest they visit https://jamesstudio.uk for more details or contact hello@jamesstudio.uk.`
           },
           {
             role: 'user',
@@ -65,5 +74,43 @@ export async function onRequestPost(context) {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
+  }
+}
+
+async function fetchSiteContent() {
+  try {
+    // Define pages to fetch
+    const pages = [
+      'https://jamesstudio.uk/',
+      'https://jamesstudio.uk/#services',
+      'https://jamesstudio.uk/#about',
+      'https://jamesstudio.uk/#contact',
+    ];
+
+    let content = '';
+
+    for (const url of pages) {
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          const html = await response.text();
+          // Extract text content from HTML
+          const text = html
+            .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+            .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+            .replace(/<[^>]+>/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+          content += `\n\n--- Content from ${url} ---\n${text.substring(0, 2000)}`;
+        }
+      } catch (error) {
+        console.error(`Failed to fetch ${url}:`, error);
+      }
+    }
+
+    return content || 'Failed to fetch site content. Please visit https://jamesstudio.uk for more information.';
+  } catch (error) {
+    console.error('Error fetching site content:', error);
+    return 'Unable to fetch site content. Please visit https://jamesstudio.uk for more information.';
   }
 }
