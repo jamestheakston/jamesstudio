@@ -644,7 +644,7 @@
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
+            transform: translate(-50%, -50%) translateY(20px) scale(0.95);
             width: 90%;
             max-width: 800px;
             height: 80vh;
@@ -657,13 +657,13 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease, transform 0.3s ease, pointer-events 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .chat-modal.open {
             display: flex;
             opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
+            transform: translate(-50%, -50%) translateY(0) scale(1);
             pointer-events: all;
         }
 
