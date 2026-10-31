@@ -582,6 +582,11 @@
             }
         }
 
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
     </style>
 </head>
 <body class="antialiased selection:bg-[#1A1A1A] selection:text-[#FAF9F6]">
@@ -1540,7 +1545,7 @@
         const chatUnavailable = document.getElementById('chatUnavailable');
 
         // Set chat availability
-        const chatUnavailableVar = true;
+        const chatUnavailableVar = false;
 
         // Icons for toggle button
         const chatIcon = `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1580,7 +1585,7 @@
         });
 
         // Start chat from welcome screen
-        function startChatWithMessage(message) {
+        async function startChatWithMessage(message) {
             chatWelcome.style.display = 'none';
             chatMessages.style.display = 'flex';
             chatInputArea.style.display = 'flex';
@@ -1588,19 +1593,57 @@
             // Add the FAQ item or custom message as user message
             addMessage(message, 'user');
 
-            // Simulate bot response
-            setTimeout(() => {
-                const responses = [
-                    "Great question! Let me help you with that.",
-                    "Thanks for asking! Here's what you need to know.",
-                    "I'd be happy to explain that to you.",
-                    "That's a common question. Here's the answer:"
-                ];
-                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                addMessage(randomResponse, 'bot');
-            }, 500);
+            // Call API for bot response
+            await getAIResponse(message);
 
             chatInput.focus();
+        }
+
+        // Get AI response from Cloudflare Function
+        async function getAIResponse(message) {
+            // Add typing indicator
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chat-message bot';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = '<span style="animation: pulse 1.5s infinite">...</span>';
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to get response');
+                }
+
+                const data = await response.json();
+
+                // Remove typing indicator
+                const typingIndicator = document.getElementById('typingIndicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+
+                // Add bot response
+                addMessage(data.response, 'bot');
+            } catch (error) {
+                console.error('Error getting AI response:', error);
+
+                // Remove typing indicator
+                const typingIndicator = document.getElementById('typingIndicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+
+                // Add error message
+                addMessage('Sorry, I encountered an error. Please try again or email us at hello@jamesstudio.uk', 'bot');
+            }
         }
 
         chatStartBtn.addEventListener('click', () => {
@@ -1633,6 +1676,9 @@
         if (chatUnavailableVar) {
             chatWelcome.style.display = 'none';
             chatUnavailable.style.display = 'flex';
+        } else {
+            chatWelcome.style.display = 'flex';
+            chatUnavailable.style.display = 'none';
         }
 
         // FAQ item clicks
@@ -1643,7 +1689,7 @@
         });
 
         // Send message
-        function sendMessage() {
+        async function sendMessage() {
             const message = chatInput.value.trim();
             if (!message) return;
 
@@ -1651,18 +1697,8 @@
             addMessage(message, 'user');
             chatInput.value = '';
 
-            // Simulate bot response
-            setTimeout(() => {
-                const responses = [
-                    "Thanks for reaching out! Would you like to tell us more about your project?",
-                    "We'd love to help! What kind of website or application are you looking to build?",
-                    "Great question! Feel free to share more details about your goals.",
-                    "Hello! How can we assist you with your web development needs?",
-                    "We're here to help! What's on your mind?"
-                ];
-                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                addMessage(randomResponse, 'bot');
-            }, 1000);
+            // Call API for bot response
+            await getAIResponse(message);
         }
 
         function addMessage(text, type) {
