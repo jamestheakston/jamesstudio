@@ -514,6 +514,12 @@
             padding: 16px 20px;
             border-top: 1px solid #1A1A1A/10;
             display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-input-row {
+            display: flex;
             gap: 12px;
         }
 
@@ -627,18 +633,45 @@
         /* Full-screen chat modal */
         .chat-modal {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 800px;
+            height: 80vh;
+            max-height: 700px;
             background: white;
             z-index: 10000;
             display: none;
             flex-direction: column;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
         .chat-modal.open {
             display: flex;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .chat-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .chat-modal-backdrop.open {
+            display: block;
+            opacity: 1;
         }
 
         .chat-modal-header {
@@ -1308,13 +1341,15 @@
             </div>
             <div class="chat-messages" id="chatMessages" style="display: none;"></div>
             <div class="chat-input-area" id="chatInputArea" style="display: none;">
-                <input type="text" class="chat-input" id="chatInput" placeholder="Type your message...">
-                <button class="chat-send-btn" id="chatSendBtn">
-                    Send
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                    </svg>
-                </button>
+                <div class="chat-input-row">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Type your message...">
+                    <button class="chat-send-btn" id="chatSendBtn">
+                        Send
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg>
+                    </button>
+                </div>
                 <div class="chat-powered-by">Powered by ChatGPT</div>
             </div>
         </div>
@@ -1324,6 +1359,9 @@
             </svg>
         </button>
     </div>
+
+    <!-- Chat Modal Backdrop -->
+    <div class="chat-modal-backdrop" id="chatModalBackdrop"></div>
 
     <!-- Full-screen Chat Modal -->
     <div class="chat-modal" id="chatModal">
@@ -1337,13 +1375,15 @@
         </div>
         <div class="chat-modal-messages" id="chatModalMessages"></div>
         <div class="chat-modal-input-area">
-            <input type="text" class="chat-input" id="chatModalInput" placeholder="Type your message...">
-            <button class="chat-send-btn" id="chatModalSendBtn">
-                Send
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                </svg>
-            </button>
+            <div class="chat-input-row">
+                <input type="text" class="chat-input" id="chatModalInput" placeholder="Type your message...">
+                <button class="chat-send-btn" id="chatModalSendBtn">
+                    Send
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                </button>
+            </div>
             <div class="chat-powered-by">Powered by ChatGPT</div>
         </div>
     </div>
@@ -1719,6 +1759,7 @@
         const chatUnavailable = document.getElementById('chatUnavailable');
         const chatExpandBtn = document.getElementById('chatExpandBtn');
         const chatModal = document.getElementById('chatModal');
+        const chatModalBackdrop = document.getElementById('chatModalBackdrop');
         const chatModalCloseBtn = document.getElementById('chatModalCloseBtn');
         const chatModalMessages = document.getElementById('chatModalMessages');
         const chatModalInput = document.getElementById('chatModalInput');
@@ -1915,6 +1956,7 @@
         chatExpandBtn.addEventListener('click', () => {
             // Copy existing messages to modal
             chatModalMessages.innerHTML = chatMessages.innerHTML;
+            chatModalBackdrop.classList.add('open');
             chatModal.classList.add('open');
             chatModalInput.focus();
         });
@@ -1922,6 +1964,13 @@
         // Close modal
         chatModalCloseBtn.addEventListener('click', () => {
             chatModal.classList.remove('open');
+            chatModalBackdrop.classList.remove('open');
+        });
+
+        // Close modal when clicking backdrop
+        chatModalBackdrop.addEventListener('click', () => {
+            chatModal.classList.remove('open');
+            chatModalBackdrop.classList.remove('open');
         });
 
         // Send message from modal
