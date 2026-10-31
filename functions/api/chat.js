@@ -11,6 +11,9 @@ export async function onRequestPost(context) {
       });
     }
 
+    console.log('GROQ_API_KEY exists:', !!env.GROQ_API_KEY);
+    console.log('GROQ_API_KEY length:', env.GROQ_API_KEY?.length);
+
     if (!env.GROQ_API_KEY) {
       console.error('GROQ_API_KEY not configured');
       return new Response(JSON.stringify({ error: 'GROQ_API_KEY not configured. Please add it to Cloudflare Pages Environment Variables.' }), {
@@ -19,16 +22,7 @@ export async function onRequestPost(context) {
       });
     }
 
-    // Fetch site content for context (with timeout)
-    let siteContent = '';
-    try {
-      siteContent = await fetchSiteContent();
-    } catch (error) {
-      console.error('Error fetching site content:', error);
-      siteContent = 'Site content temporarily unavailable.';
-    }
-
-    // Call Groq API with site context
+    // Call Groq API (without site scraping for now to test)
     const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -40,11 +34,7 @@ export async function onRequestPost(context) {
         messages: [
           {
             role: 'system',
-            content: `You are a helpful assistant for James Studio, a UK-based web development and design agency. Be friendly, professional, and helpful. Keep responses concise and relevant to web development, design, and the agency's services.
-
-${siteContent ? `Here is information about James Studio from their website https://jamesstudio.uk:\n\n${siteContent}` : ''}
-
-When answering questions, use this information. If the information isn't available here, suggest they visit https://jamesstudio.uk for more details or contact hello@jamesstudio.uk.`
+            content: 'You are a helpful assistant for James Studio, a UK-based web development and design agency. Be friendly, professional, and helpful. Keep responses concise and relevant to web development, design, and the agency\'s services. Suggest they visit https://jamesstudio.uk for more details or contact hello@jamesstudio.uk.'
           },
           {
             role: 'user',
@@ -56,16 +46,20 @@ When answering questions, use this information. If the information isn't availab
       }),
     });
 
+    console.log('Groq API response status:', groqResponse.status);
+
     if (!groqResponse.ok) {
       const errorData = await groqResponse.text();
       console.error('Groq API error:', errorData);
-      return new Response(JSON.stringify({ error: 'Failed to get response from AI' }), {
+      return new Response(JSON.stringify({ error: `Failed to get response from AI: ${errorData}` }), {
         status: 500,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
     const groqData = await groqResponse.json();
+    console.log('Groq API response data:', JSON.stringify(groqData).substring(0, 500));
+
     const aiResponse = groqData.choices[0]?.message?.content || 'Sorry, I could not generate a response.';
 
     return new Response(JSON.stringify({ response: aiResponse }), {
@@ -75,7 +69,7 @@ When answering questions, use this information. If the information isn't availab
 
   } catch (error) {
     console.error('Chat function error:', error);
-    return new Response(JSON.stringify({ error: 'Internal server error' }), {
+    return new Response(JSON.stringify({ error: `Internal server error: ${error.message}` }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });

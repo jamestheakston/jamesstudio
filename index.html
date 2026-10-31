@@ -1618,7 +1618,8 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error('Failed to get response');
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to get response');
                 }
 
                 const data = await response.json();
@@ -1640,8 +1641,8 @@
                     typingIndicator.remove();
                 }
 
-                // Add error message
-                addMessage('Sorry, I encountered an error. Please try again or email us at hello@jamesstudio.uk', 'bot');
+                // Add error message with details
+                addMessage(`Sorry, I encountered an error: ${error.message}. Please try again or email us at hello@jamesstudio.uk`, 'bot');
             }
         }
 
