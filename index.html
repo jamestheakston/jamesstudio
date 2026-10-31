@@ -657,11 +657,14 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             opacity: 0;
             pointer-events: none;
-            transition: all 0.3s ease;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
         .chat-modal.open {
             display: flex;
+        }
+
+        .chat-modal.open {
             opacity: 1;
             transform: translate(-50%, -50%) translateY(0) scale(1);
             pointer-events: all;
@@ -692,6 +695,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
         }
 
         .chat-modal-header h3 {
