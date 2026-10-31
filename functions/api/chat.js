@@ -12,14 +12,21 @@ export async function onRequestPost(context) {
     }
 
     if (!env.GROQ_API_KEY) {
-      return new Response(JSON.stringify({ error: 'GROQ_API_KEY not configured' }), {
+      console.error('GROQ_API_KEY not configured');
+      return new Response(JSON.stringify({ error: 'GROQ_API_KEY not configured. Please add it to Cloudflare Pages Environment Variables.' }), {
         status: 500,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    // Fetch site content for context
-    const siteContent = await fetchSiteContent();
+    // Fetch site content for context (with timeout)
+    let siteContent = '';
+    try {
+      siteContent = await fetchSiteContent();
+    } catch (error) {
+      console.error('Error fetching site content:', error);
+      siteContent = 'Site content temporarily unavailable.';
+    }
 
     // Call Groq API with site context
     const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -35,9 +42,7 @@ export async function onRequestPost(context) {
             role: 'system',
             content: `You are a helpful assistant for James Studio, a UK-based web development and design agency. Be friendly, professional, and helpful. Keep responses concise and relevant to web development, design, and the agency's services.
 
-Here is information about James Studio from their website https://jamesstudio.uk:
-
-${siteContent}
+${siteContent ? `Here is information about James Studio from their website https://jamesstudio.uk:\n\n${siteContent}` : ''}
 
 When answering questions, use this information. If the information isn't available here, suggest they visit https://jamesstudio.uk for more details or contact hello@jamesstudio.uk.`
           },
@@ -91,7 +96,18 @@ async function fetchSiteContent() {
 
     for (const url of pages) {
       try {
-        const response = await fetch(url);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
+        const response = await fetch(url, {
+          signal: controller.signal,
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (compatible; JamesStudioBot/1.0)',
+          },
+        });
+
+        clearTimeout(timeoutId);
+
         if (response.ok) {
           const html = await response.text();
           // Extract text content from HTML
@@ -104,7 +120,8 @@ async function fetchSiteContent() {
           content += `\n\n--- Content from ${url} ---\n${text.substring(0, 2000)}`;
         }
       } catch (error) {
-        console.error(`Failed to fetch ${url}:`, error);
+        console.error(`Failed to fetch ${url}:`, error.message);
+        // Continue with other pages even if one fails
       }
     }
 
