@@ -239,22 +239,6 @@
             transform: translateX(6px);
         }
 
-        /* Security statement modal */
-        #securityModal {
-            opacity: 0;
-            transition: opacity 0.25s ease-out;
-        }
-        #securityModal.show {
-            opacity: 1;
-        }
-        #securityModal .modal-panel {
-            transform: translateY(16px);
-            transition: transform 0.25s ease-out;
-        }
-        #securityModal.show .modal-panel {
-            transform: translateY(0);
-        }
-
         /* Custom Chat Widget Styles */
         .chat-widget-container {
             position: fixed;
@@ -707,14 +691,6 @@
 </head>
 <body class="antialiased selection:bg-[#1A1A1A] selection:text-[#FAF9F6]">
 
-    <!-- Security Statement Banner -->
-    <div class="bg-[#1A1A1A] text-[#FAF9F6] px-6 py-2.5 text-center text-xs md:text-sm tracking-tight">
-        <span class="text-neutral-400">Security Questions?</span>
-        <button type="button" id="securityBannerBtn" data-security-open aria-haspopup="dialog" aria-controls="securityModal" class="ml-1 font-semibold underline underline-offset-4 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FAF9F6] rounded">
-            Read our statement &rarr;
-        </button>
-    </div>
-
     <!-- Navigation -->
     <nav class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#1A1A1A]/10 px-6 py-4 md:px-12 flex justify-between items-center transition-all duration-300">
         <a href="#" class="geometric-font text-xl md:text-2xl font-extrabold tracking-tighter flex items-center gap-2">
@@ -767,47 +743,6 @@
         <p class="menu-item absolute bottom-6 left-8 right-8 text-xs text-neutral-400 tracking-tight" style="animation-delay:.3s">
             hello@jamesstudio.uk &nbsp;·&nbsp; Manchester, UK
         </p>
-    </div>
-
-    <!-- Security Statement Banner (menu copy, pinned above the header while the menu is open) -->
-    <div id="mobileMenuBanner" class="hidden fixed top-0 left-0 right-0 z-[60] bg-[#1A1A1A] text-[#FAF9F6] px-6 py-2.5 text-center text-xs tracking-tight">
-        <span class="text-neutral-400">Security Questions?</span>
-        <button type="button" data-security-open aria-haspopup="dialog" aria-controls="securityModal" class="ml-1 font-semibold underline underline-offset-4 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FAF9F6] rounded">
-            Read our statement &rarr;
-        </button>
-    </div>
-
-    <!-- Security Statement Modal -->
-    <div id="securityModal" class="hidden fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-[#1A1A1A]/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="securityModalTitle">
-        <div class="modal-panel bg-[#FAF9F6] text-[#1A1A1A] w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl border border-[#1A1A1A]/10 shadow-2xl p-8 md:p-10 relative">
-            <button type="button" id="securityModalClose" class="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#1A1A1A]/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1A1A]" aria-label="Close statement">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-
-            <p class="text-xs uppercase font-bold tracking-widest text-neutral-400 mb-3">Security Statement</p>
-            <h2 id="securityModalTitle" class="geometric-font text-2xl md:text-3xl font-extrabold tracking-tight mb-5">Good news: your website is safe with us.</h2>
-
-            <div class="space-y-4 text-sm text-neutral-600 leading-relaxed">
-                <p>
-                    You may have seen the news about a serious security problem found in PHP, a popular tool that lots of websites around the world are built with. The people who look after PHP have already released a fix, but any website still running an older version could be at risk.
-                </p>
-                <p>
-                    <span class="font-semibold text-[#1A1A1A]">We don't build websites with PHP, so this doesn't affect any site we've made for you.</span>
-                    There's nothing you need to do.
-                </p>
-                <p>
-                    And if a security problem ever does affect your website, <span class="font-semibold text-[#1A1A1A]">we'll tell you straight away.</span>
-                </p>
-                <p>
-                    Got a question? Just drop us a line at <a href="mailto:hello@jamesstudio.uk" class="underline hover:text-black">hello@jamesstudio.uk</a>. If you'd like to read more about the PHP issue, you can find it in the
-                    <a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener noreferrer" class="underline hover:text-black">official PHP announcement</a>.
-                </p>
-            </div>
-
-            <button type="button" id="securityModalDone" class="mt-8 w-full bg-[#1A1A1A] text-[#FAF9F6] py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-neutral-800 transition-colors">
-                Close
-            </button>
-        </div>
     </div>
 
     <!-- Hero Section -->
@@ -1350,56 +1285,17 @@
             const isOpened = !mobileMenu.classList.contains('hidden');
             if (isOpened) {
                 mobileMenu.classList.add('hidden');
-                document.getElementById('mobileMenuBanner').classList.add('hidden');
                 document.querySelector('nav').style.top = '';
                 bar1.classList.remove('rotate-45', 'translate-y-[5px]');
                 bar2.classList.remove('-rotate-45', '-translate-y-[5px]');
             } else {
                 mobileMenu.classList.remove('hidden');
-                // Pin the security banner above the header while the menu is open
-                const menuBanner = document.getElementById('mobileMenuBanner');
-                menuBanner.classList.remove('hidden');
-                document.querySelector('nav').style.top = menuBanner.offsetHeight + 'px';
                 bar1.classList.add('rotate-45', 'translate-y-[5px]');
                 bar2.classList.add('-rotate-45', '-translate-y-[5px]');
             }
         }
 
         mobileMenuBtn.addEventListener('click', toggleMenu);
-
-        // Security statement modal
-        const securityModal = document.getElementById('securityModal');
-        const securityOpenBtns = document.querySelectorAll('[data-security-open]');
-        const securityModalClose = document.getElementById('securityModalClose');
-        const securityModalDone = document.getElementById('securityModalDone');
-        let securityOpener = null;
-
-        function openSecurityModal(e) {
-            securityOpener = e && e.currentTarget ? e.currentTarget : null;
-            securityModal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => securityModal.classList.add('show'), 10);
-            securityModalClose.focus();
-        }
-
-        function closeSecurityModal() {
-            securityModal.classList.remove('show');
-            document.body.style.overflow = '';
-            setTimeout(() => securityModal.classList.add('hidden'), 250);
-            if (securityOpener) securityOpener.focus();
-        }
-
-        securityOpenBtns.forEach(btn => btn.addEventListener('click', openSecurityModal));
-        securityModalClose.addEventListener('click', closeSecurityModal);
-        securityModalDone.addEventListener('click', closeSecurityModal);
-        securityModal.addEventListener('click', (e) => {
-            if (e.target === securityModal) closeSecurityModal();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !securityModal.classList.contains('hidden')) {
-                closeSecurityModal();
-            }
-        });
 
         // Custom dropdown controls
         const dropdownButton = document.getElementById('dropdownButton');
