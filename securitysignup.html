@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Signup — James Studio</title>
+    <meta name="description" content="Sign up to receive security updates from James Studio.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: #f6f8fa;
+            color: #1f2328;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .geometric-font {
+            font-family: 'Syne', sans-serif;
+            letter-spacing: -0.03em;
+        }
+        a {
+            color: #0969da;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .site-header {
+            min-height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            background: #fff;
+            border-bottom: 1px solid #d1d9e0;
+        }
+        .home-link {
+            color: #59636e;
+            font-size: 14px;
+        }
+        main {
+            width: min(100% - 32px, 620px);
+            margin: 64px auto;
+        }
+        .page-heading {
+            margin: 0 0 18px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+        .signup-card {
+            max-width: 460px;
+            margin: 0 auto;
+            padding: 24px;
+            background: #fff;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
+            box-shadow: 0 1px 0 rgba(31, 35, 40, 0.04);
+        }
+        .signup-card h2 {
+            margin: 0 0 8px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .intro {
+            margin: 0 0 22px;
+            color: #59636e;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        input[type="email"] {
+            width: 100%;
+            min-height: 34px;
+            padding: 5px 12px;
+            color: #1f2328;
+            background: #fff;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
+            font: inherit;
+            font-size: 14px;
+            box-shadow: inset 0 1px 0 rgba(31, 35, 40, 0.04);
+        }
+        input[type="email"]:focus {
+            border-color: #0969da;
+            outline: 2px solid rgba(9, 105, 218, 0.3);
+            outline-offset: -1px;
+        }
+        .signup-card button#submitButton {
+            width: 100%;
+            min-height: 34px;
+            margin-top: 16px;
+            padding: 5px 16px;
+            color: #fff;
+            background-color: #1f883d;
+            border: 1px solid rgba(31, 35, 40, 0.15);
+            border-radius: 6px;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 1px 0 rgba(31, 35, 40, 0.1);
+        }
+        .signup-card button#submitButton:hover:not(:disabled) {
+            background-color: #1a7f37;
+        }
+        .signup-card button#submitButton:disabled {
+            cursor: wait;
+            opacity: 1;
+        }
+        .form-message {
+            margin: 16px 0 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .form-message.success {
+            padding: 12px 16px;
+            color: #1a7f37;
+            background: #dafbe1;
+            border: 1px solid rgba(31, 136, 61, 0.25);
+            border-radius: 6px;
+        }
+        .success-state {
+            text-align: center;
+        }
+        .success-icon {
+            display: grid;
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            place-items: center;
+            color: #1a7f37;
+            background: #dafbe1;
+            border-radius: 50%;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .success-state h2 {
+            margin: 0 0 8px;
+            font-size: 20px;
+        }
+        .success-state p {
+            margin: 0;
+            color: #59636e;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+        .hidden {
+            display: none;
+        }
+        .privacy-note {
+            margin: 16px 0 0;
+            color: #59636e;
+            font-size: 12px;
+            line-height: 1.5;
+            text-align: center;
+        }
+        @media (max-width: 480px) {
+            .site-header {
+                padding: 0 16px;
+            }
+            main {
+                margin-top: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a href="/" class="geometric-font text-xl md:text-2xl font-extrabold tracking-tighter flex items-center gap-2">
+            JAMES<span class="text-xs bg-[#1A1A1A] text-[#FAF9F6] px-2 py-0.5 rounded-full uppercase tracking-widest">Studio</span>
+        </a>
+        <a href="/" class="home-link">Back home</a>
+    </header>
+
+    <main>
+        <h1 class="page-heading">Security updates</h1>
+        <section class="signup-card" id="signupCard" aria-labelledby="signup-title" aria-live="polite">
+            <div id="signupFormContent">
+                <h2 id="signup-title">Subscribe to security updates</h2>
+                <p class="intro">Get security updates, maintenance notices, and practical best practices delivered to your inbox.</p>
+                <form id="securitySignupForm">
+                    <label for="email">Email address</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+                    <button type="submit" id="submitButton">Subscribe</button>
+                </form>
+                <p id="formMessage" class="form-message hidden" role="status" aria-live="polite"></p>
+                <p class="privacy-note">No spam. Just security-related updates and the occasional maintenance warning.</p>
+            </div>
+            <div id="signupSuccess" class="success-state hidden" role="status">
+                <span class="success-icon" aria-hidden="true">✓</span>
+                <h2 id="signupSuccessTitle">Signup successful!</h2>
+                <p>Thanks for your interest in security updates. This is a demo, so no email was sent.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const form = document.getElementById('securitySignupForm');
+        const submitButton = document.getElementById('submitButton');
+        const formMessage = document.getElementById('formMessage');
+        const signupCard = document.getElementById('signupCard');
+        const signupFormContent = document.getElementById('signupFormContent');
+        const signupSuccess = document.getElementById('signupSuccess');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Subscribing...';
+            formMessage.classList.add('hidden');
+
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            signupFormContent.hidden = true;
+            signupSuccess.classList.remove('hidden');
+            signupCard.setAttribute('aria-labelledby', 'signupSuccessTitle');
+        });
+    </script>
+</body>
+</html>
