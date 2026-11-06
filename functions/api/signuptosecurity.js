@@ -20,15 +20,31 @@ export async function onRequestPost(context) {
             });
         }
 
+        // Insert into security_users table in Supabase
+        const supabaseUrl = 'https://pkqkqijmohbvfxxnzhyy.supabase.co';
+        const supabaseKey = 'sb_publishable_Raqakv5Z4U8Wr7zmzIvLDA_TsnBSFyS';
+        
+        await fetch(`${supabaseUrl}/rest/v1/security_users`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${supabaseKey}`,
+                'Content-Type': 'application/json',
+                'apikey': supabaseKey
+            },
+            body: JSON.stringify({
+                email: email
+            })
+        });
+
         // Send welcome email using Resend
         const resendResponse = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+                'Authorization': `Bearer ${env.RESEND}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                from: 'James Studio <security@jamesstudio.uk>',
+                from: 'James Studio <notifications@security.jamesstudio.uk>',
                 to: email,
                 subject: 'Welcome to James Studio Security Updates',
                 html: `
