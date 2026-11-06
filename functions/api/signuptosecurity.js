@@ -24,7 +24,7 @@ export async function onRequestPost(context) {
         const supabaseUrl = 'https://pkqkqijmohbvfxxnzhyy.supabase.co';
         const supabaseKey = 'sb_publishable_Raqakv5Z4U8Wr7zmzIvLDA_TsnBSFyS';
         
-        await fetch(`${supabaseUrl}/rest/v1/security_users`, {
+        const supabaseResponse = await fetch(`${supabaseUrl}/rest/v1/security_users`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${supabaseKey}`,
@@ -35,6 +35,11 @@ export async function onRequestPost(context) {
                 email: email
             })
         });
+
+        if (!supabaseResponse.ok) {
+            const errorText = await supabaseResponse.text();
+            console.error('Supabase error:', errorText);
+        }
 
         // Send welcome email using Resend
         const resendResponse = await fetch('https://api.resend.com/emails', {
@@ -87,7 +92,8 @@ export async function onRequestPost(context) {
         if (!resendResponse.ok) {
             const errorText = await resendResponse.text();
             console.error('Resend API error:', errorText);
-            return new Response(JSON.stringify({ error: 'Failed to send email' }), {
+            const errorData = await resendResponse.json().catch(() => ({ message: errorText }));
+            return new Response(JSON.stringify({ error: errorData.message || 'Failed to send email' }), {
                 status: 500,
                 headers: { 'Content-Type': 'application/json' },
             });
