@@ -13,6 +13,9 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -93,6 +96,10 @@
     </div>
 
     <script>
+        const supabaseUrl = 'https://pkqkqijmohbvfxxnzhyy.supabase.co';
+        const supabaseKey = 'sb_publishable_Raqakv5Z4U8Wr7zmzIvLDA_TsnBSFyS';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
         const urlParams = new URLSearchParams(window.location.search);
         const email = urlParams.get('email');
         const token = urlParams.get('token');
@@ -125,32 +132,26 @@
             loading.classList.remove('hidden');
 
             try {
-                const response = await fetch('/api/unsubscribe', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email, token }),
-                });
+                const { error: deleteError } = await supabaseClient
+                    .from('security_users')
+                    .delete()
+                    .eq('email', email)
+                    .eq('unsubscribe_token', token);
 
-                const data = await response.json();
-
-                if (response.ok) {
-                    loading.classList.add('hidden');
-                    success.classList.remove('hidden');
-                    pageTitle.textContent = 'Unsubscribed';
-                    pageSubtitle.textContent = 'Done';
-                } else {
-                    loading.classList.add('hidden');
-                    error.classList.remove('hidden');
-                    pageTitle.textContent = 'Error';
-                    pageSubtitle.textContent = 'Something went wrong';
-                    errorMessage.textContent = data.error || 'Something went wrong. Please try again.';
+                if (deleteError) {
+                    throw new Error(deleteError.message);
                 }
+
+                loading.classList.add('hidden');
+                success.classList.remove('hidden');
+                pageTitle.textContent = 'Unsubscribed';
+                pageSubtitle.textContent = 'Done';
             } catch (err) {
                 loading.classList.add('hidden');
                 error.classList.remove('hidden');
-                errorMessage.textContent = 'Network error. Please try again.';
+                pageTitle.textContent = 'Error';
+                pageSubtitle.textContent = 'Something went wrong';
+                errorMessage.textContent = err.message || 'Something went wrong. Please try again.';
             }
         }
     </script>
