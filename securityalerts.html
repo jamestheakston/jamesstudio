@@ -150,7 +150,7 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    securityMessage.textContent = '✓ Successfully subscribed! Check your inbox for a welcome email.';
+                    securityMessage.textContent = `✓ ${data.message || 'Successfully subscribed! Check your inbox for a welcome email.'}`;
                     securityMessage.classList.remove('hidden');
                     securityMessage.style.color = '#22c55e';
                     securityEmail.value = '';

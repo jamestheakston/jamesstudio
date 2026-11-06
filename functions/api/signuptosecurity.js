@@ -20,9 +20,31 @@ export async function onRequestPost(context) {
             });
         }
 
-        // Insert into security_users table in Supabase
+        // Check if email already exists in security_users table
         const supabaseUrl = 'https://pkqkqijmohbvfxxnzhyy.supabase.co';
         const supabaseKey = 'sb_publishable_Raqakv5Z4U8Wr7zmzIvLDA_TsnBSFyS';
+        
+        const checkResponse = await fetch(`${supabaseUrl}/rest/v1/security_users?email=eq.${email}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${supabaseKey}`,
+                'Content-Type': 'application/json',
+                'apikey': supabaseKey
+            }
+        });
+
+        if (checkResponse.ok) {
+            const existingUsers = await checkResponse.json();
+            if (existingUsers && existingUsers.length > 0) {
+                return new Response(JSON.stringify({ 
+                    success: true, 
+                    message: 'You are already signed up for security alerts' 
+                }), {
+                    status: 200,
+                    headers: { 'Content-Type': 'application/json' },
+                });
+            }
+        }
         
         // Generate a unique unsubscribe token
         const token = crypto.randomUUID();
