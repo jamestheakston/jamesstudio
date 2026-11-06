@@ -22,6 +22,9 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -122,6 +125,10 @@
     </footer>
 
     <script>
+        const supabaseUrl = 'https://pkqkqijmohbvfxxnzhyy.supabase.co';
+        const supabaseKey = 'sb_publishable_Raqakv5Z4U8Wr7zmzIvLDA_TsnBSFyS';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
         const securityForm = document.getElementById('securityForm');
         const securityEmail = document.getElementById('securityEmail');
         const securitySubmit = document.getElementById('securitySubmit');
@@ -133,18 +140,60 @@
             const email = securityEmail.value.trim();
             if (!email) return;
 
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                securityMessage.textContent = '✗ Invalid email format';
+                securityMessage.classList.remove('hidden');
+                securityMessage.style.color = '#ef4444';
+                return;
+            }
+
             // Show loading state
             securitySubmit.disabled = true;
             securitySubmit.textContent = 'Subscribing...';
             securityMessage.classList.add('hidden');
 
             try {
-                const response = await fetch('/api/signuptosecurity', {
+                // Check if email already exists
+                const { data: existingUsers, error: checkError } = await supabase
+                    .from('security_users')
+                    .select('email')
+                    .eq('email', email);
+
+                if (checkError) {
+                    throw new Error('Failed to check existing email');
+                }
+
+                if (existingUsers && existingUsers.length > 0) {
+                    securityMessage.textContent = '✓ You are already signed up for security alerts';
+                    securityMessage.classList.remove('hidden');
+                    securityMessage.style.color = '#22c55e';
+                    securityEmail.value = '';
+                    securitySubmit.disabled = false;
+                    securitySubmit.textContent = 'Subscribe';
+                    return;
+                }
+
+                // Generate unique token
+                const token = crypto.randomUUID();
+
+                // Insert into Supabase
+                const { error: insertError } = await supabase
+                    .from('security_users')
+                    .insert({ email, unsubscribe_token: token });
+
+                if (insertError) {
+                    throw new Error('Failed to add email to database');
+                }
+
+                // Send welcome email via API (keep RESEND key server-side)
+                const response = await fetch('/api/send-security-email', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ email }),
+                    body: JSON.stringify({ email, token }),
                 });
 
                 const data = await response.json();
