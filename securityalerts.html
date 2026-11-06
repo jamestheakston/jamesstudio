@@ -127,7 +127,7 @@
     <script>
         const supabaseUrl = 'https://pkqkqijmohbvfxxnzhyy.supabase.co';
         const supabaseKey = 'sb_publishable_Raqakv5Z4U8Wr7zmzIvLDA_TsnBSFyS';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
         const securityForm = document.getElementById('securityForm');
         const securityEmail = document.getElementById('securityEmail');
@@ -156,7 +156,7 @@
 
             try {
                 // Check if email already exists
-                const { data: existingUsers, error: checkError } = await supabase
+                const { data: existingUsers, error: checkError } = await supabaseClient
                     .from('security_users')
                     .select('email')
                     .eq('email', email);
@@ -179,7 +179,7 @@
                 const token = crypto.randomUUID();
 
                 // Insert into Supabase
-                const { error: insertError } = await supabase
+                const { error: insertError } = await supabaseClient
                     .from('security_users')
                     .insert({ email, unsubscribe_token: token });
 
