@@ -34,8 +34,8 @@
     <div class="max-w-md w-full">
         <div class="bg-white rounded-2xl shadow-lg p-8">
             <div class="text-center mb-6">
-                <h1 class="text-2xl font-bold mb-2">Unsubscribe</h1>
-                <p class="text-neutral-600">Security Alerts</p>
+                <h1 id="pageTitle" class="text-2xl font-bold mb-2">Unsubscribe</h1>
+                <p id="pageSubtitle" class="text-neutral-600">Security Alerts</p>
             </div>
             
             <div id="loading" class="hidden text-center py-8">
@@ -102,11 +102,15 @@
         const success = document.getElementById('success');
         const error = document.getElementById('error');
         const errorMessage = document.getElementById('errorMessage');
+        const pageTitle = document.getElementById('pageTitle');
+        const pageSubtitle = document.getElementById('pageSubtitle');
 
         // Show confirmation first
         if (!email || !token) {
             confirm.classList.add('hidden');
             error.classList.remove('hidden');
+            pageTitle.textContent = 'Error';
+            pageSubtitle.textContent = 'Invalid Link';
             errorMessage.textContent = 'Invalid unsubscribe link. Missing email or token.';
         } else {
             confirm.classList.remove('hidden');
@@ -134,9 +138,13 @@
                 if (response.ok) {
                     loading.classList.add('hidden');
                     success.classList.remove('hidden');
+                    pageTitle.textContent = 'Unsubscribed';
+                    pageSubtitle.textContent = 'Done';
                 } else {
                     loading.classList.add('hidden');
                     error.classList.remove('hidden');
+                    pageTitle.textContent = 'Error';
+                    pageSubtitle.textContent = 'Something went wrong';
                     errorMessage.textContent = data.error || 'Something went wrong. Please try again.';
                 }
             } catch (err) {
