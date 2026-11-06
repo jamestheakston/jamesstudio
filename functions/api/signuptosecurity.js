@@ -49,7 +49,7 @@ export async function onRequestPost(context) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                from: 'James Studio <notifications@security.jamesstudio.uk>',
+                from: 'James Studio <security@email.jamesstudio.uk>',
                 to: email,
                 subject: 'Welcome to James Studio Security Updates',
                 html: `
