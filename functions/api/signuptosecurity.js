@@ -24,6 +24,9 @@ export async function onRequestPost(context) {
         const supabaseUrl = 'https://pkqkqijmohbvfxxnzhyy.supabase.co';
         const supabaseKey = 'sb_publishable_Raqakv5Z4U8Wr7zmzIvLDA_TsnBSFyS';
         
+        // Generate a unique unsubscribe token
+        const token = crypto.randomUUID();
+        
         const supabaseResponse = await fetch(`${supabaseUrl}/rest/v1/security_users`, {
             method: 'POST',
             headers: {
@@ -32,7 +35,8 @@ export async function onRequestPost(context) {
                 'apikey': supabaseKey
             },
             body: JSON.stringify({
-                email: email
+                email: email,
+                unsubscribe_token: token
             })
         });
 
@@ -81,6 +85,7 @@ export async function onRequestPost(context) {
                             <div style="background: #f5f5f5; padding: 20px; text-align: center; font-size: 12px; color: #666;">
                                 <p style="margin: 0;">&copy; 2026 James Studio. All rights reserved.</p>
                                 <p style="margin: 10px 0 0 0;">This email was sent to ${email}</p>
+                                <p style="margin: 10px 0 0 0;"><a href="https://jamesstudio.uk/unsubscribe?email=${encodeURIComponent(email)}&token=${token}" style="color: #666; text-decoration: underline;">Unsubscribe</a></p>
                             </div>
                         </div>
                     </body>
