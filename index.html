@@ -707,48 +707,7 @@
                 Get in Touch
             </a>
         </div>
-
-        <!-- Mobile Menu Button -->
-        <button id="mobileMenuBtn" class="flex flex-col justify-between w-6 h-4 focus:outline-none" aria-label="Toggle Menu">
-            <span class="w-full h-[2px] bg-[#1A1A1A] transition-all" id="bar1"></span>
-            <span class="w-full h-[2px] bg-[#1A1A1A] transition-all" id="bar2"></span>
-        </button>
     </nav>
-
-    <!-- Mobile Navigation Overlay -->
-    <div id="mobileMenu" class="hidden fixed inset-0 z-40 bg-[#FAF9F6] flex flex-col justify-center items-stretch px-8 pt-28 pb-24 border-t border-[#1A1A1A]/10 overflow-y-auto">
-        <div class="flex flex-col" role="navigation" aria-label="Mobile">
-            <a href="#services" onclick="toggleMenu()" class="menu-link menu-item" style="animation-delay:.05s">
-                <span class="menu-num">01</span>
-                <span class="menu-text geometric-font">Services</span>
-                <svg class="menu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6l6 6-6 6"></path></svg>
-            </a>
-            <a href="#work" onclick="toggleMenu()" class="menu-link menu-item" style="animation-delay:.1s">
-                <span class="menu-num">02</span>
-                <span class="menu-text geometric-font">Selected Work</span>
-                <svg class="menu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6l6 6-6 6"></path></svg>
-            </a>
-            <a href="#about" onclick="toggleMenu()" class="menu-link menu-item" style="animation-delay:.15s">
-                <span class="menu-num">03</span>
-                <span class="menu-text geometric-font">About Us</span>
-                <svg class="menu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6l6 6-6 6"></path></svg>
-            </a>
-            <a href="#news" onclick="toggleMenu()" class="menu-link menu-item" style="animation-delay:.2s">
-                <span class="menu-num">04</span>
-                <span class="menu-text geometric-font">News</span>
-                <svg class="menu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6l6 6-6 6"></path></svg>
-            </a>
-        </div>
-
-        <a href="#contact" onclick="toggleMenu()" class="menu-cta menu-item mt-10" style="animation-delay:.2s">
-            <span>Get in Touch</span>
-            <svg class="menu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6l6 6-6 6"></path></svg>
-        </a>
-
-        <p class="menu-item absolute bottom-6 left-8 right-8 text-xs text-neutral-400 tracking-tight" style="animation-delay:.3s">
-            hello@jamesstudio.uk &nbsp;·&nbsp; Manchester, UK
-        </p>
-    </div>
 
     <!-- Hero Section -->
     <header class="relative px-6 py-20 md:py-32 md:px-12 max-w-7xl mx-auto flex flex-col justify-center min-h-[80vh]">
@@ -1356,28 +1315,6 @@
     <script>
         // Update copyright year
         document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Mobile responsive menu controls
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const bar1 = document.getElementById('bar1');
-        const bar2 = document.getElementById('bar2');
-
-        function toggleMenu() {
-            const isOpened = !mobileMenu.classList.contains('hidden');
-            if (isOpened) {
-                mobileMenu.classList.add('hidden');
-                document.querySelector('nav').style.top = '';
-                bar1.classList.remove('rotate-45', 'translate-y-[5px]');
-                bar2.classList.remove('-rotate-45', '-translate-y-[5px]');
-            } else {
-                mobileMenu.classList.remove('hidden');
-                bar1.classList.add('rotate-45', 'translate-y-[5px]');
-                bar2.classList.add('-rotate-45', '-translate-y-[5px]');
-            }
-        }
-
-        mobileMenuBtn.addEventListener('click', toggleMenu);
 
         // Custom dropdown controls
         const dropdownButton = document.getElementById('dropdownButton');
