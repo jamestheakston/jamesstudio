@@ -709,14 +709,14 @@
         </div>
 
         <!-- Mobile Menu Button -->
-        <button id="mobileMenuBtn" class="flex flex-col justify-between w-6 h-4 focus:outline-none" aria-label="Toggle Menu">
+        <button id="mobileMenuBtn" class="flex md:hidden flex-col justify-between w-6 h-4 focus:outline-none" aria-label="Toggle Menu">
             <span class="w-full h-[2px] bg-[#1A1A1A] transition-all" id="bar1"></span>
             <span class="w-full h-[2px] bg-[#1A1A1A] transition-all" id="bar2"></span>
         </button>
     </nav>
 
     <!-- Mobile Navigation Overlay -->
-    <div id="mobileMenu" class="hidden fixed inset-0 z-40 bg-[#FAF9F6] flex flex-col justify-center items-stretch px-8 pt-28 pb-24 border-t border-[#1A1A1A]/10 overflow-y-auto">
+    <div id="mobileMenu" class="hidden md:!hidden fixed inset-0 z-40 bg-[#FAF9F6] flex flex-col justify-center items-stretch px-8 pt-28 pb-24 border-t border-[#1A1A1A]/10 overflow-y-auto">
         <div class="flex flex-col" role="navigation" aria-label="Mobile">
             <a href="#services" onclick="toggleMenu()" class="menu-link menu-item" style="animation-delay:.05s">
                 <span class="menu-num">01</span>
@@ -1100,7 +1100,6 @@
                     </p>
                     <p class="flex items-center gap-3">
                         <svg class="w-5 h-5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        Manchester, United Kingdom
                     </p>
                 </div>
 
@@ -1378,6 +1377,13 @@
         }
 
         mobileMenuBtn.addEventListener('click', toggleMenu);
+
+        // Close mobile menu on resize to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768 && !mobileMenu.classList.contains('hidden')) {
+                toggleMenu();
+            }
+        });
 
         // Custom dropdown controls
         const dropdownButton = document.getElementById('dropdownButton');
