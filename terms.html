@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms of Service — James Studio</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
-    
-    <meta name="description" content="Terms of Service for James Studio web development services.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://jamesstudio.uk/terms">
-    
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <!-- Tailwind CSS for high-fidelity styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Syne (geometric, wide header) & Space Grotesk (modern mono-ish clean body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     
     <style>
@@ -19,60 +18,326 @@
             background-color: #FAF9F6;
             color: #1A1A1A;
         }
-        h1, h2, h3 {
+        h1, h2, h3, .geometric-font {
             font-family: 'Syne', sans-serif;
+            letter-spacing: -0.03em;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF9F6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1A1A1A;
+            border-radius: 3px;
+        }
+
+        /* Sliding tab indicator */
+        .tab-indicator {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            height: 2px;
+            background-color: #1A1A1A;
+            transition: all 0.3s ease-out;
+            border-radius: 1px;
         }
     </style>
 </head>
-<body class="antialiased">
-    <nav class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#1A1A1A]/10 px-6 py-4 md:px-12 flex justify-between items-center">
-        <a href="/" class="font-sans text-xl md:text-2xl font-extrabold tracking-tighter flex items-center gap-2">
+<body class="antialiased selection:bg-[#1A1A1A] selection:text-[#FAF9F6]">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#1A1A1A]/10 px-6 py-4 md:px-12 flex justify-between items-center transition-all duration-300">
+        <a href="/index.html" class="geometric-font text-xl md:text-2xl font-extrabold tracking-tighter flex items-center gap-2">
             JAMES<span class="text-xs bg-[#1A1A1A] text-[#FAF9F6] px-2 py-0.5 rounded-full uppercase tracking-widest">Studio</span>
         </a>
+        
+        <div class="hidden md:flex items-center gap-8 font-medium text-sm tracking-tight">
+            <a href="/index.html#services" class="hover:text-black/60 transition-colors">Services</a>
+            <a href="/index.html#work" class="hover:text-black/60 transition-colors">Selected Work</a>
+            <a href="/index.html#about" class="hover:text-black/60 transition-colors">About Us</a>
+            <a href="/index.html#contact" class="bg-[#1A1A1A] text-[#FAF9F6] px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider hover:bg-neutral-800 transition-all shadow-sm">
+                Get in Touch
+            </a>
+        </div>
     </nav>
 
-    <main class="px-6 py-16 md:py-24 md:px-12 max-w-4xl mx-auto">
-        <h1 class="text-4xl md:text-5xl font-bold mb-8">Terms of Service</h1>
-        <p class="text-neutral-600 mb-12">Last updated: November 2026</p>
+    <!-- Main Content -->
+    <main class="px-6 py-20 md:py-32 md:px-12 max-w-4xl mx-auto">
+        <div class="space-y-8">
+            <div>
+                <p class="text-xs uppercase font-bold tracking-widest text-neutral-400 mb-4">Legal</p>
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">Terms of Service</h1>
+                <p class="text-sm text-neutral-500"><strong>Last Updated:</strong> November 2026</p>
+            </div>
 
-        <div class="prose prose-lg space-y-8">
-            <h2 class="text-2xl font-bold">1. Acceptance of Terms</h2>
-            <p>By accessing or using James Studio's services, you agree to be bound by these Terms of Service. If you disagree with any part of these terms, you may not access our services.</p>
+            <!-- Tabs -->
+            <div class="border-b border-[#1A1A1A]/10 relative">
+                <div class="flex gap-8">
+                    <button id="tabSite" class="tab-btn pb-3 text-sm font-semibold tracking-wider text-[#1A1A1A]" onclick="switchTab('site')">This Site</button>
+                    <button id="tabClient" class="tab-btn pb-3 text-sm font-semibold tracking-wider text-neutral-400 hover:text-[#1A1A1A]" onclick="switchTab('client')">Client Portal</button>
+                </div>
+                <div id="tabIndicator" class="tab-indicator"></div>
+            </div>
 
-            <h2 class="text-2xl font-bold">2. Services</h2>
-            <p>James Studio provides web development, design, and related digital services. We reserve the right to modify, suspend, or discontinue any service at any time without prior notice.</p>
+            <!-- Tab Content -->
+            <div id="contentSite" class="tab-content prose prose-neutral max-w-none space-y-6">
+                <div class="flex justify-end mb-4">
+                    <button onclick="copyLink()" class="flex items-center gap-2 bg-[#FAF9F6] border border-[#1A1A1A]/10 px-4 py-2 rounded-lg text-sm font-medium hover:border-[#1A1A1A] transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        <span>Copy Link</span>
+                    </button>
+                </div>
+                <p>By accessing or using James Studio's website and services, you agree to be bound by these Terms of Service. If you disagree with any part of these terms, you may not access our services.</p>
 
-            <h2 class="text-2xl font-bold">3. Payment Terms</h2>
-            <p>For services requiring payment, we use Stripe for secure payment processing. By providing payment information, you represent that you are authorized to use the payment method and that the information is accurate.</p>
-            <p>Prices are quoted in GBP and are subject to change. Payment is required before work begins unless otherwise agreed in writing.</p>
+                <h2 class="text-2xl font-bold mt-8 mb-4">1. Services</h2>
+                <p>James Studio provides web development, design, and related digital services. We reserve the right to modify, suspend, or discontinue any service at any time without prior notice.</p>
 
-            <h2 class="text-2xl font-bold">4. Refund Policy</h2>
-            <p>Refunds are considered on a case-by-case basis. If you wish to request a refund, please contact us at hello@jamesstudio.uk within 14 days of payment. Refunds may be issued if work has not yet commenced or for exceptional circumstances.</p>
+                <h2 class="text-2xl font-bold mt-8 mb-4">2. Payment Terms</h2>
+                <p>For services requiring payment, we use Stripe for secure payment processing. By providing payment information, you represent that you are authorized to use the payment method and that the information is accurate.</p>
+                <p class="mt-4">Prices are quoted in GBP and are subject to change. Payment is required before work begins unless otherwise agreed in writing.</p>
 
-            <h2 class="text-2xl font-bold">5. Client Responsibilities</h2>
-            <p>You agree to provide accurate information, timely feedback, and necessary assets (images, content, access credentials) required to complete the project. Delays caused by client failure to provide these may extend project timelines.</p>
+                <h2 class="text-2xl font-bold mt-8 mb-4">3. Refund Policy</h2>
+                <p>Refunds are considered on a case-by-case basis. If you wish to request a refund, please contact us at hello@jamesstudio.uk within 14 days of payment. Refunds may be issued if work has not yet commenced or for exceptional circumstances.</p>
 
-            <h2 class="text-2xl font-bold">6. Intellectual Property</h2>
-            <p>All work produced by James Studio remains our intellectual property until full payment is received. Upon full payment, rights are transferred to you according to our agreement. We retain the right to display work in our portfolio unless otherwise agreed.</p>
+                <h2 class="text-2xl font-bold mt-8 mb-4">4. Client Responsibilities</h2>
+                <p>You agree to provide accurate information, timely feedback, and necessary assets (images, content, access credentials) required to complete the project. Delays caused by client failure to provide these may extend project timelines.</p>
 
-            <h2 class="text-2xl font-bold">7. Limitation of Liability</h2>
-            <p>James Studio shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of our services. Our total liability is limited to the amount paid for the specific service.</p>
+                <h2 class="text-2xl font-bold mt-8 mb-4">5. Intellectual Property</h2>
+                <p>All work produced by James Studio remains our intellectual property until full payment is received. Upon full payment, rights are transferred to you according to our agreement. We retain the right to display work in our portfolio unless otherwise agreed.</p>
 
-            <h2 class="text-2xl font-bold">8. Privacy</h2>
-            <p>Your use of our services is also governed by our Privacy Policy, which can be found at jamesstudio.uk/privacy.html.</p>
+                <h2 class="text-2xl font-bold mt-8 mb-4">6. Limitation of Liability</h2>
+                <p>James Studio shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of our services. Our total liability is limited to the amount paid for the specific service.</p>
 
-            <h2 class="text-2xl font-bold">9. Governing Law</h2>
-            <p>These terms are governed by the laws of England and Wales. Any disputes shall be resolved in the courts of England and Wales.</p>
+                <h2 class="text-2xl font-bold mt-8 mb-4">7. Privacy</h2>
+                <p>Your use of our services is also governed by our Privacy Policy, which can be found at jamesstudio.uk/privacy.html.</p>
 
-            <h2 class="text-2xl font-bold">10. Contact</h2>
-            <p>For questions about these Terms of Service, please contact us at hello@jamesstudio.uk.</p>
+                <h2 class="text-2xl font-bold mt-8 mb-4">8. Governing Law</h2>
+                <p>These terms are governed by the laws of England and Wales. Any disputes shall be resolved in the courts of England and Wales.</p>
+
+                <h2 class="text-2xl font-bold mt-8 mb-4">9. Contact</h2>
+                <p>For questions about these Terms of Service, please contact us at <a href="#" class="underline hover:text-black legal-email-link">legal@jamesstudio.uk</a> for legal concerns, or through our contact form.</p>
+            </div>
+
+            <div id="contentClient" class="tab-content hidden prose prose-neutral max-w-none space-y-6">
+                <div class="flex justify-end mb-4">
+                    <button onclick="copyLink()" class="flex items-center gap-2 bg-[#FAF9F6] border border-[#1A1A1A]/10 px-4 py-2 rounded-lg text-sm font-medium hover:border-[#1A1A1A] transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        <span>Copy Link</span>
+                    </button>
+                </div>
+                <p>By accessing or using the James Studio Client Portal, you agree to be bound by these Terms of Service. If you disagree with any part of these terms, you may not use the Client Portal.</p>
+
+                <h2 class="text-2xl font-bold mt-8 mb-4">1. Client Portal Access</h2>
+                <p>The James Studio Client Portal is a secure dashboard that allows our clients to directly edit their website content. Access to the Client Portal is provided as part of our web development services and is subject to these terms.</p>
+
+                <h2 class="text-2xl font-bold mt-8 mb-4">2. Account Responsibilities</h2>
+                <p>You are responsible for maintaining the confidentiality of your account credentials. You agree to notify us immediately of any unauthorized use of your account. You are responsible for all activities that occur under your account.</p>
+
+                <h2 class="text-2xl font-bold mt-8 mb-4">3. Content Editing</h2>
+                <p>Through the Client Portal, you may edit text and image content on your website. When you click "Publish", your changes are committed to your GitHub repository and automatically deployed to your live website. You are responsible for ensuring that any content you publish is accurate, legal, and does not infringe on third-party rights.</p>
+
+                <h2 class="text-2xl font-bold mt-8 mb-4">4. GitHub Integration</h2>
+                <p>We handle all GitHub integration on our backend. You do not need to connect your GitHub account or provide GitHub credentials. We only access repositories you have been granted permission to edit. You agree that we may use GitHub's API to load and save your website content.</p>
+
+                <h2 class="text-2xl font-bold mt-8 mb-4">5. AI Features</h2>
+                <p>The Client Portal includes optional AI-powered editing assistance. By using these features, you agree that your content may be processed by third-party AI services (Puter) for the purpose of generating suggested edits. You are responsible for reviewing and approving any AI-generated content before publishing.</p>
+
+                <h2 class="text-2xl font-bold mt-8 mb-4">6. Beta Service</h2>
+                <p>The Client Portal is currently in beta. We may make changes to features and functionality as we improve the service. Your feedback is valuable to us.</p>
+                <p class="mt-4"><strong>Disclaimer:</strong> As a beta service, features may break unexpectedly without warning. We take no liability for any issues, data loss, or service interruptions that may occur while using the Client Portal. We recommend backing up your data regularly.</p>
+
+                <h2 class="text-2xl font-bold mt-8 mb-4">7. Limitation of Liability</h2>
+                <p>James Studio shall not be liable for any damages arising from your use of the Client Portal, including but not limited to data loss, service interruptions, or errors in AI-generated content. Our total liability is limited to the amount paid for our services.</p>
+
+                <h2 class="text-2xl font-bold mt-8 mb-4">8. Termination</h2>
+                <p>We reserve the right to suspend or terminate your access to the Client Portal at any time, with or without cause, with or without notice. Upon termination, your right to use the Client Portal immediately ceases.</p>
+
+                <h2 class="text-2xl font-bold mt-8 mb-4">9. Governing Law</h2>
+                <p>These terms are governed by the laws of England and Wales. Any disputes shall be resolved in the courts of England and Wales.</p>
+
+                <h2 class="text-2xl font-bold mt-8 mb-4">10. Contact</h2>
+                <p>For questions about these Terms of Service regarding the Client Portal, please contact us at <a href="#" class="underline hover:text-black legal-email-link">legal@jamesstudio.uk</a> for legal concerns.</p>
+            </div>
         </div>
     </main>
 
+    <!-- Footer -->
     <footer class="border-t border-[#1A1A1A]/10 py-12 px-6 md:px-12 bg-white">
-        <div class="max-w-7xl mx-auto text-center">
-            <p class="text-xs text-neutral-400">&copy; 2026 James Studio. All rights reserved.</p>
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
+            <p class="text-xs text-neutral-400">
+                &copy; <span id="year">2026</span> James Theakston. Trading as James Studio Web Design.
+            </p>
+            <div class="flex gap-6 text-xs text-neutral-500">
+                <a href="/privacy.html" class="hover:underline">Privacy Policy</a>
+                <a href="/terms.html" class="hover:underline">Terms of Service</a>
+                <a href="/index.html" class="hover:underline">Back to Home</a>
+            </div>
         </div>
     </footer>
+
+    <!-- Email Client Modal -->
+    <div id="email-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4 transition-all duration-300 ease-in-out">
+        <div id="email-modal-content" class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl transform scale-95 opacity-0 transition-all duration-300 ease-in-out">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">Choose Email Client</h3>
+                <button id="close-modal" class="text-neutral-400 hover:text-black transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 mb-6">
+                <button id="gmail-btn" class="flex flex-col items-center gap-2 p-4 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all">
+                    <div class="w-12 h-12 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 192 192">
+                            <path fill="url(#a)" d="M146 44h38v110c0 6.627-5.373 12-12 12h-20a6 6 0 0 1-6-6z"/>
+                            <path fill="#fc413d" d="M46 44H8v110c0 6.627 5.373 12 12 12h20a6 6 0 0 0 6-6z"/>
+                            <path fill="url(#b)" d="M39.226 30.456c-8.033-6.752-20.018-5.714-26.77 2.319-6.752 8.032-5.714 20.017 2.319 26.77l76.078 63.949a8 8 0 0 0 10.295 0l76.078-63.95c8.032-6.752 9.07-18.737 2.318-26.77-6.752-8.032-18.737-9.07-26.769-2.318L96 78.18z"/>
+                            <defs>
+                                <linearGradient id="a" x1="165" x2="165" y1="44" y2="166" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#60d673"/>
+                                    <stop offset=".17" stop-color="#42c868"/>
+                                    <stop offset=".39" stop-color="#0ebc5f"/>
+                                    <stop offset=".62" stop-color="#00a9bb"/>
+                                    <stop offset=".86" stop-color="#3c90ff"/>
+                                    <stop offset="1" stop-color="#3186ff"/>
+                                </linearGradient>
+                                <linearGradient id="b" x1="8" x2="184" y1="46.13" y2="46.13" gradientUnits="userSpaceOnUse">
+                                    <stop offset=".08" stop-color="#ff63a0"/>
+                                    <stop offset=".3" stop-color="#fc413d"/>
+                                    <stop offset=".5" stop-color="#fc413d"/>
+                                    <stop offset=".7" stop-color="#3c90ff"/>
+                                    <stop offset=".92" stop-color="#60d673"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium">Gmail</span>
+                </button>
+                <button id="outlook-btn" class="flex flex-col items-center gap-2 p-4 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all">
+                    <div class="w-12 h-12 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 48 48">
+                            <path fill="#0078D4" d="M42 10H6a2 2 0 0 0-2 2v24a2 2 0 0 0 2 2h36a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2z"/>
+                            <path fill="#fff" d="M24 25.5L8 14v20l16-8.5zm0 0L40 14v20l-16-8.5z"/>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium">Outlook</span>
+                </button>
+                <button id="apple-btn" class="flex flex-col items-center gap-2 p-4 border border-[#1A1A1A]/10 rounded-xl hover:border-[#1A1A1A] transition-all">
+                    <div class="w-12 h-12 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 48 48">
+                            <path fill="#000" d="M33.5 25.5c.1 3.2 2.8 4.3 2.9 4.3-.1.1-.5 1.6-1.5 3.2-1 1.4-2 2.8-3.6 2.8-1.5 0-2-.9-3.7-.9-1.8 0-2.4.9-3.8.9-1.5 0-2.6-1.3-3.6-2.8-2-2.9-3.5-8.1-1.5-11.6 1-1.8 2.9-2.9 4.9-2.9 1.5 0 3 1 3.9 1 .9 0 2.5-1.2 4.2-1 .7 0 2.7.3 4 2.2-.1.1-2.4 1.4-2.3 4.2zM29.3 16.3c.8-1 1.4-2.3 1.2-3.7-1.2.1-2.6.8-3.5 1.8-.7.9-1.4 2.3-1.2 3.6 1.3.1 2.7-.6 3.5-1.7z"/>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium">Apple Mail</span>
+                </button>
+            </div>
+
+            <button id="copy-btn" class="w-full bg-[#1A1A1A] text-[#FAF9F6] py-3 rounded-xl font-semibold hover:bg-neutral-800 transition-all">
+                Copy Email Address
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tab) {
+            const tabSite = document.getElementById('tabSite');
+            const tabClient = document.getElementById('tabClient');
+            const contentSite = document.getElementById('contentSite');
+            const contentClient = document.getElementById('contentClient');
+            const indicator = document.getElementById('tabIndicator');
+
+            if (tab === 'site') {
+                tabSite.classList.remove('text-neutral-400');
+                tabSite.classList.add('text-[#1A1A1A]');
+                tabClient.classList.remove('text-[#1A1A1A]');
+                tabClient.classList.add('text-neutral-400');
+                contentSite.classList.remove('hidden');
+                contentClient.classList.add('hidden');
+                indicator.style.left = '0';
+                indicator.style.width = tabSite.offsetWidth + 'px';
+            } else {
+                tabClient.classList.remove('text-neutral-400');
+                tabClient.classList.add('text-[#1A1A1A]');
+                tabSite.classList.remove('text-[#1A1A1A]');
+                tabSite.classList.add('text-neutral-400');
+                contentClient.classList.remove('hidden');
+                contentSite.classList.add('hidden');
+                indicator.style.left = tabSite.offsetWidth + 'px';
+                indicator.style.width = tabClient.offsetWidth + 'px';
+            }
+        }
+
+        // Initialize tab indicator
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabSite = document.getElementById('tabSite');
+            const indicator = document.getElementById('tabIndicator');
+            indicator.style.width = tabSite.offsetWidth + 'px';
+        });
+
+        // Copy link
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard!');
+        }
+
+        // Email modal
+        const emailModal = document.getElementById('email-modal');
+        const emailModalContent = document.getElementById('email-modal-content');
+        const closeModal = document.getElementById('close-modal');
+        const emailLinks = document.querySelectorAll('.legal-email-link');
+        const email = 'legal@jamesstudio.uk';
+
+        emailLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                emailModal.classList.remove('hidden');
+                emailModal.classList.add('flex');
+                setTimeout(() => {
+                    emailModalContent.classList.remove('scale-95', 'opacity-0');
+                    emailModalContent.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            });
+        });
+
+        closeModal.addEventListener('click', () => {
+            emailModalContent.classList.remove('scale-100', 'opacity-100');
+            emailModalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                emailModal.classList.remove('flex');
+                emailModal.classList.add('hidden');
+            }, 300);
+        });
+
+        emailModal.addEventListener('click', (e) => {
+            if (e.target === emailModal) {
+                closeModal.click();
+            }
+        });
+
+        document.getElementById('gmail-btn').addEventListener('click', () => {
+            window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, '_blank');
+        });
+
+        document.getElementById('outlook-btn').addEventListener('click', () => {
+            window.open(`https://outlook.live.com/owa/?path=/mail/action/compose&to=${email}`, '_blank');
+        });
+
+        document.getElementById('apple-btn').addEventListener('click', () => {
+            window.open(`mailto:${email}`, '_blank');
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', () => {
+            navigator.clipboard.writeText(email);
+            alert('Email address copied to clipboard!');
+        });
+
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
