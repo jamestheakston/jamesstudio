@@ -5,7 +5,7 @@
  */
 
 // Set this to true to enable maintenance mode
-const MAINTENANCE_MODE = false;
+const MAINTENANCE_MODE = true;
 
 // Pick one of the following maintenance types:
 // - 'generic': General maintenance message
@@ -13,7 +13,7 @@ const MAINTENANCE_MODE = false;
 // - 'holiday': General holiday themed maintenance page
 // Change content of maintenance page accordingly
 // Or set MAINTENANCE_MODE to false to disable
-const MAINTENANCE_TYPE = 'generic';
+const MAINTENANCE_TYPE = 'christmas';
 
 export function onRequest(context) {
   const url = new URL(context.request.url);
