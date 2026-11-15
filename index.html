@@ -97,33 +97,6 @@
             transition-delay: 0.3s;
         }
 
-        /* Cookie Banner Styles */
-        .cookie-banner {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: #1A1A1A;
-            color: #FAF9F6;
-            padding: 20px;
-            z-index: 1000;
-            border-radius: 12px;
-            max-width: 400px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            transform: translateY(100px);
-            opacity: 0;
-            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-        }
-        .cookie-banner.is-visible {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .cookie-banner.fade-out {
-            opacity: 0;
-            transform: translateY(100px);
-            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-        }
-
         /* Selection colors for dark backgrounds */
         .bg-\[\\#1A1A1A\] ::selection {
             background-color: #FAF9F6;
@@ -1454,10 +1427,7 @@
         }
 
         function hideCookieBanner() {
-            cookieBanner.classList.add('fade-out');
-            setTimeout(() => {
-                cookieBanner.remove();
-            }, 300);
+            cookieBanner.remove();
         }
 
         acceptCookiesBtn.addEventListener('click', () => {
