@@ -1139,6 +1139,21 @@
                         <p class="text-neutral-600 text-sm leading-relaxed">Our response to the recent PHP security vulnerability and what it means for our clients.</p>
                     </div>
                 </a>
+
+                <!-- News Article - Pillar Group -->
+                <a href="/news/introducing-pillar-group" class="group cursor-pointer block">
+                    <div class="relative overflow-hidden rounded-2xl aspect-[16/9] bg-neutral-200 border border-[#1A1A1A]/5 mb-6">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80"
+                             alt="Introducing Pillar Group"
+                             class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                             loading="lazy">
+                    </div>
+                    <div class="space-y-3">
+                        <span class="text-xs uppercase font-semibold text-neutral-400">November 2026</span>
+                        <h3 class="text-xl font-bold group-hover:underline">Introducing Pillar Group</h3>
+                        <p class="text-neutral-600 text-sm leading-relaxed">A new chapter for our digital ventures. A holding company built for longevity, utility, and restraint.</p>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
@@ -1592,15 +1607,21 @@
         }
 
         function hideCookieBanner() {
-            cookieBanner.classList.add('fade-out');
-            setTimeout(() => {
-                cookieBanner.remove();
-            }, 300);
+            const banner = document.getElementById('cookieBanner');
+            if (banner) {
+                banner.classList.add('fade-out');
+                setTimeout(() => {
+                    if (banner && banner.parentNode) {
+                        banner.remove();
+                    }
+                }, 300);
+            }
         }
 
         function showCookieBanner() {
             // Check if banner exists, if not recreate it
-            if (!document.getElementById('cookieBanner')) {
+            const existingBanner = document.getElementById('cookieBanner');
+            if (!existingBanner) {
                 const bannerHTML = `
                     <div id="cookieBanner" class="cookie-banner">
                         <div class="space-y-4">
@@ -1640,10 +1661,12 @@
                 
                 // Show the banner
                 setTimeout(() => {
-                    newBanner.classList.add('is-visible');
+                    if (newBanner) {
+                        newBanner.classList.add('is-visible');
+                    }
                 }, 10);
             } else {
-                cookieBanner.classList.add('is-visible');
+                existingBanner.classList.add('is-visible');
             }
         }
 
