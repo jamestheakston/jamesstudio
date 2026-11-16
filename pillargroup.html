@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pillar Group — About Us</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <!-- Tailwind CSS for high-fidelity styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Syne (geometric, wide header) & Space Grotesk (modern mono-ish clean body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #FAF9F6;
+            color: #1A1A1A;
+        }
+        h1, h2, h3, .geometric-font {
+            font-family: 'Syne', sans-serif;
+            letter-spacing: -0.03em;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF9F6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1A1A1A;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#1A1A1A] selection:text-[#FAF9F6]">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#1A1A1A]/10 px-6 py-4 md:px-12 flex justify-between items-center transition-all duration-300">
+        <a href="/index.html" class="geometric-font text-xl md:text-2xl font-extrabold tracking-tighter flex items-center gap-2">
+            JAMES<span class="text-xs bg-[#1A1A1A] text-[#FAF9F6] px-2 py-0.5 rounded-full uppercase tracking-widest">Studio</span>
+        </a>
+        
+        <div class="hidden md:flex items-center gap-8 font-medium text-sm tracking-tight">
+            <a href="/index.html#services" class="hover:text-black/60 transition-colors">Services</a>
+            <a href="/index.html#work" class="hover:text-black/60 transition-colors">Selected Work</a>
+            <a href="/index.html#about" class="hover:text-black/60 transition-colors">About Us</a>
+            <a href="/index.html#contact" class="bg-[#1A1A1A] text-[#FAF9F6] px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider hover:bg-neutral-800 transition-all shadow-sm">
+                Get in Touch
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="px-6 py-20 md:py-32 md:px-12 max-w-4xl mx-auto">
+        <div class="space-y-8">
+            <div>
+                <p class="text-xs uppercase font-bold tracking-widest text-neutral-400 mb-4">About</p>
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">Pillar Group</h1>
+                <p class="text-sm text-neutral-500"><strong>Last Updated:</strong> 16th November 2026</p>
+            </div>
+
+            <div class="prose prose-neutral max-w-none space-y-6">
+                <p>Pillar Group is a technology company focused on building innovative digital solutions. We operate multiple services and brands, each serving different markets and needs.</p>
+
+                <h2 class="text-2xl font-bold mt-8 mb-4">Our Brands</h2>
+                <p>Pillar Group owns and operates the following services:</p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li><strong>James Studio:</strong> A UK-based web development and design agency specializing in minimalist, high-performance websites and full-stack applications. Visit <a href="/index.html" class="underline hover:text-black">jamesstudio.uk</a> to learn more.</li>
+                    <li><strong>Classcastle:</strong> [Description of Classcastle service]</li>
+                </ul>
+
+                <h2 class="text-2xl font-bold mt-8 mb-4">Data Sharing Between Services</h2>
+                <p>If you use multiple services owned by Pillar Group, your name may be transferred between these services for identification purposes. No other personal data (such as your email address, contact details, or account information) is shared between Pillar Group services.</p>
+                <p class="mt-4">For more information about how we handle your personal data, please refer to the Privacy Policy of the specific service you are using.</p>
+
+                <h2 class="text-2xl font-bold mt-8 mb-4">Contact</h2>
+                <p>For inquiries about Pillar Group, please contact us at <a href="mailto:legal@jamesstudio.uk" class="underline hover:text-black">legal@jamesstudio.uk</a>.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#1A1A1A]/10 py-12 px-6 md:px-12 bg-white">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
+            <p class="text-xs text-neutral-400">
+                &copy; <span id="year">2026</span> Pillar Group. Trading as James Studio Web Design.
+            </p>
+            <div class="flex gap-6 text-xs text-neutral-500">
+                <a href="/privacy.html" class="hover:underline">Privacy Policy</a>
+                <a href="/terms.html" class="hover:underline">Terms of Service</a>
+                <a href="/index.html" class="hover:underline">Back to Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
