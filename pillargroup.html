@@ -3,101 +3,329 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pillar Group — About Us</title>
+    <title>Pillar Group</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <!-- Tailwind CSS for high-fidelity styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Syne (geometric, wide header) & Space Grotesk (modern mono-ish clean body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     
     <style>
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: #FAF9F6;
-            color: #1A1A1A;
+        :root {
+            --bg-primary: #FAF9F6;
+            --bg-secondary: #F2F0EB;
+            --ink-primary: #141413;
+            --ink-secondary: #575652;
+            --border-hairline: #E2DFD7;
+            --accent: #1F3A2E;
         }
-        h1, h2, h3, .geometric-font {
-            font-family: 'Syne', sans-serif;
-            letter-spacing: -0.03em;
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--ink-primary);
+            -webkit-font-smoothing: antialiased;
+        }
+        .font-editorial {
+            font-family: 'Instrument Serif', Georgia, serif;
         }
         ::-webkit-scrollbar {
             width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #FAF9F6;
+            background: var(--bg-primary);
         }
         ::-webkit-scrollbar-thumb {
-            background: #1A1A1A;
-            border-radius: 3px;
+            background: #C4C0B6;
+        }
+        .hairline-b {
+            border-bottom: 1px solid var(--border-hairline);
+        }
+        .hairline-t {
+            border-top: 1px solid var(--border-hairline);
+        }
+        .hairline-r {
+            border-right: 1px solid var(--border-hairline);
+        }
+        .brand-row {
+            transition: background-color 0.25s ease;
+        }
+        .brand-row:hover {
+            background-color: var(--bg-secondary);
+        }
+        .brand-row:hover .arrow-icon {
+            transform: translate(3px, -3px);
+        }
+        .arrow-icon {
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
     </style>
 </head>
-<body class="antialiased selection:bg-[#1A1A1A] selection:text-[#FAF9F6]">
+<body class="selection:bg-[#141413] selection:text-[#FAF9F6]">
 
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#1A1A1A]/10 px-6 py-4 md:px-12 flex justify-between items-center transition-all duration-300">
-        <a href="/index.html" class="geometric-font text-xl md:text-2xl font-extrabold tracking-tighter flex items-center gap-2">
-            JAMES<span class="text-xs bg-[#1A1A1A] text-[#FAF9F6] px-2 py-0.5 rounded-full uppercase tracking-widest">Studio</span>
-        </a>
-        
-        <div class="hidden md:flex items-center gap-8 font-medium text-sm tracking-tight">
-            <a href="/index.html#services" class="hover:text-black/60 transition-colors">Services</a>
-            <a href="/index.html#work" class="hover:text-black/60 transition-colors">Selected Work</a>
-            <a href="/index.html#about" class="hover:text-black/60 transition-colors">About Us</a>
-            <a href="/index.html#contact" class="bg-[#1A1A1A] text-[#FAF9F6] px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider hover:bg-neutral-800 transition-all shadow-sm">
-                Get in Touch
+    <header class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md hairline-b">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 h-20 flex justify-between items-center">
+            <a href="/pillargroup.html" class="text-sm font-semibold tracking-[0.14em] uppercase text-[#141413]">
+                Pillar Group
             </a>
+            
+            <nav class="flex items-center gap-8 md:gap-10 text-sm text-[#575652]">
+                <a href="#brands" class="hover:text-[#141413] transition-colors">Portfolio</a>
+                <a href="#principles" class="hover:text-[#141413] transition-colors">Principles</a>
+                <a href="#privacy" class="hidden sm:inline hover:text-[#141413] transition-colors">Governance</a>
+                <a href="#contact" class="text-[#141413] font-medium border-b border-[#141413] pb-0.5 hover:opacity-70 transition-opacity">
+                    Contact
+                </a>
+            </nav>
         </div>
-    </nav>
+    </header>
 
-    <!-- Main Content -->
-    <main class="px-6 py-20 md:py-32 md:px-12 max-w-4xl mx-auto">
-        <div class="space-y-8">
-            <div>
-                <p class="text-xs uppercase font-bold tracking-widest text-neutral-400 mb-4">About</p>
-                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">Pillar Group</h1>
-                <p class="text-sm text-neutral-500"><strong>Last Updated:</strong> 16th November 2026</p>
+    <main>
+        <section class="hairline-b">
+            <div class="max-w-7xl mx-auto px-6 md:px-12 pt-24 pb-28 md:pt-36 md:pb-40">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+                    <div class="lg:col-span-8">
+                        <p class="text-xs font-medium uppercase tracking-[0.16em] text-[#575652] mb-8">
+                            United Kingdom — Digital Holding Group
+                        </p>
+                        <h1 class="font-editorial text-5xl sm:text-7xl md:text-[5.5rem] leading-[0.98] tracking-[-0.02em] text-[#141413]">
+                            Independent software, design, and <span class="italic font-normal">digital ventures.</span>
+                        </h1>
+                    </div>
+                    <div class="lg:col-span-4 lg:pb-3">
+                        <p class="text-base md:text-lg text-[#575652] leading-relaxed mb-8">
+                            Pillar Group owns, operates, and supports focused technology businesses built for longevity, utility, and restraint.
+                        </p>
+                        <div class="flex items-center gap-6 text-sm font-medium">
+                            <a href="#brands" class="bg-[#141413] text-[#FAF9F6] px-6 py-3.5 hover:bg-[#2B2B29] transition-colors">
+                                View Operating Brands
+                            </a>
+                            <a href="#principles" class="text-[#141413] hover:opacity-65 transition-opacity">
+                                How we operate →
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div class="prose prose-neutral max-w-none space-y-6">
-                <p>Pillar Group is a technology company focused on building innovative digital solutions. We operate multiple services and brands, each serving different markets and needs.</p>
+        <section id="brands" class="hairline-b">
+            <div class="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-32">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+                    <div>
+                        <span class="text-xs font-mono text-[#575652] block mb-3">01 / PORTFOLIO</span>
+                        <h2 class="font-editorial text-4xl md:text-5xl tracking-tight">Operating Brands</h2>
+                    </div>
+                    <p class="text-sm text-[#575652] max-w-md">
+                        Each company within the group operates autonomously with its own product roadmap, engineering team, and customer commitments.
+                    </p>
+                </div>
 
-                <h2 class="text-2xl font-bold mt-8 mb-4">Our Brands</h2>
-                <p>Pillar Group owns and operates the following services:</p>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li><strong>James Studio:</strong> A UK-based web development and design agency specializing in minimalist, high-performance websites and full-stack applications. Visit <a href="/index.html" class="underline hover:text-black">jamesstudio.uk</a> to learn more.</li>
-                    <li><strong>Classcastle:</strong> [Description of Classcastle service]</li>
-                </ul>
+                <div class="hairline-t">
+                    <a href="/index.html" class="brand-row group block hairline-b py-10 md:py-12 px-2 -mx-2">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline">
+                            <div class="md:col-span-4 flex items-center gap-4">
+                                <span class="text-xs font-mono text-[#575652]">01</span>
+                                <h3 class="text-2xl font-medium tracking-tight text-[#141413]">James Studio</h3>
+                            </div>
+                            <div class="md:col-span-2">
+                                <span class="inline-block text-xs uppercase tracking-wider px-2.5 py-1 bg-[#E8EFEA] text-[#1F3A2E] font-medium">
+                                    Active
+                                </span>
+                            </div>
+                            <div class="md:col-span-5">
+                                <p class="text-[#575652] text-base leading-relaxed">
+                                    A UK-based web development and design practice building minimalist, high-performance websites and full-stack applications.
+                                </p>
+                            </div>
+                            <div class="md:col-span-1 flex md:justify-end items-center">
+                                <span class="inline-flex items-center gap-1.5 text-sm font-medium text-[#141413]">
+                                    <span class="md:hidden">Visit Studio</span>
+                                    <svg class="w-4 h-4 arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M7 17L17 7M17 7H8M17 7V16"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
 
-                <h2 class="text-2xl font-bold mt-8 mb-4">Data Sharing Between Services</h2>
-                <p>If you use multiple services owned by Pillar Group, your name may be transferred between these services for identification purposes. No other personal data (such as your email address, contact details, or account information) is shared between Pillar Group services.</p>
-                <p class="mt-4">For more information about how we handle your personal data, please refer to the Privacy Policy of the specific service you are using.</p>
+                    <a href="https://classcastle.org" target="_blank" rel="noopener noreferrer" class="brand-row group block hairline-b py-10 md:py-12 px-2 -mx-2">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline">
+                            <div class="md:col-span-4 flex items-center gap-4">
+                                <span class="text-xs font-mono text-[#575652]">02</span>
+                                <h3 class="text-2xl font-medium tracking-tight text-[#141413]">Classcastle</h3>
+                            </div>
+                            <div class="md:col-span-2">
+                                <span class="inline-block text-xs uppercase tracking-wider px-2.5 py-1 bg-[#E8EFEA] text-[#1F3A2E] font-medium">
+                                    Active
+                                </span>
+                            </div>
+                            <div class="md:col-span-5">
+                                <p class="text-[#575652] text-base leading-relaxed">
+                                    A teacher web app paired with a lightweight browser extension for students. One click, and thirty screens land in the same place. Free for teachers, works on Chromebooks and Firefox.
+                                </p>
+                            </div>
+                            <div class="md:col-span-1 flex md:justify-end items-center">
+                                <span class="inline-flex items-center gap-1.5 text-sm font-medium text-[#141413]">
+                                    <span class="md:hidden">Visit</span>
+                                    <svg class="w-4 h-4 arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M7 17L17 7M17 7H8M17 7V16"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
 
-                <h2 class="text-2xl font-bold mt-8 mb-4">Contact</h2>
-                <p>For inquiries about Pillar Group, please contact us at <a href="mailto:legal@jamesstudio.uk" class="underline hover:text-black">legal@jamesstudio.uk</a>.</p>
+                    <div class="py-10 md:py-12 px-2 -mx-2 hairline-b">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline">
+                            <div class="md:col-span-4 flex items-center gap-4">
+                                <span class="text-xs font-mono text-[#575652]">03</span>
+                                <h3 class="text-2xl font-medium tracking-tight text-[#141413]">Cookery</h3>
+                            </div>
+                            <div class="md:col-span-2">
+                                <span class="inline-block text-xs uppercase tracking-wider px-2.5 py-1 bg-[#EAE7DF] text-[#575652] font-medium">
+                                    Discontinued
+                                </span>
+                            </div>
+                            <div class="md:col-span-5">
+                                <p class="text-[#575652] text-base leading-relaxed">
+                                    AI-powered recipe generation platform for Raycast. Previously in public beta before being discontinued.
+                                </p>
+                            </div>
+                            <div class="md:col-span-1 flex md:justify-end items-center">
+                                <span class="text-xs font-mono text-[#575652]">—</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <section id="principles" class="hairline-b bg-[#F2F0EB]">
+            <div class="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-32">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
+                    <div class="lg:col-span-5">
+                        <span class="text-xs font-mono text-[#575652] block mb-3">02 / PRINCIPLES</span>
+                        <h2 class="font-editorial text-4xl md:text-5xl tracking-tight leading-[1.05]">
+                            Utility over noise. Craft over scale.
+                        </h2>
+                    </div>
+                    <div class="lg:col-span-6 lg:col-start-7 flex items-end">
+                        <p class="text-lg text-[#575652] leading-relaxed">
+                            We build software that respects the person using it. Rather than chasing short-term growth metrics, we focus on durable engineering, clear interfaces, and straightforward business models.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 hairline-t hairline-b">
+                    <div class="py-10 md:pr-10 md:hairline-r hairline-b md:border-b-0">
+                        <span class="text-xs font-mono text-[#575652] block mb-6">I.</span>
+                        <h3 class="text-lg font-semibold mb-3 text-[#141413]">Deliberate Engineering</h3>
+                        <p class="text-sm text-[#575652] leading-relaxed">
+                            Fast load times, clean architecture, and zero bloat. We treat technical maintainability as a core product feature rather than an afterthought.
+                        </p>
+                    </div>
+                    <div class="py-10 md:px-10 md:hairline-r hairline-b md:border-b-0">
+                        <span class="text-xs font-mono text-[#575652] block mb-6">II.</span>
+                        <h3 class="text-lg font-semibold mb-3 text-[#141413]">Strict Data Boundaries</h3>
+                        <p class="text-sm text-[#575652] leading-relaxed">
+                            User data is never monetized or cross-pollinated for advertising. Trust is maintained through structural separation and minimal data collection.
+                        </p>
+                    </div>
+                    <div class="py-10 md:pl-10">
+                        <span class="text-xs font-mono text-[#575652] block mb-6">III.</span>
+                        <h3 class="text-lg font-semibold mb-3 text-[#141413]">Quiet Simplicity</h3>
+                        <p class="text-sm text-[#575652] leading-relaxed">
+                            Software should get out of the way. We strip away unnecessary friction so people can finish their work and move on with their day.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="privacy" class="hairline-b">
+            <div class="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-32">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    <div class="lg:col-span-4">
+                        <span class="text-xs font-mono text-[#575652] block mb-3">03 / DATA GOVERNANCE</span>
+                        <h2 class="font-editorial text-4xl tracking-tight mb-4">Cross-Service Privacy</h2>
+                        <p class="text-sm text-[#575652]">
+                            How account information is isolated across Pillar Group entities.
+                        </p>
+                    </div>
+                    
+                    <div class="lg:col-span-7 lg:col-start-6 space-y-6 text-[#141413] leading-relaxed">
+                        <p class="text-lg font-medium">
+                            If you use multiple services owned by Pillar Group, your name may be transferred between these services strictly for account identification purposes.
+                        </p>
+                        <div class="hairline-t pt-6 space-y-4 text-base text-[#575652]">
+                            <p>
+                                No other personal data—including your email address, billing details, usage history, or account credentials—is shared between Pillar Group services. Each operating brand maintains its own independent infrastructure and data handling practices.
+                            </p>
+                            <p>
+                                For complete details regarding data retention, processing, and your statutory rights, consult the dedicated Privacy Policy published on the specific service you use.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-32">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                    <div class="md:col-span-7">
+                        <span class="text-xs font-mono text-[#575652] block mb-3">04 / ENQUIRIES</span>
+                        <h2 class="font-editorial text-4xl md:text-6xl tracking-tight">
+                            Corporate & legal enquiries.
+                        </h2>
+                    </div>
+                    <div class="md:col-span-5 md:flex md:justify-end">
+                        <div>
+                            <p class="text-sm text-[#575652] mb-3">Direct correspondence</p>
+                            <a href="mailto:legal@jamesstudio.uk" class="inline-flex items-center gap-3 text-xl md:text-2xl font-medium text-[#141413] border-b border-[#141413] pb-1 hover:opacity-65 transition-opacity">
+                                legal@jamesstudio.uk
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 17L17 7M17 7H8M17 7V16"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-[#1A1A1A]/10 py-12 px-6 md:px-12 bg-white">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
-            <p class="text-xs text-neutral-400">
-                &copy; <span id="year">2026</span> Pillar Group. Trading as James Studio Web Design.
-            </p>
-            <div class="flex gap-6 text-xs text-neutral-500">
-                <a href="/privacy.html" class="hover:underline">Privacy Policy</a>
-                <a href="/terms.html" class="hover:underline">Terms of Service</a>
-                <a href="/index.html" class="hover:underline">Back to Home</a>
+    <footer class="hairline-t bg-[#FAF9F6]">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 py-12 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 text-xs text-[#575652]">
+            <div class="flex items-center gap-6">
+                <span class="font-semibold uppercase tracking-[0.14em] text-[#141413]">Pillar Group</span>
+                <span>© <span id="year">2026</span> All rights reserved.</span>
+            </div>
+            <div class="flex gap-8">
+                <a href="/privacy.html" class="hover:text-[#141413] transition-colors">Privacy Policy</a>
+                <a href="/terms.html" class="hover:text-[#141413] transition-colors">Terms of Service</a>
             </div>
         </div>
     </footer>
 
     <script>
-        // Set current year in footer
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
