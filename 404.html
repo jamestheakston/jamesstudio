@@ -124,6 +124,50 @@
         // Get current path without query parameters
         const currentPath = window.location.pathname;
 
+        // Fallback: Simple string similarity (Levenshtein distance approximation)
+        function similarity(s1, s2) {
+            const longer = s1.length > s2.length ? s1 : s2;
+            const shorter = s1.length > s2.length ? s2 : s1;
+            const longerLength = longer.length;
+            if (longerLength === 0) return 1.0;
+            return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+        }
+
+        function editDistance(s1, s2) {
+            const costs = new Array();
+            for (let i = 0; i <= s1.length; i++) {
+                let lastValue = i;
+                for (let j = 0; j <= s2.length; j++) {
+                    if (i == 0) costs[j] = j;
+                    else if (j > 0) {
+                        let newValue = costs[j - 1];
+                        if (s1.charAt(i - 1) != s2.charAt(j - 1))
+                            newValue = Math.min(Math.min(costs[j], lastValue), costs[j - 1]) + 1;
+                        costs[j - 1] = lastValue;
+                        lastValue = newValue;
+                    }
+                }
+                if (i > 0) costs[s2.length] = lastValue;
+            }
+            return costs[s2.length];
+        }
+
+        function getFallbackSuggestions() {
+            const suggestions = availablePages.map(page => {
+                const pathSimilarity = similarity(currentPath.toLowerCase(), page.path.toLowerCase());
+                const nameSimilarity = similarity(currentPath.toLowerCase(), page.name.toLowerCase());
+                return {
+                    ...page,
+                    score: Math.max(pathSimilarity, nameSimilarity)
+                };
+            })
+            .filter(page => page.score > 0.3)
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 3);
+
+            return suggestions;
+        }
+
         // Use AI to suggest pages
         async function getAISuggestions() {
             const suggestionsDiv = document.getElementById('suggestions');
@@ -150,32 +194,39 @@ Analyze the path "${currentPath}" and suggest up to 3 MOST RELEVANT pages from t
 
                 if (response.ok) {
                     const data = await response.json();
-                    const suggestedNames = data.response.split(',').map(s => s.trim()).filter(s => s);
                     
-                    // Match suggested names to pages
-                    const suggestions = availablePages.filter(page => 
-                        suggestedNames.some(name => 
-                            page.name.toLowerCase().includes(name.toLowerCase()) || 
-                            name.toLowerCase().includes(page.name.toLowerCase())
-                        )
-                    ).slice(0, 3);
+                    // Check if AI returned a valid response
+                    if (data.response && !data.response.includes('could not generate a response')) {
+                        const suggestedNames = data.response.split(',').map(s => s.trim()).filter(s => s);
+                        
+                        // Match suggested names to pages
+                        const suggestions = availablePages.filter(page => 
+                            suggestedNames.some(name => 
+                                page.name.toLowerCase().includes(name.toLowerCase()) || 
+                                name.toLowerCase().includes(page.name.toLowerCase())
+                            )
+                        ).slice(0, 3);
 
-                    if (suggestions.length > 0) {
-                        suggestionsDiv.innerHTML = suggestions.map(page => `
-                            <a href="${page.path}" ${page.external ? 'target="_blank" rel="noopener noreferrer"' : ''} class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
-                                ${page.name}
-                            </a>
-                        `).join('');
-                    } else {
-                        // Fallback to home if AI didn't match anything
-                        suggestionsDiv.innerHTML = `
-                            <a href="/" class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
-                                Go to Home
-                            </a>
-                        `;
+                        if (suggestions.length > 0) {
+                            suggestionsDiv.innerHTML = suggestions.map(page => `
+                                <a href="${page.path}" ${page.external ? 'target="_blank" rel="noopener noreferrer"' : ''} class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
+                                    ${page.name}
+                                </a>
+                            `).join('');
+                            return;
+                        }
                     }
+                }
+                
+                // Fallback to algorithmic suggestions if AI fails or returns error
+                const fallbackSuggestions = getFallbackSuggestions();
+                if (fallbackSuggestions.length > 0) {
+                    suggestionsDiv.innerHTML = fallbackSuggestions.map(page => `
+                        <a href="${page.path}" ${page.external ? 'target="_blank" rel="noopener noreferrer"' : ''} class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
+                            ${page.name}
+                        </a>
+                    `).join('');
                 } else {
-                    // Fallback to home on error
                     suggestionsDiv.innerHTML = `
                         <a href="/" class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
                             Go to Home
@@ -184,12 +235,21 @@ Analyze the path "${currentPath}" and suggest up to 3 MOST RELEVANT pages from t
                 }
             } catch (error) {
                 console.error('Error getting AI suggestions:', error);
-                // Fallback to home on error
-                suggestionsDiv.innerHTML = `
-                    <a href="/" class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
-                        Go to Home
-                    </a>
-                `;
+                // Fallback to algorithmic suggestions on error
+                const fallbackSuggestions = getFallbackSuggestions();
+                if (fallbackSuggestions.length > 0) {
+                    suggestionsDiv.innerHTML = fallbackSuggestions.map(page => `
+                        <a href="${page.path}" ${page.external ? 'target="_blank" rel="noopener noreferrer"' : ''} class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
+                            ${page.name}
+                        </a>
+                    `).join('');
+                } else {
+                    suggestionsDiv.innerHTML = `
+                        <a href="/" class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
+                            Go to Home
+                        </a>
+                    `;
+                }
             }
         }
 
