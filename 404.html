@@ -40,22 +40,6 @@
 </head>
 <body class="antialiased selection:bg-[#1A1A1A] selection:text-[#FAF9F6] min-h-screen flex flex-col">
 
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#1A1A1A]/10 px-6 py-4 md:px-12 flex justify-between items-center transition-all duration-300">
-        <a href="/index.html" class="geometric-font text-xl md:text-2xl font-extrabold tracking-tighter flex items-center gap-2">
-            JAMES<span class="text-xs bg-[#1A1A1A] text-[#FAF9F6] px-2 py-0.5 rounded-full uppercase tracking-widest">Studio</span>
-        </a>
-        
-        <div class="hidden md:flex items-center gap-8 font-medium text-sm tracking-tight">
-            <a href="/index.html#services" class="hover:text-black/60 transition-colors">Services</a>
-            <a href="/index.html#work" class="hover:text-black/60 transition-colors">Selected Work</a>
-            <a href="/index.html#about" class="hover:text-black/60 transition-colors">About Us</a>
-            <a href="/index.html#contact" class="bg-[#1A1A1A] text-[#FAF9F6] px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider hover:bg-neutral-800 transition-all shadow-sm">
-                Get in Touch
-            </a>
-        </div>
-    </nav>
-
     <!-- 404 Content -->
     <main class="flex-1 relative overflow-hidden">
         <!-- Background Image -->
@@ -106,22 +90,7 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-[#1A1A1A]/10 py-12 px-6 md:px-12 bg-white">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
-            <p class="text-xs text-neutral-400">
-                &copy; <span id="year">2026</span> James Studio. All rights engineered under geometric rules.
-            </p>
-            <div class="flex gap-6 text-xs text-neutral-500">
-                <a href="#" class="hover:underline">Privacy Policy</a>
-                <a href="#" class="hover:underline">Terms of Service</a>
-            </div>
-        </div>
-    </footer>
-
     <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-
         // Available pages on the site
         const availablePages = [
             { path: '/', name: 'Home' },
