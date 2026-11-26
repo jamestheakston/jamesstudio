@@ -292,14 +292,7 @@
 
         function proceedToVerify() {
             // Redirect to verification site
-            const baseUrl = 'https://verify.jamesstudio.uk/verifyattempt/consent';
-            const params = new URLSearchParams({
-                servicename: 'James Studio',
-                method: 'student',
-                noauthredirect: 'https://jamesstudio.uk/student?error=cancelled',
-                redirect: 'https://verify.jamesstudio.uk/?error=comingsoon'
-            });
-            window.location.href = `${baseUrl}?${params.toString()}`;
+            window.location.href = 'https://verify.jamesstudio.uk/verifyattempt/consent?servicename=James%20Studio&method=student&noauthredirect=https%3A//jamesstudio.uk/student%3Ferror%3Dcancelled&redirect=https%3A//jamesstudio.uk/student%3Ferror%3Dcomingsoon';
         }
 
         // Close modal on outside click
