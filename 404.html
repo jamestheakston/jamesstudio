@@ -173,7 +173,11 @@ Main site pages: ${availablePages.filter(p => !p.external).map(p => `${p.name} (
 
 Other services: verify.jamesstudio.uk (student verification), client.jamesstudio.uk (client portal - contact hello@jamesstudio.uk).
 
-Analyze the path "${currentPath}" and suggest up to 3 MOST RELEVANT pages from the main site pages list. Only suggest client contact if the path explicitly contains "client". Prioritize actual pages over contact options. Return only the page names, separated by commas.`
+Analyze the path "${currentPath}" and determine:
+1. If there are relevant pages from the main site pages list, suggest up to 3 MOST RELEVANT pages. Only suggest client contact if the path explicitly contains "client". Return the page names separated by commas.
+2. If NONE of the pages are truly relevant to what the user was looking for, instead write a helpful 1-2 sentence description explaining what they might be looking for and where they could find it or who to contact. Start your response with "DESC:" if providing a description instead of page names.
+
+Prioritize actual pages over contact options.`
                     }),
                 });
 
@@ -182,6 +186,17 @@ Analyze the path "${currentPath}" and suggest up to 3 MOST RELEVANT pages from t
                     
                     // Check if AI returned a valid response
                     if (data.response && !data.response.includes('could not generate a response')) {
+                        // Check if AI provided a description instead of page names
+                        if (data.response.startsWith('DESC:')) {
+                            const description = data.response.replace('DESC:', '').trim();
+                            suggestionsDiv.innerHTML = `
+                                <p class="text-sm text-white/90 max-w-md mx-auto text-center leading-relaxed">
+                                    ${description}
+                                </p>
+                            `;
+                            return;
+                        }
+
                         const suggestedNames = data.response.split(',').map(s => s.trim()).filter(s => s);
                         
                         // Match suggested names to pages
