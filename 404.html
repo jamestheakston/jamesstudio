@@ -57,21 +57,29 @@
     </nav>
 
     <!-- 404 Content -->
-    <main class="flex-1 flex items-center justify-center px-6 md:px-12">
+    <main class="flex-1 flex items-center justify-center px-6 md:px-12 py-20">
         <div class="max-w-2xl text-center space-y-8">
-            <h1 class="text-8xl md:text-9xl font-extrabold tracking-tight text-[#1A1A1A]">404</h1>
+            <div class="inline-block mb-4">
+                <span class="text-xs uppercase font-bold tracking-widest text-neutral-400">Error 404</span>
+            </div>
+            
+            <h1 class="text-8xl md:text-9xl font-extrabold tracking-tight text-[#1A1A1A] leading-none mb-4">404</h1>
             
             <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Page Not Found</h2>
             
             <p class="text-lg md:text-xl text-neutral-600 leading-relaxed max-w-lg mx-auto">
-                The page you're looking for doesn't exist or has been moved. Let's get you back on track.
+                The page you're looking for doesn't exist or has been moved. Did you mean one of these?
             </p>
 
-            <div class="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-                <a href="/index.html" class="bg-[#1A1A1A] text-[#FAF9F6] px-8 py-4 rounded-full text-sm font-semibold tracking-wider hover:bg-neutral-800 transition-all transform hover:-translate-y-0.5">
+            <div id="suggestions" class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                <!-- Suggestions will be loaded here by JavaScript -->
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+                <a href="/" class="bg-[#1A1A1A] text-[#FAF9F6] px-8 py-4 rounded-full text-sm font-semibold tracking-wider hover:bg-neutral-800 transition-all transform hover:-translate-y-0.5 shadow-sm">
                     Return Home
                 </a>
-                <a href="/index.html#work" class="border border-[#1A1A1A] text-[#1A1A1A] px-8 py-4 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all transform hover:-translate-y-0.5">
+                <a href="/#work" class="border border-[#1A1A1A] text-[#1A1A1A] px-8 py-4 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all transform hover:-translate-y-0.5">
                     View Our Work
                 </a>
             </div>
@@ -93,6 +101,99 @@
 
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Available pages on the site
+        const availablePages = [
+            { path: '/', name: 'Home' },
+            { path: '/student', name: 'Student Discount' },
+            { path: '/changelog', name: 'Changelog' },
+            { path: '/pillargroup', name: 'Pillar Group' },
+            { path: '/privacy.html', name: 'Privacy Policy' },
+            { path: '/terms.html', name: 'Terms of Service' },
+            { path: '/securityalerts.html', name: 'Security Alerts' },
+            { path: '/projects/classchartsimprover.html', name: 'ClassCharts Improver' },
+            { path: '/projects/scoutscarwash.html', name: 'Scouts Car Wash' },
+            { path: '/projects/montecuredogs.html', name: 'Montecure Dogs' },
+            { path: '/news/ai-and-our-view', name: 'AI and our POV' },
+            { path: '/news/security-and-php', name: 'Security & PHP' },
+            { path: '/news/introducing-pillar-group', name: 'Introducing Pillar Group' },
+            { path: 'https://verify.jamesstudio.uk', name: 'Verify Service', external: true },
+            { path: 'mailto:hello@jamesstudio.uk', name: 'Contact for Client Portal', external: true },
+            { path: 'mailto:hello@jamesstudio.uk', name: 'Contact for Admin Panel', external: true }
+        ];
+
+        // Get current path without query parameters
+        const currentPath = window.location.pathname;
+
+        // Use AI to suggest pages
+        async function getAISuggestions() {
+            const suggestionsDiv = document.getElementById('suggestions');
+            
+            // Show loading state
+            suggestionsDiv.innerHTML = '<span class="text-sm text-neutral-500">Finding suggestions...</span>';
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: `The user tried to visit "${currentPath}" but it doesn't exist. 
+
+Available pages: ${availablePages.map(p => `${p.name} (${p.path})`).join(', ')}.
+
+Suggest up to 3 relevant pages or services from the list above. Return only the page/service names, separated by commas.`
+                    }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const suggestedNames = data.response.split(',').map(s => s.trim()).filter(s => s);
+                    
+                    // Match suggested names to pages
+                    const suggestions = availablePages.filter(page => 
+                        suggestedNames.some(name => 
+                            page.name.toLowerCase().includes(name.toLowerCase()) || 
+                            name.toLowerCase().includes(page.name.toLowerCase())
+                        )
+                    ).slice(0, 3);
+
+                    if (suggestions.length > 0) {
+                        suggestionsDiv.innerHTML = suggestions.map(page => `
+                            <a href="${page.path}" ${page.external ? 'target="_blank" rel="noopener noreferrer"' : ''} class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
+                                ${page.name}
+                            </a>
+                        `).join('');
+                    } else {
+                        // Fallback to home if AI didn't match anything
+                        suggestionsDiv.innerHTML = `
+                            <a href="/" class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
+                                Go to Home
+                            </a>
+                        `;
+                    }
+                } else {
+                    // Fallback to home on error
+                    suggestionsDiv.innerHTML = `
+                        <a href="/" class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
+                            Go to Home
+                        </a>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error getting AI suggestions:', error);
+                // Fallback to home on error
+                suggestionsDiv.innerHTML = `
+                    <a href="/" class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
+                        Go to Home
+                    </a>
+                `;
+            }
+        }
+
+        // Call AI suggestions on page load
+        getAISuggestions();
     </script>
 </body>
 </html>
