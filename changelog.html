@@ -168,29 +168,55 @@
                 if (commits.length === 0) {
                     changelog.innerHTML = '<p>No commits found.</p>';
                 } else {
-                    let html = '';
+                    // Group commits by date
+                    const groupedByDate = {};
                     
                     commits.forEach(commit => {
-                        const date = new Date(commit.commit.committer.date).toLocaleDateString('en-GB', {
+                        const dateObj = new Date(commit.commit.committer.date);
+                        const dateKey = dateObj.toLocaleDateString('en-GB', {
                             day: 'numeric',
                             month: 'long',
                             year: 'numeric'
                         });
                         
-                        const message = commit.commit.message.split('\n')[0]; // First line only
-                        const shortHash = commit.sha.substring(0, 7);
+                        if (!groupedByDate[dateKey]) {
+                            groupedByDate[dateKey] = [];
+                        }
                         
-                        html += `
-                            <h2>${date}</h2>
-                            <ul>
+                        groupedByDate[dateKey].push({
+                            message: commit.commit.message.split('\n')[0],
+                            hash: commit.sha.substring(0, 7),
+                            time: dateObj.toLocaleTimeString('en-GB', {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            }),
+                            url: commit.html_url
+                        });
+                    });
+                    
+                    let html = '';
+                    
+                    // Sort dates in descending order
+                    const sortedDates = Object.keys(groupedByDate).sort((a, b) => {
+                        return new Date(b) - new Date(a);
+                    });
+                    
+                    sortedDates.forEach(date => {
+                        html += `<h2>${date}</h2><ul>`;
+                        
+                        groupedByDate[date].forEach(commit => {
+                            html += `
                                 <li>
-                                    <strong>${message}</strong>
+                                    <strong>${commit.message}</strong>
                                     <br>
-                                    <span class="commit-hash">${shortHash}</span>
-                                    <a href="${commit.html_url}" target="_blank" class="text-xs ml-2">View on GitHub →</a>
+                                    <span class="commit-hash">${commit.hash}</span>
+                                    <span class="text-xs text-neutral-500 ml-2">${commit.time}</span>
+                                    <a href="${commit.url}" target="_blank" class="text-xs ml-2">View on GitHub →</a>
                                 </li>
-                            </ul>
-                        `;
+                            `;
+                        });
+                        
+                        html += '</ul>';
                     });
                     
                     changelog.innerHTML = html;
