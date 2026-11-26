@@ -124,48 +124,44 @@
         // Get current path without query parameters
         const currentPath = window.location.pathname;
 
-        // Fallback: Simple string similarity (Levenshtein distance approximation)
-        function similarity(s1, s2) {
-            const longer = s1.length > s2.length ? s1 : s2;
-            const shorter = s1.length > s2.length ? s2 : s1;
-            const longerLength = longer.length;
-            if (longerLength === 0) return 1.0;
-            return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
-        }
-
-        function editDistance(s1, s2) {
-            const costs = new Array();
-            for (let i = 0; i <= s1.length; i++) {
-                let lastValue = i;
-                for (let j = 0; j <= s2.length; j++) {
-                    if (i == 0) costs[j] = j;
-                    else if (j > 0) {
-                        let newValue = costs[j - 1];
-                        if (s1.charAt(i - 1) != s2.charAt(j - 1))
-                            newValue = Math.min(Math.min(costs[j], lastValue), costs[j - 1]) + 1;
-                        costs[j - 1] = lastValue;
-                        lastValue = newValue;
-                    }
-                }
-                if (i > 0) costs[s2.length] = lastValue;
-            }
-            return costs[s2.length];
-        }
-
+        // Fallback: Simple keyword matching
         function getFallbackSuggestions() {
-            const suggestions = availablePages.map(page => {
-                const pathSimilarity = similarity(currentPath.toLowerCase(), page.path.toLowerCase());
-                const nameSimilarity = similarity(currentPath.toLowerCase(), page.name.toLowerCase());
-                return {
-                    ...page,
-                    score: Math.max(pathSimilarity, nameSimilarity)
-                };
-            })
-            .filter(page => page.score > 0.3)
-            .sort((a, b) => b.score - a.score)
-            .slice(0, 3);
-
-            return suggestions;
+            const pathLower = currentPath.toLowerCase();
+            
+            // Check for keywords in the path
+            if (pathLower.includes('student')) {
+                return availablePages.filter(p => p.name.toLowerCase().includes('student'));
+            }
+            if (pathLower.includes('project') || pathLower.includes('work') || pathLower.includes('portfolio')) {
+                return availablePages.filter(p => p.path.includes('/projects/'));
+            }
+            if (pathLower.includes('news') || pathLower.includes('blog') || pathLower.includes('article')) {
+                return availablePages.filter(p => p.path.includes('/news/'));
+            }
+            if (pathLower.includes('privacy')) {
+                return availablePages.filter(p => p.name.toLowerCase().includes('privacy'));
+            }
+            if (pathLower.includes('term')) {
+                return availablePages.filter(p => p.name.toLowerCase().includes('term'));
+            }
+            if (pathLower.includes('security')) {
+                return availablePages.filter(p => p.name.toLowerCase().includes('security'));
+            }
+            if (pathLower.includes('pillar')) {
+                return availablePages.filter(p => p.name.toLowerCase().includes('pillar'));
+            }
+            if (pathLower.includes('change') || pathLower.includes('log')) {
+                return availablePages.filter(p => p.name.toLowerCase().includes('changelog'));
+            }
+            if (pathLower.includes('verify')) {
+                return availablePages.filter(p => p.name.toLowerCase().includes('verify'));
+            }
+            if (pathLower.includes('client')) {
+                return availablePages.filter(p => p.name.toLowerCase().includes('client'));
+            }
+            
+            // Default: return Home
+            return [availablePages[0]];
         }
 
         // Use AI to suggest pages
