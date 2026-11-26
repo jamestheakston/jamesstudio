@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Suggestions — James Studio</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="How James Studio uses AI to provide intelligent page suggestions on 404 errors.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jamesstudio.uk/news/intelligent_suggestions">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Intelligent Suggestions — James Studio">
+    <meta property="og:description" content="How James Studio uses AI to provide intelligent page suggestions on 404 errors.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://jamesstudio.uk/news/intelligent_suggestions">
+    <meta property="og:image" content="https://jamesstudio.uk/assets/og-image.jpg">
+    <meta property="og:image:width" content="1424">
+    <meta property="og:image:height" content="752">
+    <meta property="og:image:alt" content="James Studio - Minimalist Web Development & Design Agency UK">
+    <meta property="og:site_name" content="James Studio">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #FAF9F6;
+            color: #1A1A1A;
+        }
+        h1, h2, h3, .geometric-font {
+            font-family: 'Syne', sans-serif;
+            letter-spacing: -0.03em;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#1A1A1A]/10 px-6 py-4 md:px-12 flex justify-between items-center transition-all duration-300">
+        <a href="/" class="geometric-font text-xl md:text-2xl font-extrabold tracking-tighter flex items-center gap-2">
+            JAMES<span class="text-xs bg-[#1A1A1A] text-[#FAF9F6] px-2 py-0.5 rounded-full uppercase tracking-widest">Studio</span>
+        </a>
+        
+        <div class="flex items-center gap-6 md:gap-8 font-medium text-sm tracking-tight">
+            <a href="/#services" class="hover:text-black/60 transition-colors">Services</a>
+            <a href="/#work" class="hover:text-black/60 transition-colors">Selected Work</a>
+            <a href="/#about" class="hover:text-black/60 transition-colors">About Us</a>
+            <a href="/#news" class="hover:text-black/60 transition-colors">News</a>
+            <a href="/#contact" class="bg-[#1A1A1A] text-[#FAF9F6] px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider hover:bg-neutral-800 transition-all shadow-sm">
+                Get in Touch
+            </a>
+        </div>
+    </nav>
+
+    <!-- Article Header -->
+    <header class="px-6 py-16 md:py-24 md:px-12 max-w-7xl mx-auto">
+        <a href="/#news" class="inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-black mb-8 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Back to News
+        </a>
+        
+        <div class="max-w-4xl">
+            <span class="text-xs uppercase font-bold tracking-widest text-neutral-400 mb-4 block">November 2026</span>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">Intelligent Suggestions</h1>
+            <p class="text-lg text-neutral-600 leading-relaxed">How we use AI to help users find what they're looking for when they hit a dead end.</p>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <article class="px-6 md:px-12 max-w-4xl mx-auto pb-24">
+        <div class="prose prose-lg max-w-none">
+            <p class="text-xl text-neutral-600 leading-relaxed mb-8">
+                We've all been there: you click a link, expecting to land on a helpful page, but instead you're met with a generic "404 — Page Not Found" message. Frustrating, right? At James Studio, we decided to do something about it.
+            </p>
+
+            <h2 class="text-2xl font-bold mt-12 mb-4">The Problem with Traditional 404s</h2>
+            <p class="text-neutral-600 leading-relaxed mb-6">
+                Traditional 404 pages are dead ends. They tell users what went wrong, but offer no path forward. You might see a "Return Home" button, but that's not always helpful if you were looking for something specific. Users often bounce, frustrated that they couldn't find what they needed.
+            </p>
+
+            <h2 class="text-2xl font-bold mt-12 mb-4">Our Solution: AI-Powered Suggestions</h2>
+            <p class="text-neutral-600 leading-relaxed mb-6">
+                When a user lands on a 404 page on our site, we don't just show an error. We analyze the URL they tried to visit and use AI to suggest the most relevant pages they might have been looking for.
+            </p>
+
+            <p class="text-neutral-600 leading-relaxed mb-6">
+                Here's how it works:
+            </p>
+
+            <ul class="list-disc pl-6 space-y-3 text-neutral-600 mb-6">
+                <li>We capture the invalid URL path</li>
+                <li>We send it to our AI chat endpoint along with a list of all available pages on our site</li>
+                <li>The AI analyzes the path and determines which pages are most relevant</li>
+                <li>We display up to 3 suggested pages as clickable buttons</li>
+            </ul>
+
+            <h2 class="text-2xl font-bold mt-12 mb-4">How We Built It</h2>
+            <p class="text-neutral-600 leading-relaxed mb-6">
+                We use the same AI chat endpoint that powers our website's chat widget. When the 404 page loads, it makes a POST request to <code class="bg-neutral-100 px-2 py-1 rounded text-sm">/api/chat</code> with a structured prompt asking for relevant page suggestions.
+            </p>
+
+            <p class="text-neutral-600 leading-relaxed mb-6">
+                The AI is given context about our site structure and told to prioritize actual pages over contact options. It also has a 30-second timeout to fetch site content, ensuring it has up-to-date information.
+            </p>
+
+            <h2 class="text-2xl font-bold mt-12 mb-4">Reliability First</h2>
+            <p class="text-neutral-600 leading-relaxed mb-6">
+                AI is powerful, but it's not infallible. If the AI endpoint fails or returns an error, we have a reliable fallback system in place. We use simple keyword matching to suggest relevant pages based on the URL path—for example, if someone tries to visit <code class="bg-neutral-100 px-2 py-1 rounded text-sm">/project/example</code>, we'll suggest pages from our portfolio section.
+            </p>
+
+            <p class="text-neutral-600 leading-relaxed mb-6">
+                This ensures users always get helpful suggestions, even if the AI is temporarily unavailable.
+            </p>
+
+            <h2 class="text-2xl font-bold mt-12 mb-4">The Result</h2>
+            <p class="text-neutral-600 leading-relaxed mb-6">
+                Users who hit a 404 on our site now see a helpful message: "Did you mean one of these?" followed by intelligent suggestions. They can quickly navigate to where they actually wanted to go, reducing frustration and bounce rates.
+            </p>
+
+            <p class="text-neutral-600 leading-relaxed mb-6">
+                It's a small detail, but these small details are what make the difference between a frustrating experience and a helpful one.
+            </p>
+
+            <div class="bg-neutral-100/50 border border-[#1A1A1A]/10 rounded-2xl p-8 mt-12">
+                <h3 class="text-xl font-bold mb-4">Want to see it in action?</h3>
+                <p class="text-neutral-600 mb-6">Try visiting a non-existent page on our site, like <a href="/this-page-does-not-exist" class="underline hover:text-black">/this-page-does-not-exist</a>, to see the intelligent suggestions in action.</p>
+                <a href="/#contact" class="inline-block bg-[#1A1A1A] text-[#FAF9F6] px-8 py-4 rounded-full text-sm font-semibold tracking-wider hover:bg-neutral-800 transition-all">
+                    Get in Touch
+                </a>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#1A1A1A]/10 py-12 px-6 md:px-12 bg-white">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
+            <p class="text-xs text-neutral-400">
+                &copy; 2026 Pillar Group. Trading as James Studio Web Design UK.
+            </p>
+            <div class="flex gap-4 sm:gap-6 text-xs text-neutral-500">
+                <a href="/" class="hover:underline py-2 px-2">Home</a>
+                <a href="/#contact" class="hover:underline py-2 px-2">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
