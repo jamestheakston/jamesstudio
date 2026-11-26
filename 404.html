@@ -118,8 +118,7 @@
             { path: '/news/security-and-php', name: 'Security & PHP' },
             { path: '/news/introducing-pillar-group', name: 'Introducing Pillar Group' },
             { path: 'https://verify.jamesstudio.uk', name: 'Verify Service', external: true },
-            { path: 'mailto:hello@jamesstudio.uk', name: 'Contact for Client Portal', external: true },
-            { path: 'mailto:hello@jamesstudio.uk', name: 'Contact for Admin Panel', external: true }
+            { path: 'mailto:hello@jamesstudio.uk', name: 'Contact for Client Portal', external: true }
         ];
 
         // Get current path without query parameters
@@ -141,9 +140,11 @@
                     body: JSON.stringify({
                         message: `The user tried to visit "${currentPath}" but it doesn't exist. 
 
-Available pages: ${availablePages.map(p => `${p.name} (${p.path})`).join(', ')}.
+Main site pages: ${availablePages.filter(p => !p.external).map(p => `${p.name} (${p.path})`).join(', ')}.
 
-Suggest up to 3 relevant pages or services from the list above. Return only the page/service names, separated by commas.`
+Other services: verify.jamesstudio.uk (student verification), client.jamesstudio.uk (client portal - contact hello@jamesstudio.uk).
+
+Analyze the path "${currentPath}" and suggest up to 3 MOST RELEVANT pages from the main site pages list. Only suggest client contact if the path explicitly contains "client". Prioritize actual pages over contact options. Return only the page names, separated by commas.`
                     }),
                 });
 
