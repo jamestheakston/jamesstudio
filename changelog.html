@@ -165,64 +165,67 @@
 
                 const commits = await response.json();
                 
-                // Group commits by date
-                const groupedByDate = {};
-                
-                commits.forEach(commit => {
-                    const dateObj = new Date(commit.commit.committer.date);
-                    const dateKey = dateObj.toLocaleDateString('en-GB', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
+                if (commits.length === 0) {
+                    changelog.innerHTML = '<p>No commits found.</p>';
+                } else {
+                    // Group commits by date
+                    const groupedByDate = {};
+                    
+                    commits.forEach(commit => {
+                        const dateObj = new Date(commit.commit.committer.date);
+                        const dateKey = dateObj.toLocaleDateString('en-GB', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric'
+                        });
+                        
+                        if (!groupedByDate[dateKey]) {
+                            groupedByDate[dateKey] = [];
+                        }
+                        
+                        groupedByDate[dateKey].push({
+                            message: commit.commit.message.split('\n')[0],
+                            hash: commit.sha.substring(0, 7),
+                            time: dateObj.toLocaleTimeString('en-GB', {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            }),
+                            url: commit.html_url
+                        });
                     });
                     
-                    if (!groupedByDate[dateKey]) {
-                        groupedByDate[dateKey] = [];
-                    }
+                    let html = '';
                     
-                    groupedByDate[dateKey].push({
-                        message: commit.commit.message.split('\n')[0],
-                        hash: commit.sha.substring(0, 7),
-                        time: dateObj.toLocaleTimeString('en-GB', {
-                            hour: '2-digit',
-                            minute: '2-digit'
-                        }),
-                        url: commit.html_url
-                    });
-                });
-                
-                let html = '';
-                
-                // Sort dates in descending order and take only the first 3
-                const sortedDates = Object.keys(groupedByDate).sort((a, b) => {
-                    return new Date(b) - new Date(a);
-                }).slice(0, 3);
-                
-                sortedDates.forEach(date => {
-                    html += `<h2>${date}</h2><ul>`;
+                    // Sort dates in descending order and take only the first 3
+                    const sortedDates = Object.keys(groupedByDate).sort((a, b) => {
+                        return new Date(b) - new Date(a);
+                    }).slice(0, 3);
                     
-                    groupedByDate[date].forEach(commit => {
-                        html += `
-                            <li>
-                                <strong>${commit.message}</strong>
-                                <br>
-                                <span class="commit-hash">${commit.hash}</span>
-                                <span class="text-xs text-neutral-500 ml-2">${commit.time}</span>
-                                <a href="${commit.url}" target="_blank" class="text-xs ml-2">View on GitHub →</a>
-                            </li>
-                        `;
+                    sortedDates.forEach(date => {
+                        html += `<h2>${date}</h2><ul>`;
+                        
+                        groupedByDate[date].forEach(commit => {
+                            html += `
+                                <li>
+                                    <strong>${commit.message}</strong>
+                                    <br>
+                                    <span class="commit-hash">${commit.hash}</span>
+                                    <span class="text-xs text-neutral-500 ml-2">${commit.time}</span>
+                                    <a href="${commit.url}" target="_blank" class="text-xs ml-2">View on GitHub →</a>
+                                </li>
+                            `;
+                        });
+                        
+                        html += '</ul>';
                     });
                     
-                    html += '</ul>';
-                });
-                
-                changelog.innerHTML = html + `
-                    <div class="mt-8 pt-8 border-t border-[#1A1A1A]/10 text-center">
-                        <a href="https://github.com/jamestheakston/jamesstudio/commits/main" target="_blank" class="inline-block bg-[#1A1A1A] text-white px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-neutral-800 transition-all">
-                            View more changes on GitHub →
-                        </a>
-                    </div>
-                `;
+                    changelog.innerHTML = html + `
+                        <div class="mt-8 pt-8 border-t border-[#1A1A1A]/10 text-center">
+                            <a href="https://github.com/jamestheakston/jamesstudio/commits/main" target="_blank" class="inline-block bg-[#1A1A1A] text-white px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-neutral-800 transition-all">
+                                View more changes on GitHub →
+                            </a>
+                        </div>
+                    `;
                 }
 
                 loading.classList.add('hidden');
