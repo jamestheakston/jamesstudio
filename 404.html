@@ -190,7 +190,7 @@
             const suggestionsDiv = document.getElementById('suggestions');
             
             // Show loading state
-            suggestionsDiv.innerHTML = '<span class="text-sm text-neutral-500">Finding suggestions...</span>';
+            suggestionsDiv.innerHTML = '<span class="text-sm text-white/70">Finding suggestions...</span>';
 
             try {
                 const response = await fetch('/api/chat', {
@@ -226,7 +226,7 @@ Analyze the path "${currentPath}" and suggest up to 3 MOST RELEVANT pages from t
 
                         if (suggestions.length > 0) {
                             suggestionsDiv.innerHTML = suggestions.map(page => `
-                                <a href="${page.path}" ${page.external ? 'target="_blank" rel="noopener noreferrer"' : ''} class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
+                                <a href="${page.path}" ${page.external ? 'target="_blank" rel="noopener noreferrer"' : ''} class="border border-white/40 text-white px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-white hover:text-black transition-all drop-shadow-lg">
                                     ${page.name}
                                 </a>
                             `).join('');
@@ -239,13 +239,13 @@ Analyze the path "${currentPath}" and suggest up to 3 MOST RELEVANT pages from t
                 const fallbackSuggestions = getFallbackSuggestions();
                 if (fallbackSuggestions.length > 0) {
                     suggestionsDiv.innerHTML = fallbackSuggestions.map(page => `
-                        <a href="${page.path}" ${page.external ? 'target="_blank" rel="noopener noreferrer"' : ''} class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
+                        <a href="${page.path}" ${page.external ? 'target="_blank" rel="noopener noreferrer"' : ''} class="border border-white/40 text-white px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-white hover:text-black transition-all drop-shadow-lg">
                             ${page.name}
                         </a>
                     `).join('');
                 } else {
                     suggestionsDiv.innerHTML = `
-                        <a href="/" class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
+                        <a href="/" class="border border-white/40 text-white px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-white hover:text-black transition-all drop-shadow-lg">
                             Go to Home
                         </a>
                     `;
@@ -256,13 +256,13 @@ Analyze the path "${currentPath}" and suggest up to 3 MOST RELEVANT pages from t
                 const fallbackSuggestions = getFallbackSuggestions();
                 if (fallbackSuggestions.length > 0) {
                     suggestionsDiv.innerHTML = fallbackSuggestions.map(page => `
-                        <a href="${page.path}" ${page.external ? 'target="_blank" rel="noopener noreferrer"' : ''} class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
+                        <a href="${page.path}" ${page.external ? 'target="_blank" rel="noopener noreferrer"' : ''} class="border border-white/40 text-white px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-white hover:text-black transition-all drop-shadow-lg">
                             ${page.name}
                         </a>
                     `).join('');
                 } else {
                     suggestionsDiv.innerHTML = `
-                        <a href="/" class="border border-[#1A1A1A]/20 text-[#1A1A1A] px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-[#1A1A1A] hover:text-[#FAF9F6] transition-all">
+                        <a href="/" class="border border-white/40 text-white px-6 py-3 rounded-full text-sm font-semibold tracking-wider hover:bg-white hover:text-black transition-all drop-shadow-lg">
                             Go to Home
                         </a>
                     `;
